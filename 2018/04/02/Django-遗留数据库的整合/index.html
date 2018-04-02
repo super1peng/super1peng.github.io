@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="执行查询一旦你建立好数据模型，Django会自动为你生成一套数据库抽象的API，可以让你创建、检索、更新和删除对象。">
+<meta name="description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
 <meta name="keywords" content="Django,Django rest framework">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Django-执行查询">
-<meta property="og:url" content="http://super1peng.xyz/2018/03/29/Django-执行查询/index.html">
+<meta property="og:title" content="Django 遗留数据库的整合">
+<meta property="og:url" content="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="执行查询一旦你建立好数据模型，Django会自动为你生成一套数据库抽象的API，可以让你创建、检索、更新和删除对象。">
+<meta property="og:description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-02T02:59:54.020Z">
+<meta property="og:updated_time" content="2018-04-02T06:29:57.831Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Django-执行查询">
-<meta name="twitter:description" content="执行查询一旦你建立好数据模型，Django会自动为你生成一套数据库抽象的API，可以让你创建、检索、更新和删除对象。">
+<meta name="twitter:title" content="Django 遗留数据库的整合">
+<meta name="twitter:description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://super1peng.xyz/2018/03/29/Django-执行查询/"/>
+  <link rel="canonical" href="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/"/>
 
 
 
 
 
-  <title>Django-执行查询 | 大大大大碗面</title>
+  <title>Django 遗留数据库的整合 | 大大大大碗面</title>
   
 
 
@@ -266,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/03/29/Django-执行查询/">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="super1peng">
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Django-执行查询</h1>
+          <h1 class="post-title" itemprop="name headline">Django 遗留数据库的整合</h1>
         
 
         <div class="post-meta">
@@ -295,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-29T22:17:45+08:00">
-                2018-03-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T14:22:39+08:00">
+                2018-04-02
               </time>
             
 
@@ -338,13 +338,25 @@
       
 
       
-        <h1 id="执行查询"><a href="#执行查询" class="headerlink" title="执行查询"></a>执行查询</h1><p>一旦你建立好数据模型，Django会自动为你生成一套数据库抽象的API，可以让你创建、检索、更新和删除对象。<br><a id="more"></a><br>在整个文档（以及参考）中，我们将引用下面的模型，它构成一个博客应用：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Blog</span><span class="params">(models.Model)</span>:</span>    <span class="comment"># Blog表</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">100</span>)</span><br><span class="line">    tagline = models.TextField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span>              <span class="comment"># __unicode__ on Python 2</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Author</span><span class="params">(models.Model)</span>:</span> <span class="comment"># 作者表</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">200</span>)</span><br><span class="line">    email = models.EmailField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span>              <span class="comment"># __unicode__ on Python 2</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Entry</span><span class="params">(models.Model)</span>:</span>   <span class="comment"># 整体条目</span></span><br><span class="line">    blog = models.ForeignKey(Blog)</span><br><span class="line">    headline = models.CharField(max_length=<span class="number">255</span>)</span><br><span class="line">    body_text = models.TextField()</span><br><span class="line">    pub_date = models.DateField()</span><br><span class="line">    mod_date = models.DateField()</span><br><span class="line">    authors = models.ManyToManyField(Author)</span><br><span class="line">    n_comments = models.IntegerField()</span><br><span class="line">    n_pingbacks = models.IntegerField()</span><br><span class="line">    rating = models.IntegerField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span>              <span class="comment"># __unicode__ on Python 2</span></span><br><span class="line">        <span class="keyword">return</span> self.headline</span><br></pre></td></tr></table></figure></p>
-<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>Django 使用一种直观的方式把数据库表中的数据表示成Python对象：一个模型类代表数据库中的一个表，一个模型类的实例代表这个数据库表中的一条特定的记录。</p>
-<p>使用关键字参数实例化模型实例来创建一个对象，然后调用<code>save()</code>把它保存到数据库中。</p>
-<p>假设模型存放于文件<code>mysite/blog/models.py</code>中，下面是一个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from blog.models import Blog</span><br><span class="line">&gt;&gt;&gt; b = Blog(name=&apos;Beatles Blog&apos;, tagline=&apos;All the latest Beatles news.&apos;)</span><br><span class="line">&gt;&gt;&gt; b.save()</span><br></pre></td></tr></table></figure><br>上面的代码在背后执行了SQL 的INSERT语句。 在你显式调用<code>save()</code>之前，Django 不会访问数据库。</p>
-<h2 id="将更改保存到对象"><a href="#将更改保存到对象" class="headerlink" title="将更改保存到对象"></a>将更改保存到对象</h2><p>要保存对数据库中已存在的对象的改动，请使用<code>save()</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; b5.name = &apos;New name&apos;</span><br><span class="line">&gt;&gt;&gt; b5.save()</span><br></pre></td></tr></table></figure></p>
-<h2 id="保存ForeignKey和ManyToManyField字段"><a href="#保存ForeignKey和ManyToManyField字段" class="headerlink" title="保存ForeignKey和ManyToManyField字段"></a>保存ForeignKey和ManyToManyField字段</h2><p>更新<code>ForeignKey</code>字段的方式和保存普通字段相同 — 只要把一个正确类型的对象赋值给该字段。 下面的例子更新一个<code>Entry</code>实例<code>entry</code>的<code>blog</code>属性，假设<code>Entry</code>和<code>Blog</code>已经有正确的实例保存在数据库中（所以我们可以像下面这样获取它们）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from blog.models import Blog, Entry</span><br><span class="line">&gt;&gt;&gt; entry = Entry.objects.get(pk=1)</span><br><span class="line">&gt;&gt;&gt; cheese_blog = Blog.objects.get(name=&quot;Cheddar Talk&quot;)</span><br><span class="line">&gt;&gt;&gt; entry.blog = cheese_blog</span><br><span class="line">&gt;&gt;&gt; entry.save()</span><br></pre></td></tr></table></figure></p>
-<h2 id="还没写完-待续"><a href="#还没写完-待续" class="headerlink" title="还没写完 待续"></a>还没写完 待续</h2>
+        <h1 id="将遗留数据库整合到Django"><a href="#将遗留数据库整合到Django" class="headerlink" title="将遗留数据库整合到Django"></a>将遗留数据库整合到Django</h1><p>虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。<br>一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。<br><a id="more"></a></p>
+<h2 id="向Django提供你的数据库参数"><a href="#向Django提供你的数据库参数" class="headerlink" title="向Django提供你的数据库参数"></a>向Django提供你的数据库参数</h2><p>你需要告诉Django你的数据库连接参数，以及数据库的名称。请修改<code>DATABASES</code>设置，为’默认’ 连接的以下键赋值：</p>
+<ul>
+<li>NAME</li>
+<li>ENGINE</li>
+<li>USER</li>
+<li>PASSWORD</li>
+<li>HOST</li>
+<li>PORT</li>
+</ul>
+<h2 id="自动生成模型"><a href="#自动生成模型" class="headerlink" title="自动生成模型"></a>自动生成模型</h2><p>Django自带叫做<code>inspectdb</code>的工具，可以按照现有的数据库创建模型。你可以运行以下命令，并查看输出：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py inspectdb</span><br></pre></td></tr></table></figure></p>
+<p>通过重定向Unix标准输出流来保存文件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py inspectdb &gt; models.py</span><br></pre></td></tr></table></figure></p>
+<p>这个特性是一个快捷方式，并不是一个确定的模型生成器。详见<code>inspectdb</code>文档 。</p>
+<p>一旦你创建好了你的模型，把文件命名为<code>models.py</code>，然后把它放到你应用的Python包中。然后把应用添加到你的<code>INSTALLED_APPS</code>设置中。</p>
+<p>默认情况下，<code>inspectdb</code>创建未被管理的模型。这就是说，模型的Meta类中的<code>managed = False</code>告诉Django不要管理每个表的创建、修改和删除<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    id = models.IntegerField(primary_key=<span class="keyword">True</span>)</span><br><span class="line">    first_name = models.CharField(max_length=<span class="number">70</span>)</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">       managed = <span class="keyword">False</span></span><br><span class="line">       db_table = <span class="string">'CENSUS_PERSONS'</span></span><br></pre></td></tr></table></figure></p>
+<p>如果你希望Django管理表的生命周期，你需要把<code>managed</code>选项改为<code>True</code>（<code>`</code>或者简单地把它移除，因为True是默认值）。</p>
+<h2 id="安装Django核心表"><a href="#安装Django核心表" class="headerlink" title="安装Django核心表"></a>安装Django核心表</h2><p>接下来，运行<code>migrate</code>命令来安装所有所需的额外的数据库记录，比如后台权限和内容类型:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure></p>
+<h2 id="测试和调整"><a href="#测试和调整" class="headerlink" title="测试和调整"></a>测试和调整</h2><p>上面就是所有基本的步骤了 —— 到目前为止你会想要调整Django自动生成的模型，直到他们按照你想要的方式工作。尝试通过Django数据库API访问你的数据，并且尝试使用Django后台页面编辑对象，以及相应地编辑模型文件。</p>
+
       
     </div>
     
@@ -376,8 +388,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/29/Django-模型/" rel="next" title="Django-模型">
-                <i class="fa fa-chevron-left"></i> Django-模型
+              <a href="/2018/04/02/Django-序列化/" rel="next" title="Django 序列化">
+                <i class="fa fa-chevron-left"></i> Django 序列化
               </a>
             
           </div>
@@ -385,10 +397,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/02/Django-序列化/" rel="prev" title="Django 序列化">
-                Django 序列化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -533,7 +541,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#执行查询"><span class="nav-number">1.</span> <span class="nav-text">执行查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建对象"><span class="nav-number">1.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将更改保存到对象"><span class="nav-number">1.2.</span> <span class="nav-text">将更改保存到对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保存ForeignKey和ManyToManyField字段"><span class="nav-number">1.3.</span> <span class="nav-text">保存ForeignKey和ManyToManyField字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还没写完-待续"><span class="nav-number">1.4.</span> <span class="nav-text">还没写完 待续</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#将遗留数据库整合到Django"><span class="nav-number">1.</span> <span class="nav-text">将遗留数据库整合到Django</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#向Django提供你的数据库参数"><span class="nav-number">1.1.</span> <span class="nav-text">向Django提供你的数据库参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动生成模型"><span class="nav-number">1.2.</span> <span class="nav-text">自动生成模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Django核心表"><span class="nav-number">1.3.</span> <span class="nav-text">安装Django核心表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试和调整"><span class="nav-number">1.4.</span> <span class="nav-text">测试和调整</span></a></li></ol></li></ol></div>
             
 
           </div>
