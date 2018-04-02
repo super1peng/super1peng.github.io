@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Django,Django rest framework," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="序列化 Serialization什么是序列化在程序运行的过程中，所有的变量都在内存中，比如定义一个dict：12d = dict(name=&apos;Bob&apos;, age=20, score=88)&amp;gt;&amp;gt;&amp;gt; &amp;#123;&apos;name&apos;: &apos;Bob&apos;, &apos;age&apos;: 20, &apos;score&apos;: 88&amp;#125;">
+<meta name="keywords" content="Django,Django rest framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django 序列化">
+<meta property="og:url" content="http://super1peng.xyz/2018/04/02/Django-序列化/index.html">
+<meta property="og:site_name" content="大大大大碗面">
+<meta property="og:description" content="序列化 Serialization什么是序列化在程序运行的过程中，所有的变量都在内存中，比如定义一个dict：12d = dict(name=&apos;Bob&apos;, age=20, score=88)&amp;gt;&amp;gt;&amp;gt; &amp;#123;&apos;name&apos;: &apos;Bob&apos;, &apos;age&apos;: 20, &apos;score&apos;: 88&amp;#125;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://super1peng.xyz/2018/04/02/Django-序列化/Serlization.png">
+<meta property="og:updated_time" content="2018-04-02T02:59:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django 序列化">
+<meta name="twitter:description" content="序列化 Serialization什么是序列化在程序运行的过程中，所有的变量都在内存中，比如定义一个dict：12d = dict(name=&apos;Bob&apos;, age=20, score=88)&amp;gt;&amp;gt;&amp;gt; &amp;#123;&apos;name&apos;: &apos;Bob&apos;, &apos;age&apos;: 20, &apos;score&apos;: 88&amp;#125;">
+<meta name="twitter:image" content="http://super1peng.xyz/2018/04/02/Django-序列化/Serlization.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://super1peng.xyz/2018/04/02/Django-序列化/"/>
+
+
+
+
+
+  <title>Django 序列化 | 大大大大碗面</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <a href="https://github.com/super1peng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大大大大碗面</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/04/02/Django-序列化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="super1peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mangsen.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大大大大碗面">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Django 序列化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T09:16:53+08:00">
+                2018-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读总量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="序列化-Serialization"><a href="#序列化-Serialization" class="headerlink" title="序列化 Serialization"></a>序列化 Serialization</h1><h2 id="什么是序列化"><a href="#什么是序列化" class="headerlink" title="什么是序列化"></a>什么是序列化</h2><p>在程序运行的过程中，所有的变量都在内存中，比如定义一个dict：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d = dict(name=<span class="string">'Bob'</span>, age=<span class="number">20</span>, score=<span class="number">88</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&#123;<span class="string">'name'</span>: <span class="string">'Bob'</span>, <span class="string">'age'</span>: <span class="number">20</span>, <span class="string">'score'</span>: <span class="number">88</span>&#125;</span><br></pre></td></tr></table></figure><br><a id="more"></a><br>可以随时修改变量，比如把<code>&#39;Bob&#39;</code>改成<code>&#39;Bill&#39;</code>，但是一旦程序结束，变量所占用的内存就被操作系统全部回收。如果没有把修改后的<code>‘Bill’</code>存储到磁盘上，下次重新运行程序，变量又被初始化为<code>Bob</code>。  </p>
+<p>我们把变量从内存中变成可存储或传输的过程称之为序列化，在Python中叫做<code>pickling</code>，在其他语言中也被称之为<code>serialization、marshalling、flattening</code>，都是一个意思。  </p>
+<p>序列化之后，就可以把序列化后的内容写入磁盘，或者通过网络传输到别的服务器上。  </p>
+<p>反过来，把变量内容从序列化的对象重新读到内存中来称之为<code>反序列化</code>，即<code>unpickling</code>。</p>
+<h2 id="Python序列化应用"><a href="#Python序列化应用" class="headerlink" title="Python序列化应用"></a>Python序列化应用</h2><p><code>Josn</code>作为标准的格式，具有很好的可读性和跨平台特性，是序列化的不错选择。  </p>
+<p>Json库中与序列化有关的方法：<code>dumps dump loads load</code>。</p>
+<ul>
+<li>dump/dumps功能：将字典类型通过json把它序列化为json格式的字典。</li>
+<li>load/loads功能：将json编码的字符串转化为python数据结构。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">dict = &#123;<span class="string">'key1'</span>:<span class="string">'小蘑菇'</span>,<span class="string">'key2'</span>:<span class="number">3</span>,<span class="string">'key3'</span>:<span class="keyword">None</span>,<span class="string">'key4'</span>:<span class="string">'summer'</span>&#125;</span><br><span class="line"></span><br><span class="line">print(<span class="string">'未序列化前的数据类型为'</span>,type(dict))</span><br><span class="line">print(<span class="string">'未序列化前的数据为:'</span>,dict)</span><br><span class="line"></span><br><span class="line">str = json.dumps(dict)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'序列化后的数据类型为'</span>,type(str))</span><br><span class="line">print(<span class="string">'序列化后的数据为:'</span>,str)</span><br><span class="line"></span><br><span class="line">dict1 = json.loads(str)</span><br><span class="line">print(<span class="string">'反序列化后的数据类型为'</span>,type(dict1))</span><br><span class="line">print(<span class="string">'反序列化后的数据为:'</span>,dict1)</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br><img src="/2018/04/02/Django-序列化/Serlization.png" alt="结果"></p>
+<h1 id="Django序列化"><a href="#Django序列化" class="headerlink" title="Django序列化"></a>Django序列化</h1><h2 id="创建模型"><a href="#创建模型" class="headerlink" title="创建模型"></a>创建模型</h2><p>在 /appnames/model.py文件中创建如下结构：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> pygments.lexers <span class="keyword">import</span> get_all_lexers</span><br><span class="line"><span class="keyword">from</span> pygments.styles <span class="keyword">import</span> get_all_styles</span><br><span class="line"></span><br><span class="line">LEXERS = [item <span class="keyword">for</span> item <span class="keyword">in</span> get_all_lexers() <span class="keyword">if</span> item[<span class="number">1</span>]]</span><br><span class="line">LANGUAGE_CHOICES = sorted([(item[<span class="number">1</span>][<span class="number">0</span>], item[<span class="number">0</span>]) <span class="keyword">for</span> item <span class="keyword">in</span> LEXERS])</span><br><span class="line">STYLE_CHOICES = sorted((item, item) <span class="keyword">for</span> item <span class="keyword">in</span> get_all_styles())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Snippet</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    created = models.DateTimeField(auto_now_add=<span class="keyword">True</span>)</span><br><span class="line">    title = models.CharField(max_length=<span class="number">100</span>, blank=<span class="keyword">True</span>, default=<span class="string">''</span>)</span><br><span class="line">    code = models.TextField()</span><br><span class="line">    linenos = models.BooleanField(default=<span class="keyword">False</span>)</span><br><span class="line">    language = models.CharField(choices=LANGUAGE_CHOICES, default=<span class="string">'python'</span>, max_length=<span class="number">100</span>)</span><br><span class="line">    style = models.CharField(choices=STYLE_CHOICES, default=<span class="string">'friendly'</span>, max_length=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        ordering = (<span class="string">'created'</span>,)</span><br></pre></td></tr></table></figure></p>
+<p>创建完成之后，为snippet模型穿件一个初始迁移(initial migration)。然后进行第一次同步数据库。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations snippets</span><br><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure></p>
+<h2 id="创建一个序列化类"><a href="#创建一个序列化类" class="headerlink" title="创建一个序列化类"></a>创建一个序列化类</h2><p>为了构建我们的API，首先要做的就是，提供一种将我们的实例，将实例序列化/反序列化成表述，例如<code>json</code>。在<code>appname</code>目录中创建一个新文件，<code>serializers.py</code>，添加如下代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    id = serializers.IntegerField(read_only=<span class="keyword">True</span>)</span><br><span class="line">    title = serializers.CharField(required=<span class="keyword">False</span>, allow_blank=<span class="keyword">True</span>, max_length=<span class="number">100</span>)</span><br><span class="line">    code = serializers.CharField(style=&#123;<span class="string">'base_template'</span>: <span class="string">'textarea.html'</span>&#125;)</span><br><span class="line">    linenos = serializers.BooleanField(required=<span class="keyword">False</span>)</span><br><span class="line">    language = serializers.ChoiceField(choices=LANGUAGE_CHOICES, default=<span class="string">'python'</span>)</span><br><span class="line">    style = serializers.ChoiceField(choices=STYLE_CHOICES, default=<span class="string">'friendly'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, validated_data)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Create and return a new `Snippet` instance, given the validated data.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> Snippet.objects.create(**validated_data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self, instance, validated_data)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Update and return an existing `Snippet` instance, given the validated data.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        instance.title = validated_data.get(<span class="string">'title'</span>, instance.title)</span><br><span class="line">        instance.code = validated_data.get(<span class="string">'code'</span>, instance.code)</span><br><span class="line">        instance.linenos = validated_data.get(<span class="string">'linenos'</span>, instance.linenos)</span><br><span class="line">        instance.language = validated_data.get(<span class="string">'language'</span>, instance.language)</span><br><span class="line">        instance.style = validated_data.get(<span class="string">'style'</span>, instance.style)</span><br><span class="line">        instance.save()</span><br><span class="line">        <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure></p>
+<p>上述序列化类(serializer class)第一部分定义了一些需要被序列化/反序列化字段。create()和update()方法定义了在成熟的实例是如何被创建和修改的。</p>
+<h2 id="用序列化工作"><a href="#用序列化工作" class="headerlink" title="用序列化工作"></a>用序列化工作</h2><p>熟练运用之前，先使用django命令行进行测试：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py shell</span><br></pre></td></tr></table></figure></p>
+<p>我们添加一些数据进行测试工作<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</span><br><span class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</span><br><span class="line"><span class="keyword">from</span> rest_framework.renderers <span class="keyword">import</span> JSONRenderer</span><br><span class="line"><span class="keyword">from</span> rest_framework.parsers <span class="keyword">import</span> JSONParser</span><br><span class="line"></span><br><span class="line">snippet = Snippet(code=<span class="string">'foo = "bar"\n'</span>)</span><br><span class="line">snippet.save()</span><br><span class="line"></span><br><span class="line">snippet = Snippet(code=<span class="string">'print "hello, world"\n'</span>)</span><br><span class="line">snippet.save()</span><br></pre></td></tr></table></figure></p>
+<p>我们将其中一个进行序列化：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">serializer = SnippetSerializer(snippet)</span><br><span class="line">serializer.data</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&#123;<span class="string">'id'</span>: <span class="number">2</span>, <span class="string">'title'</span>: <span class="string">u''</span>, <span class="string">'code'</span>: <span class="string">u'print "hello, world"\n'</span>, <span class="string">'linenos'</span>: <span class="keyword">False</span>, <span class="string">'language'</span>: <span class="string">u'python'</span>, <span class="string">'style'</span>: <span class="string">u'friendly'</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在我们已经将模型实例转化成Python原生的数据类型，为了完善过程我们还要将其转化成<code>JSON</code>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">content = JSONRenderer().render(serializer.data)</span><br><span class="line">content</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'&#123;"id": 2, "title": "", "code": "print \\"hello, world\\"\\n", "linenos": false, "language": "python", "style": "friendly"&#125;'</span></span><br></pre></td></tr></table></figure>  </p>
+<p>反序列化也一样。我们首先将流（steam）转换成原生数据类型：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.utils.six <span class="keyword">import</span> BytesIO</span><br><span class="line"></span><br><span class="line">stream = BytesIO(content)</span><br><span class="line">data = JSONParser().parse(stream)</span><br></pre></td></tr></table></figure> </p>
+<p>然后将Python原生数据类型恢复成正常的对象实例。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">serializer = SnippetSerializer(data=data)</span><br><span class="line">serializer.is_valid()</span><br><span class="line"><span class="comment"># True</span></span><br><span class="line">serializer.validated_data</span><br><span class="line"><span class="comment"># OrderedDict([('title', ''), ('code', 'print "hello, world"\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])</span></span><br><span class="line">serializer.save()</span><br><span class="line"><span class="comment"># &lt;Snippet: Snippet object&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>除了将模型实例序列化之外，我们也能序列化查询集(querysets)，只需要添加一个序列化参数 many=True。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">serializer = SnippetSerializer(Snippet.objects.all(), many=<span class="keyword">True</span>)</span><br><span class="line">serializer.data</span><br><span class="line"><span class="comment"># [OrderedDict([('pk', 1), ('title', u''), ('code', u'foo = "bar"\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 2), ('title', u''), ('code', u'print "hello, world"\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 3), ('title', u''), ('code', u'print "hello, world"'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])]</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="使用序列化写常规的Django视图"><a href="#使用序列化写常规的Django视图" class="headerlink" title="使用序列化写常规的Django视图"></a>使用序列化写常规的Django视图</h1><h2 id="视图文件"><a href="#视图文件" class="headerlink" title="视图文件"></a>视图文件</h2><p><code>views.py</code> 文件配置如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse, JsonResponse</span><br><span class="line"><span class="keyword">from</span> django.views.decorators.csrf <span class="keyword">import</span> csrf_exempt</span><br><span class="line"><span class="keyword">from</span> rest_framework.renderers <span class="keyword">import</span> JSONRenderer</span><br><span class="line"><span class="keyword">from</span> rest_framework.parsers <span class="keyword">import</span> JSONParser</span><br><span class="line"><span class="keyword">from</span> snippets.models <span class="keyword">import</span> Snippet</span><br><span class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> SnippetSerializer</span><br><span class="line"></span><br><span class="line"><span class="meta">@csrf_exempt</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">snippet_detail</span><span class="params">(request, pk)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Retrieve, update or delete a code snippet.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        snippet = Snippet.objects.get(pk=pk)</span><br><span class="line">    <span class="keyword">except</span> Snippet.DoesNotExist:</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(status=<span class="number">404</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'GET'</span>:</span><br><span class="line">        serializer = SnippetSerializer(snippet)</span><br><span class="line">        <span class="keyword">return</span> JsonResponse(serializer.data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> request.method == <span class="string">'PUT'</span>:</span><br><span class="line">        data = JSONParser().parse(request)</span><br><span class="line">        serializer = SnippetSerializer(snippet, data=data)</span><br><span class="line">        <span class="keyword">if</span> serializer.is_valid():</span><br><span class="line">            serializer.save()</span><br><span class="line">            <span class="keyword">return</span> JsonResponse(serializer.data)</span><br><span class="line">        <span class="keyword">return</span> JsonResponse(serializer.errors, status=<span class="number">400</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> request.method == <span class="string">'DELETE'</span>:</span><br><span class="line">        snippet.delete()</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(status=<span class="number">204</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="路由文件"><a href="#路由文件" class="headerlink" title="路由文件"></a>路由文件</h2><p><code>urls.py</code> 文件配置如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> snippets <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^snippets/$'</span>, views.snippet_list),</span><br><span class="line">    url(<span class="string">r'^snippets/(?P&lt;pk&gt;[0-9]+)/$'</span>, views.snippet_detail),</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p><code>主urls.py</code> 文件配置如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url, include</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^'</span>, include(<span class="string">'snippets.urls'</span>)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<h2 id="客户端操作"><a href="#客户端操作" class="headerlink" title="客户端操作"></a>客户端操作</h2><p>最终运行结果：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">http http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/snippets/<span class="number">2</span>/</span><br><span class="line"></span><br><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">...</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"id"</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="string">"title"</span>: <span class="string">""</span>,</span><br><span class="line">  <span class="string">"code"</span>: <span class="string">"print \"hello, world\"\n"</span>,</span><br><span class="line">  <span class="string">"linenos"</span>: false,</span><br><span class="line">  <span class="string">"language"</span>: <span class="string">"python"</span>,</span><br><span class="line">  <span class="string">"style"</span>: <span class="string">"friendly"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i>Django</a>
+          
+            <a href="/tags/Django-rest-framework/" rel="tag"><i class="fa fa-tag"></i>Django rest framework</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/29/Django-执行查询/" rel="next" title="Django-执行查询">
+                <i class="fa fa-chevron-left"></i> Django-执行查询
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/mangsen.jpg"
+                alt="super1peng" />
+            
+              <p class="site-author-name" itemprop="name">super1peng</p>
+              <p class="site-description motion-element" itemprop="description">享受生活</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/super1peng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:super1peng@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=30 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=1&height=66"></iframe>
+</div>
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#序列化-Serialization"><span class="nav-number">1.</span> <span class="nav-text">序列化 Serialization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是序列化"><span class="nav-number">1.1.</span> <span class="nav-text">什么是序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python序列化应用"><span class="nav-number">1.2.</span> <span class="nav-text">Python序列化应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Django序列化"><span class="nav-number">2.</span> <span class="nav-text">Django序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建模型"><span class="nav-number">2.1.</span> <span class="nav-text">创建模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个序列化类"><span class="nav-number">2.2.</span> <span class="nav-text">创建一个序列化类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用序列化工作"><span class="nav-number">2.3.</span> <span class="nav-text">用序列化工作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用序列化写常规的Django视图"><span class="nav-number">3.</span> <span class="nav-text">使用序列化写常规的Django视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#视图文件"><span class="nav-number">3.1.</span> <span class="nav-text">视图文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由文件"><span class="nav-number">3.2.</span> <span class="nav-text">路由文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端操作"><span class="nav-number">3.3.</span> <span class="nav-text">客户端操作</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-child"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">super1peng</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>
