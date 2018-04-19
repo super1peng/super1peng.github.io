@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Django,Django rest framework," />
+  <meta name="keywords" content="推荐系统,算法," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
-<meta name="keywords" content="Django,Django rest framework">
+<meta name="description" content="基本概念LFM的基本思想LFM(Latent Factor Model)隐语义模型，这是推荐系统中应用相当普遍的一种模型。LFM和LSI、LDA、Topic Model都属于隐含语义分析技术，是一类概念。这些技术最开始出现在文本挖掘领域，近些年他们不断被应用到其他的领域。比如：在推荐系统中，LFM能够基于用户的行为对Item进行自动聚类，也就是把Item划分到不同的类别/主题，这些类别/主题可以理">
+<meta name="keywords" content="推荐系统,算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Django 遗留数据库的整合">
-<meta property="og:url" content="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/index.html">
+<meta property="og:title" content="推荐系统--LFM">
+<meta property="og:url" content="http://super1peng.xyz/2018/04/19/推荐系统-LFM/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
+<meta property="og:description" content="基本概念LFM的基本思想LFM(Latent Factor Model)隐语义模型，这是推荐系统中应用相当普遍的一种模型。LFM和LSI、LDA、Topic Model都属于隐含语义分析技术，是一类概念。这些技术最开始出现在文本挖掘领域，近些年他们不断被应用到其他的领域。比如：在推荐系统中，LFM能够基于用户的行为对Item进行自动聚类，也就是把Item划分到不同的类别/主题，这些类别/主题可以理">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-02T06:29:57.831Z">
+<meta property="og:image" content="http://super1peng.xyz/2018/04/19/推荐系统-LFM/LFM.png">
+<meta property="og:updated_time" content="2018-04-19T05:10:43.816Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Django 遗留数据库的整合">
-<meta name="twitter:description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
+<meta name="twitter:title" content="推荐系统--LFM">
+<meta name="twitter:description" content="基本概念LFM的基本思想LFM(Latent Factor Model)隐语义模型，这是推荐系统中应用相当普遍的一种模型。LFM和LSI、LDA、Topic Model都属于隐含语义分析技术，是一类概念。这些技术最开始出现在文本挖掘领域，近些年他们不断被应用到其他的领域。比如：在推荐系统中，LFM能够基于用户的行为对Item进行自动聚类，也就是把Item划分到不同的类别/主题，这些类别/主题可以理">
+<meta name="twitter:image" content="http://super1peng.xyz/2018/04/19/推荐系统-LFM/LFM.png">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/"/>
+  <link rel="canonical" href="http://super1peng.xyz/2018/04/19/推荐系统-LFM/"/>
 
 
 
 
 
-  <title>Django 遗留数据库的整合 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>推荐系统--LFM | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -266,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/04/19/推荐系统-LFM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="super1peng">
@@ -283,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Django 遗留数据库的整合</h1>
+          <h1 class="post-title" itemprop="name headline">推荐系统--LFM</h1>
         
 
         <div class="post-meta">
@@ -295,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T14:22:39+08:00">
-                2018-04-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T10:26:16+08:00">
+                2018-04-19
               </time>
             
 
@@ -338,24 +340,51 @@
       
 
       
-        <h1 id="将遗留数据库整合到Django"><a href="#将遗留数据库整合到Django" class="headerlink" title="将遗留数据库整合到Django"></a>将遗留数据库整合到Django</h1><p>虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。<br>一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。<br><a id="more"></a></p>
-<h2 id="向Django提供你的数据库参数"><a href="#向Django提供你的数据库参数" class="headerlink" title="向Django提供你的数据库参数"></a>向Django提供你的数据库参数</h2><p>你需要告诉Django你的数据库连接参数，以及数据库的名称。请修改<code>DATABASES</code>设置，为’默认’ 连接的以下键赋值：</p>
+        <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><h2 id="LFM的基本思想"><a href="#LFM的基本思想" class="headerlink" title="LFM的基本思想"></a>LFM的基本思想</h2><p>LFM(Latent Factor Model)隐语义模型，这是推荐系统中应用相当普遍的一种模型。LFM和LSI、LDA、Topic Model都属于隐含语义分析技术，是一类概念。这些技术最开始出现在文本挖掘领域，近些年他们不断被应用到其他的领域。比如：在推荐系统中，LFM能够基于用户的行为对Item进行自动聚类，也就是把Item划分到不同的类别/主题，这些类别/主题可以理解为用户的兴趣，然后根据这些对用户进行推荐。<br><a id="more"></a></p>
+<h2 id="LFM与其他算法的对比"><a href="#LFM与其他算法的对比" class="headerlink" title="LFM与其他算法的对比"></a>LFM与其他算法的对比</h2><h3 id="LFM与UserCF、ItemCF有什么不同呢？"><a href="#LFM与UserCF、ItemCF有什么不同呢？" class="headerlink" title="LFM与UserCF、ItemCF有什么不同呢？"></a>LFM与UserCF、ItemCF有什么不同呢？</h3><p>对于UserCF，我们先计算和目标用户兴趣相似的用户，之后再根据计算出来的用户喜欢的Item给目标用户推荐Item。<br>对于ItemCF，我们先根据目标用户喜欢的Item，寻找和这些相似的Item，在推荐给用户。<br>而LFM，我们则是先对所有的Item进行分类，在根据用户的兴趣分类给用户推荐该分类中的Item。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>列举一个生活中的例子：给用户推荐书籍，对于用户A会关注数学，历史，计算机方面的书，用户B喜欢机器学习，编程语言，离散数学方面的书， 用户C喜欢某某大师的著作。那我们在推荐的时候，肯定是向用户推荐他感兴趣的类别下的图书。那么前提是我们要对所有Item（图书）进行分类。  </p>
+<p>那如何分呢？大家注意到没有，分类标准这个东西是因人而异的，每个用户的想法都不一样。拿B用户来说，他喜欢的三个类别其实都可以算作是计算机方面的书籍，也就是说B的分类粒度要比A小；拿离散数学来讲，他既可以算作数学，也可当做计算机方面的类别，也就是说有些item不能简单的将其划归到确定的单一类别；拿C用户来说，他倾向的是书的作者，只看某几个特定作者的书，那么跟A，B相比它的分类角度就完全不同了。  </p>
+<p>所以以上例子有三个待解决的问题：</p>
 <ul>
-<li>NAME</li>
-<li>ENGINE</li>
-<li>USER</li>
-<li>PASSWORD</li>
-<li>HOST</li>
-<li>PORT</li>
+<li>不能靠由单个人的主观想法建立起来的分类标准对整个平台用户喜好进行标准化。</li>
+<li>虽然在可见的用户书单中归结出3个类别，但是这不等于该用户就只喜欢这3类，对其他类别的书就一点兴趣也没有。也就是说，我们需要了解用户对于所有类别的兴趣度。</li>
+<li>对于一个给定的类来说，我们需要确定这个类中每本书属于该类别的权重。权重有助于我们确定该推荐哪些书给用户。  </li>
 </ul>
-<h2 id="自动生成模型"><a href="#自动生成模型" class="headerlink" title="自动生成模型"></a>自动生成模型</h2><p>Django自带叫做<code>inspectdb</code>的工具，可以按照现有的数据库创建模型。你可以运行以下命令，并查看输出：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py inspectdb</span><br></pre></td></tr></table></figure></p>
-<p>通过重定向Unix标准输出流来保存文件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py inspectdb &gt; models.py</span><br></pre></td></tr></table></figure></p>
-<p>这个特性是一个快捷方式，并不是一个确定的模型生成器。详见<code>inspectdb</code>文档 。</p>
-<p>一旦你创建好了你的模型，把文件命名为<code>models.py</code>，然后把它放到你应用的Python包中。然后把应用添加到你的<code>INSTALLED_APPS</code>设置中。</p>
-<p>默认情况下，<code>inspectdb</code>创建未被管理的模型。这就是说，模型的Meta类中的<code>managed = False</code>告诉Django不要管理每个表的创建、修改和删除<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    id = models.IntegerField(primary_key=<span class="keyword">True</span>)</span><br><span class="line">    first_name = models.CharField(max_length=<span class="number">70</span>)</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">       managed = <span class="keyword">False</span></span><br><span class="line">       db_table = <span class="string">'CENSUS_PERSONS'</span></span><br></pre></td></tr></table></figure></p>
-<p>如果你希望Django管理表的生命周期，你需要把<code>managed</code>选项改为<code>True</code>（<code>`</code>或者简单地把它移除，因为True是默认值）。</p>
-<h2 id="安装Django核心表"><a href="#安装Django核心表" class="headerlink" title="安装Django核心表"></a>安装Django核心表</h2><p>接下来，运行<code>migrate</code>命令来安装所有所需的额外的数据库记录，比如后台权限和内容类型:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure></p>
-<h2 id="测试和调整"><a href="#测试和调整" class="headerlink" title="测试和调整"></a>测试和调整</h2><p>上面就是所有基本的步骤了 —— 到目前为止你会想要调整Django自动生成的模型，直到他们按照你想要的方式工作。尝试通过Django数据库API访问你的数据，并且尝试使用Django后台页面编辑对象，以及相应地编辑模型文件。</p>
+<h1 id="LFM如何解决"><a href="#LFM如何解决" class="headerlink" title="LFM如何解决"></a>LFM如何解决</h1><p>对于一个给定的用户行为数据集（数据集包含的是所有的User, 所有的Item，以及每个user有过行为的Item列表），使用LFM对其建模后，我们可以得到如下图所示的模型：（假设数据集中有3个User, 4个Item, LFM建模的分类数为4）<br><img src="/2018/04/19/推荐系统-LFM/LFM.png" alt="LFM"><br>对于上图的解释：<br>R矩阵是user-item矩阵，矩阵值$R_{ij}$ 表示的是$user_{i}$ 对$item_{j}$的兴趣度，这正是我们要求的值。对于一个user来说，当计算出他对所有item的兴趣度后，就可以进行排序并作出推荐。LFM算法从数据集中抽取出若干主题，作为user和item之间连接的桥梁，将R矩阵表示为P矩阵和Q矩阵相乘。其中P矩阵是user-class矩阵，矩阵值Pij表示的是user i对class j的兴趣度；Q矩阵式class-item矩阵，矩阵值$Q_{ij}$表示的是$item_{i}$在$class_{j}$中的权重，权重越高越能作为该类的代表。所以LFM根据如下公式来计算用户user对物品item的兴趣度。  </p>
+<div style="text-align:center">$R_{ui}=P_{u}Q_{i}=\sum_{k=1}^{K}P_{u,k}{Q_{k,i}}^{T}$</div>
+
+
+<p>我们发现使用LFM后: </p>
+<ul>
+<li>我们不需要关心分类的角度，结果都是基于用户行为统计自动聚类的，全凭数据自己说了算。</li>
+<li>不需要关心分类粒度的问题，通过设置LFM的最终分类数就可控制粒度，分类数越大，粒度约细。</li>
+<li>对于一个item，并不是明确的划分到某一类，而是计算其属于每一类的概率，是一种标准的软分类。</li>
+<li>对于一个user，我们可以得到他对于每一类的兴趣度，而不是只关心可见列表中的那几个类。</li>
+<li>对于每一个class，我们可以得到类中每个item的权重，越能代表这个类的item，权重越高。  </li>
+</ul>
+<p>接下去要做的就是计算矩阵P和矩阵Q中参数值。一般做法就是最优化损失函数来求参数.</p>
+<h1 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h1><p>在进行推导之前，我们需要对数据集进行一些处理：<br>数据集应该包含所有的user和他们有过行为的（也就是喜欢）的item。所有的这些item构成了一个item全集。对于每个user来说，我们把他有过行为的item称为正样本，规定兴趣度$R_{ui}$=1，此外我们还需要从item全集中随机抽样，选取与正样本数量相当的样本作为负样本，规定兴趣度为$R_{ui}$=0。因此，兴趣的取值范围为[0,1]。  </p>
+<p>采样之后原有的数据集得到扩充，得到一个新的user-item集$(u,i)\in K$，其中如果$(u,i)$是正样本，则$R_{ui}$=1，否则$R_{ui}$=0。损失函数如下所示：</p>
+<div style="text-align:center">$C=\sum_{(u,i)\in K}(R_{ui}-\widehat{R_{ui}} )^{2}=\sum_{(u,i)\in K}(R_{ui}-\sum_{k=1}^{K}P_{u,k}{Q_{ki}}^{T})^{2}+\lambda {\left |P_u \right|}^{2}+\lambda {\left| Q_i \right|}^{2}$</div>
+
+<p>上式中的$\lambda {\left| P_u\right|}^{2}+\lambda {\left| Q_i\right|}^{2}$是用来防止过拟合的正则化项，$\lambda$需要根据具体应用场景反复实验得到。  </p>
+<p>损失函数的优化使用随机梯度下降算法：</p>
+<ol>
+<li><p>通过计算参数的偏导确定最快的下降方向：</p>
+<div style="text-align:center">$\frac{\partial C}{\partial P_{uk}} = -2(R_{ui}-\sum_{k=1}^{K}P_{u,k}{Q_{k,i}^{T}})Q_{ki}+2\lambda P_{uk}$</div><br><div style="text-align:center">$\frac{\partial C}{\partial Q_{ki}} = -2(R_{ui}-\sum_{k=1}^{K}P_{u,k}{Q_{k,i}^{T}})P_{uk}+2\lambda Q_{ki}$</div>  
+</li>
+<li><p>迭代计算不断优化参数，直到参数收敛：</p>
+<div style="text-align:center">$P_{uk}=P_{uk}-\alpha \frac{\partial C}{\partial P_{uk}}$</div><br><div style="text-align:center">$Q_{ki}=Q_{ki}-\alpha \frac{\partial C}{\partial Q_{ki}}$</div>
+
+</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>LFM在显示反馈数据（即评分数据）上解决评分预测问题精度较好。若要应用在隐性反馈数据集，首先要解决的一个关键问题是如何给每个用户生成负样本，一般来说对负样本采样时遵循以下原则：</p>
+<ol>
+<li>每个用户，要保证正负样本的数据接近。</li>
+<li>对每个用户采样负样本时，要选取那些很热门，但是用户却没有行为的Item。</li>
+</ol>
+<h3 id="参数对算法性能的影响"><a href="#参数对算法性能的影响" class="headerlink" title="参数对算法性能的影响"></a>参数对算法性能的影响</h3><p>r:正负样本的比例<br>r对算法性能影响最大。起初r增大，准确率和召回率不断提高，覆盖率逐渐降低，流行度不断变高。<code>说明r参数控制了推荐算法发掘长尾的能力。</code></p>
+<p>在实际生活中，LFM并非直接运用，而是对其进行些许的改变。</p>
 
       
     </div>
@@ -373,9 +402,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i>Django</a>
+            <a href="/tags/推荐系统/" rel="tag"><i class="fa fa-tag"></i>推荐系统</a>
           
-            <a href="/tags/Django-rest-framework/" rel="tag"><i class="fa fa-tag"></i>Django rest framework</a>
+            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i>算法</a>
           
         </div>
       
@@ -388,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/02/Django-序列化/" rel="next" title="Django 序列化">
-                <i class="fa fa-chevron-left"></i> Django 序列化
+              <a href="/2018/04/02/Django-遗留数据库的整合/" rel="next" title="Django 遗留数据库的整合">
+                <i class="fa fa-chevron-left"></i> Django 遗留数据库的整合
               </a>
             
           </div>
@@ -397,10 +426,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/19/推荐系统-LFM/" rel="prev" title="推荐系统--LFM">
-                推荐系统--LFM <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -545,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#将遗留数据库整合到Django"><span class="nav-number">1.</span> <span class="nav-text">将遗留数据库整合到Django</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#向Django提供你的数据库参数"><span class="nav-number">1.1.</span> <span class="nav-text">向Django提供你的数据库参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动生成模型"><span class="nav-number">1.2.</span> <span class="nav-text">自动生成模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Django核心表"><span class="nav-number">1.3.</span> <span class="nav-text">安装Django核心表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试和调整"><span class="nav-number">1.4.</span> <span class="nav-text">测试和调整</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LFM的基本思想"><span class="nav-number">1.1.</span> <span class="nav-text">LFM的基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LFM与其他算法的对比"><span class="nav-number">1.2.</span> <span class="nav-text">LFM与其他算法的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LFM与UserCF、ItemCF有什么不同呢？"><span class="nav-number">1.2.1.</span> <span class="nav-text">LFM与UserCF、ItemCF有什么不同呢？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LFM如何解决"><span class="nav-number">3.</span> <span class="nav-text">LFM如何解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#公式推导"><span class="nav-number">4.</span> <span class="nav-text">公式推导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数对算法性能的影响"><span class="nav-number">5.0.1.</span> <span class="nav-text">参数对算法性能的影响</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
