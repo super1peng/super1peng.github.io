@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TensorFlow,Deep learning," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="TensorFlow提供很多API。 最低级别的API — TensorFlow Core提供给使用者完全的编程控制。">
+<meta name="keywords" content="TensorFlow,Deep learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow(一)">
+<meta property="og:url" content="http://super1peng.xyz/2018/04/23/TensorFlow-一/index.html">
+<meta property="og:site_name" content="大大大大碗面">
+<meta property="og:description" content="TensorFlow提供很多API。 最低级别的API — TensorFlow Core提供给使用者完全的编程控制。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://super1peng.xyz/2018/04/23/TensorFlow-一/1.png">
+<meta property="og:updated_time" content="2018-04-23T07:33:09.218Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow(一)">
+<meta name="twitter:description" content="TensorFlow提供很多API。 最低级别的API — TensorFlow Core提供给使用者完全的编程控制。">
+<meta name="twitter:image" content="http://super1peng.xyz/2018/04/23/TensorFlow-一/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://super1peng.xyz/2018/04/23/TensorFlow-一/"/>
+
+
+
+
+
+  <title>TensorFlow(一) | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <a href="https://github.com/super1peng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大大大大碗面</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/04/23/TensorFlow-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="super1peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mangsen.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大大大大碗面">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T14:22:54+08:00">
+                2018-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读总量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>TensorFlow提供很多API。 最低级别的<code>API — TensorFlow Core</code>提供给使用者完全的编程控制。<br><a id="more"></a></p>
+<h1 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h1><p>TensorFlow中数据的中心单元是<code>张量</code>。 张量由一组原始值组成，这些原始值被组织成形状为任意维度的数组。 张量的<code>秩</code>是其维数。 以下是一些张量的例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> <span class="comment"># 一个秩为0的张量；这是一个形状为[]的标量</span></span><br><span class="line">[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>] <span class="comment"># 一个秩为1的张量；这是一个形状为[3]的向量</span></span><br><span class="line">[[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>], [<span class="number">4.</span>, <span class="number">5.</span>, <span class="number">6.</span>]] <span class="comment"># 一个秩为2的张量；这是一个形状为[2, 3]的矩阵</span></span><br><span class="line">[[[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>]], [[<span class="number">7.</span>, <span class="number">8.</span>, <span class="number">9.</span>]]] <span class="comment"># 一个秩为3、形状为[2, 1, 3]的张量</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="TensorFlow核心编程"><a href="#TensorFlow核心编程" class="headerlink" title="TensorFlow核心编程"></a>TensorFlow核心编程</h2><h3 id="导入Tensor"><a href="#导入Tensor" class="headerlink" title="导入Tensor"></a>导入Tensor</h3><p>TensorFlow程序的规范导入语句如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>  </p>
+<p>这使得Python可以访问所有TensorFlow的类，方法和符号。</p>
+<h3 id="计算图"><a href="#计算图" class="headerlink" title="计算图"></a>计算图</h3><p>TensorFlow程序由两个不同的部分组成：</p>
+<ul>
+<li>构建计算图。</li>
+<li>运行计算图。  </li>
+</ul>
+<p><code>计算图是一系列的TensorFlow操作排列成一个节点图。</code>下面来列举一个简单的例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node1 = tf.constant(<span class="number">3.0</span>, dtype=tf.float32)  </span><br><span class="line">node2 = tf.constant(<span class="number">4.0</span>)<span class="comment"># also tf.float32 implicitly  </span></span><br><span class="line">print(node1, node2)</span><br></pre></td></tr></table></figure>  </p>
+<p>打印的结果为：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tensor(<span class="string">"Const:0"</span>, shape=(), dtype=float32) Tensor(<span class="string">"Const_1:0"</span>,shape=(), dtype=float32)</span><br></pre></td></tr></table></figure>  </p>
+<p>要想打印最终结果，我们必须用到<code>session</code>:<code>一个session封装了TensorFlow运行时的控制和状态</code>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()  </span><br><span class="line">print(sess.run([node1, node2]))</span><br></pre></td></tr></table></figure>  </p>
+<p>同时，我们可以组合Tensor节点操作(操作仍然是一个节点)来构造更加复杂的计算：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node3 = tf.add(node1, node2)  </span><br><span class="line">print(<span class="string">"node3:"</span>, node3)  </span><br><span class="line">print(<span class="string">"sess.run(node3):"</span>, sess.run(node3)) </span><br></pre></td></tr></table></figure>  </p>
+<p>输出的结果是：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node3:Tensor(<span class="string">"Add:0"</span>, shape=(), dtype=float32)  </span><br><span class="line">sess.run(node3):<span class="number">7.0</span> </span><br></pre></td></tr></table></figure>  </p>
+<p>TensorFlow提供一个统一的调用称之为<code>TensorBoard</code>，它能展示一个计算图的图片；如下面的例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf </span><br><span class="line">node1 = tf.constant(<span class="number">3.0</span>, dtype=tf.float32,name=<span class="string">"node1"</span>)  </span><br><span class="line">node2 = tf.constant(<span class="number">4.0</span>, dtype=tf.float32,name=<span class="string">"node2"</span>)</span><br><span class="line">node3 = tf.add(node1, node2)  </span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    writer = tf.summary.FileWriter(<span class="string">"./haha"</span>,sess.graph)</span><br><span class="line">    print(sess.run(node3))</span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2018/04/23/TensorFlow-一/1.png" alt="图1"></p>
+<p>一个计算图可以参数化的接收外部的输入，作为一个<code>placeholders</code>(占位符)，一个占位符是允许后面提供一个值的。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = tf.placeholder(tf.float32)  </span><br><span class="line">b = tf.placeholder(tf.float32)  </span><br><span class="line">adder_node = a + b</span><br></pre></td></tr></table></figure>  </p>
+<p>feed_dict(传递字典)参数传递具体的值到run方法的占位符来进行多个输入。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(sess.run(adder_node, &#123;a:<span class="number">3</span>, b:<span class="number">4.5</span>&#125;))  </span><br><span class="line">print(sess.run(adder_node, &#123;a: [<span class="number">1</span>,<span class="number">3</span>], b: [<span class="number">2</span>,<span class="number">4</span>]&#125;))  </span><br></pre></td></tr></table></figure>  </p>
+<p>结果是：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7.5</span>  </span><br><span class="line">[<span class="number">3.</span>  <span class="number">7.</span>]</span><br></pre></td></tr></table></figure>  </p>
+<p>我们可以增加另外的操作来让计算图更加复杂，例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add_and_triple = adder_node *<span class="number">3.</span>  </span><br><span class="line">print(sess.run(add_and_triple, &#123;a:<span class="number">3</span>, b:<span class="number">4.5</span>&#125;))  </span><br><span class="line"><span class="comment"># 输出结果是：  </span></span><br><span class="line"><span class="number">22.5</span>  </span><br></pre></td></tr></table></figure>  </p>
+<p>在机器学习中，我们通常想让一个模型可以接收任意多个输入，比如大于1个，好让这个模型可以被训练，在不改变输入的情况下,我们需要改变这个计算图去获得一个新的输出。<code>Variables</code>允许我们增加可训练的参数到这个计算图中，它们被构造成有一个类型和初始值：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">W = tf.Variable([<span class="number">.3</span>], dtype=tf.float32)  </span><br><span class="line">b = tf.Variable([<span class="number">-.3</span>], dtype=tf.float32)  </span><br><span class="line">x = tf.placeholder(tf.float32)  </span><br><span class="line">linear_model = W*x + b  </span><br></pre></td></tr></table></figure>  </p>
+<p>当你调用<code>tf.constant</code>时常量被初始化，它们的值是<code>不可以改变的</code>，而变量当你调用<code>tf.Variable</code>时没有被初始化，<br>在TensorFlow程序中要想初始化这些变量，你必须明确调用<code>一个特定的操作</code>，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">init = tf.global_variables_initializer()  </span><br><span class="line">sess.run(init)  </span><br></pre></td></tr></table></figure>  </p>
+<p>要实现初始化所有全局变量的TensorFlow子图的的处理是很重要的，直到我们调用sess.run，这些变量都是未被初始化的。既然<code>x</code>是一个占位符，我们就可以同时地对多个<code>x</code>的值进行求值<code>linear_model</code>，例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(sess.run(linear_model, &#123;x: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]&#125;))  </span><br><span class="line"><span class="comment"># 输出的结果为：</span></span><br><span class="line">[<span class="number">0.</span>  <span class="number">0.30000001</span>  <span class="number">0.60000002</span>  <span class="number">0.90000004</span>]  </span><br></pre></td></tr></table></figure>  </p>
+<p>我们已经创建了一个模型，但是我们至今不知道它是多好，在这些训练数据上对这个模型进行评估，我们需要一个<code>y</code>占位符来提供一个期望的值，并且我们需要写一个<code>loss function</code>(损失函数)，一个损失函数度量当前的模型和提供<br>的数据有多远，我们将会使用一个标准的损失模式来线性回归，它的增量平方和就是当前模型与提供的数据之间的损失，<code>linear_model-y</code>创建一个向量，其中每个元素都是对应的示例错误增量。这个错误的方差我们称为<code>tf.square</code>。然后，我们合计所有的错误方差用以创建一个标量，用<code>tf.reduce_sum</code>求出所有示例的错误。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">y = tf.placeholder(tf.float32)  </span><br><span class="line">squared_deltas = tf.square(linear_model - y)  </span><br><span class="line">loss = tf.reduce_sum(squared_deltas)  </span><br><span class="line">print(sess.run(loss, &#123;x: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], y: [<span class="number">0</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span>]&#125;))  </span><br><span class="line"><span class="comment"># 输出的结果为  </span></span><br><span class="line"><span class="number">23.66</span>  </span><br></pre></td></tr></table></figure>  </p>
+<p>我们分配一个值给<code>W</code>和<code>b</code>(得到一个标准的值是-1和1)来手动改进这一点,一个变量被初始化一个值会调用<code>tf.Variable</code>，但是可以用<code>tf.assign</code>来改变这个值：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fixW = tf.assign(W, [<span class="number">-1.</span>])</span><br><span class="line">fixb = tf.assign(b, [<span class="number">1.</span>])  </span><br><span class="line">sess.run([fixW, fixb])  </span><br><span class="line">print(sess.run(loss, &#123;x: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], y: [<span class="number">0</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span>]&#125;))  </span><br><span class="line"><span class="comment"># 最终打印的结果是：  </span></span><br><span class="line"><span class="number">0.0</span></span><br></pre></td></tr></table></figure>  </p>
+<h2 id="tf-train"><a href="#tf-train" class="headerlink" title="tf.train"></a>tf.train</h2><p>TessorFlow API提供<code>optimizers</code>(优化器)，它能慢慢改变每一个变量以最小化损失函数，最简单的优化器是<code>gradient descent</code>(梯度下降)，它根据变量派生出损失的大小,来修改每个变量。一般来说，手动计算符号派生是繁琐且容易出错的。 因此，TensorFlow可以使用函数<code>tf.gradients</code>自动生成衍生物，只给出模型的描述。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">optimizer = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>)</span><br><span class="line">train = optimizer.minimize(loss)</span><br><span class="line">sess.run(init) <span class="comment"># 重置为不正确的默认值。</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    sess.run(train, &#123;x: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], y: [<span class="number">0</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span>]&#125;)</span><br><span class="line">print(sess.run([W, b]))</span><br><span class="line"><span class="comment"># 得到最终的模型参数：</span></span><br><span class="line">[array([<span class="number">-0.9999969</span>], dtype=float32), array([ <span class="number">0.99999082</span>],dtype=float32)]</span><br></pre></td></tr></table></figure>  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorFlow/" rel="tag"><i class="fa fa-tag"></i>TensorFlow</a>
+          
+            <a href="/tags/Deep-learning/" rel="tag"><i class="fa fa-tag"></i>Deep learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/23/Negative-Sampling-CBOW/" rel="next" title="Negative-Sampling-CBOW">
+                <i class="fa fa-chevron-left"></i> Negative-Sampling-CBOW
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/mangsen.jpg"
+                alt="super1peng" />
+            
+              <p class="site-author-name" itemprop="name">super1peng</p>
+              <p class="site-description motion-element" itemprop="description">享受生活</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/super1peng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:super1peng@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=30 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=1&height=66"></iframe>
+</div>
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#张量"><span class="nav-number">1.</span> <span class="nav-text">张量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorFlow核心编程"><span class="nav-number">1.1.</span> <span class="nav-text">TensorFlow核心编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导入Tensor"><span class="nav-number">1.1.1.</span> <span class="nav-text">导入Tensor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算图"><span class="nav-number">1.1.2.</span> <span class="nav-text">计算图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-train"><span class="nav-number">1.2.</span> <span class="nav-text">tf.train</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-child"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">super1peng</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
