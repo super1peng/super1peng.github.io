@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Django,Django rest framework," />
+  <meta name="keywords" content="自然语言处理," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
-<meta name="keywords" content="Django,Django rest framework">
+<meta name="description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下">
+<meta name="keywords" content="自然语言处理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Django 遗留数据库的整合">
-<meta property="og:url" content="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/index.html">
+<meta property="og:title" content="Negative-Sampling-CBOW">
+<meta property="og:url" content="http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
+<meta property="og:description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-02T06:29:57.831Z">
+<meta property="og:image" content="http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/1.png">
+<meta property="og:updated_time" content="2018-04-23T03:37:39.785Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Django 遗留数据库的整合">
-<meta name="twitter:description" content="将遗留数据库整合到Django虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。">
+<meta name="twitter:title" content="Negative-Sampling-CBOW">
+<meta name="twitter:description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下">
+<meta name="twitter:image" content="http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/1.png">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/"/>
+  <link rel="canonical" href="http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/"/>
 
 
 
 
 
-  <title>Django 遗留数据库的整合 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Negative-Sampling-CBOW | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -266,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/04/02/Django-遗留数据库的整合/">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="super1peng">
@@ -283,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Django 遗留数据库的整合</h1>
+          <h1 class="post-title" itemprop="name headline">Negative-Sampling-CBOW</h1>
         
 
         <div class="post-meta">
@@ -295,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T14:22:39+08:00">
-                2018-04-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T10:30:55+08:00">
+                2018-04-23
               </time>
             
 
@@ -338,24 +340,63 @@
       
 
       
-        <h1 id="将遗留数据库整合到Django"><a href="#将遗留数据库整合到Django" class="headerlink" title="将遗留数据库整合到Django"></a>将遗留数据库整合到Django</h1><p>虽然Django最适合用来开发新的应用，但也可以将它整合到遗留的数据库中。Django包含了很多工具，尽可能自动化解决这类问题。<br>一旦你的Django环境建立好之后，你可以按照这个大致的流程，整合你的现有数据库。<br><a id="more"></a></p>
-<h2 id="向Django提供你的数据库参数"><a href="#向Django提供你的数据库参数" class="headerlink" title="向Django提供你的数据库参数"></a>向Django提供你的数据库参数</h2><p>你需要告诉Django你的数据库连接参数，以及数据库的名称。请修改<code>DATABASES</code>设置，为’默认’ 连接的以下键赋值：</p>
+        <p>　　在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。<br>　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下走很久了，能不能不用创建这么复杂的一棵霍夫曼树，将模型的结构变得更加简单？<br>　　Negative Sampling就是这么一种求解word2vec模型的方法，它摒弃了霍夫曼树，采用了Negative Sampling(负采样)的方法来求解。<br><a id="more"></a></p>
+<h1 id="基于Negative-Sampling的模型概述"><a href="#基于Negative-Sampling的模型概述" class="headerlink" title="基于Negative Sampling的模型概述"></a>基于Negative Sampling的模型概述</h1><p>既然名字叫Negative Sampling（负采样），那么肯定使用了采样的方法。采样的方法有很多种，比如之前讲到的大名鼎鼎的<code>MCMC</code>。我们这里的Negative Sampling采样方法并没有MCMC那么复杂。  </p>
+<p>　　比如我们有一个训练样本，中心词是$w$,它周围上下文共有$2c$个词，记为$context(w)$。由于这个中心词$w$的确和$context(w)$相关存在，因此它是一个真实的正例。通过Negative Sampling采样，我们得到$neg$个和$w$不同的中心词$w_i,i=1,2,..neg$，这样$context(w)$和$w_i$就组成了$neg$个并不真实存在的负例。利用这一个正例和$neg$个负例，我们进行二元逻辑回归，得到负采样对应每个词$w_i$对应的模型参数$\theta_{i}$，和每个词的词向量。</p>
+<p>　　从上面的描述可以看出，Negative Sampling由于没有采用霍夫曼树，每次只是通过采样$neg$个不同的中心词做负例，就可以训练模型，因此整个过程要比Hierarchical Softmax简单。</p>
+<p>不过有两个问题还需要弄明白：  </p>
+<ol>
+<li>如何通过一个正例和$neg$个负例进行二元逻辑回归呢？ </li>
+<li>如何进行负采样呢？</li>
+</ol>
+<p>下面，我们将在第二节讨论问题1，在第三节讨论问题2。</p>
+<h1 id="基于Negative-Sampling的模型梯度计算"><a href="#基于Negative-Sampling的模型梯度计算" class="headerlink" title="基于Negative Sampling的模型梯度计算"></a>基于Negative Sampling的模型梯度计算</h1><p><code>Negative Sampling</code>也是采用了二元逻辑回归来求解模型参数，通过负采样，我们得到了$neg$个负例$(context(w),w_i)i=1,2,..neg$。为了统一描述，我们将正例定义为$w_0$。</p>
+<p>在逻辑回归中，我们的<code>正例</code>应该期望满足：  </p>
+<div style="text-align:center">$P(context(w_0),w_i)=\sigma (x_{w_i}^T \theta ^ {w_i})，y_i=1, i=0$</div>  
+
+<p><code>负例</code>期望满足：  </p>
+<div style="text-align:center">$P(context(w_0),w_i)=1-\sigma (x_{w_i}^T \theta ^ {w_i})，y_i=0, i=1,2,…,neg$</div>  
+
+<p>我们期望可以最大化下式：</p>
+<div style="text-align:center">$\prod_{neg}^{i=0}P(context(w_0),w_i) = \sigma(x_{w_0}^T \theta^{w_0}) \prod_{neg}^{i=0}(1-\sigma(x_{w_i}^T \theta^{w_i}))$</div>  
+
+<p>我们容易写出此时模型的似然函数为：  </p>
+<div style="text-align:center">$L = \sum_{i=0}^{neg}y_i log(\sigma(x_{w_i}^T \theta^{w_i})) + (1-y_i)log(1-\sigma(x_{w_i}^T \theta^{w_i}))$</div>  
+
+<p>和<code>Hierarchical Softmax</code>类似，我们采用随机梯度上升法，仅仅每次只用一个样本更新梯度，来进行迭代更新得到我们需要的$x_{w_i},\theta ^{w_i},i=0,1,..neg$, 这里我们需要求出$x_{w_i},\theta ^{w_i},i=0,1,..neg$的梯度。  </p>
+<p>首先计算$\theta ^ {w_i}$的梯度：</p>
+<div style="text-align:center">$\frac{\partial L}{\partial \theta^{w_i}} = y_i(1-\sigma(x_{w_i}^T \theta^{w_i}))x_{w_i}-(1-y_i)\sigma(x_{w_i}^T \theta^{w_i})x_{w_i}$</div><br><div style="text-align:center">$上式=(y_i-\sigma(x_{w_i}^T \theta^{w_i}))x_{w_i}$</div>  
+
+<p>同样的方法，我们可以求而出$x_{wi}$的梯度如下：</p>
+<div style="text-align:center">$\frac{\partial L}{\partial x^{w_i}} = (y_i - \sigma(x_{w_i}^T \theta^{w_i}))\theta^{w_i}$</div>  
+
+<p>有了梯度表达式，我们就可以用梯度上升法进行迭代来一步步的求解我们需要值。</p>
+<h1 id="Negative-Sampling负采样方法"><a href="#Negative-Sampling负采样方法" class="headerlink" title="Negative Sampling负采样方法"></a>Negative Sampling负采样方法</h1><p>在这一节中，我们将解释如何进行负采样，得到$neg$个负例。word2vec采样的方法并不复杂，如果词汇表的大小为$V$,那么我们就将一段长度为1的线段分成$V$份，每份对应词汇表中的一个词。当然每个词对应的线段长度是不一样的，高频词对应的线段长，低频词对应的线段短。每个词$w$的线段长度由下式决定：</p>
+<div style="text-align:center">$len(w) = \frac{count(w)}{\sum_{u \in vocab}count(u)}$</div>  
+
+<p>在word2vec中，分子和分母都取了3/4次幂如下：</p>
+<div style="text-align:center">$len(w) = \frac{count(w)^{3/4}}{\sum_{u \in vocab}count(u)^{3/4}}$</div>  
+
+<p>在采样前，我们将这段长度为1的线段划分成$M$等份，这里$M&gt;&gt;V$，这样可以保证每个词对应的线段都会划分成对应的小块。而M份中的每一份都会落在某一个词对应的线段上。在采样的时候，我们只需要从$M$个位置中采样出$neg$个位置就行，此时采样到的每一个位置对应到的线段所属的词就是我们的负例词。<br><img src="/2018/04/23/Negative-Sampling-CBOW/1.png" alt="网络2"><br>在word2vec中，$M$取值默认为$10^8$。</p>
+<h1 id="基于Negative-Sampling的CBOW模型"><a href="#基于Negative-Sampling的CBOW模型" class="headerlink" title="基于Negative Sampling的CBOW模型"></a>基于Negative Sampling的CBOW模型</h1><p>有了上面<code>Negative Sampling</code>负采样的方法和逻辑回归求解模型参数的方法，我们就可以总结出基于<code>Negative Sampling</code>的<code>CBOW</code>模型算法流程了。梯度迭代过程使用了随机梯度上升法：  </p>
+<p>输入：基于$CBOW$的语料训练样本，词向量的维度大小$M$，$CBOW$的上下文大小$2c$,步长$\eta$, 负采样的个数$neg$  </p>
+<p>输出：词汇表每个词对应的模型参数$\theta$，所有的词向量$x_w$。</p>
+<ol>
+<li>随机初始化所有的模型参数$\theta$，所有的词向量$w$。</li>
+<li>对于每个训练样本$(context(w_0),w_0)$,负采样出$neg$个负例中心词$w_i,i=1,2,…neg$。</li>
+<li>进行梯度上升迭代过程，对于训练集中的每一个样本$(context(w_0),w_0,w_1,…w_{neg})$做如下处理：</li>
+</ol>
 <ul>
-<li>NAME</li>
-<li>ENGINE</li>
-<li>USER</li>
-<li>PASSWORD</li>
-<li>HOST</li>
-<li>PORT</li>
+<li>$e = 0$，计算$x_w=\frac{1}{2c}\sum_{i=1}^{2c}x_i$</li>
+<li><p>for $i$ = 0 to $neg$，计算：</p>
+<div style="text-align:center">$f=\sigma (x_w^T\theta_{j-1}^w)$</div><br><div style="text-align:center">$g = (y_i - f)\eta$</div><br><div style="text-align:center">$e =e + g\theta^{w_i}$</div><br><div style="text-align:center">$\theta^{w_i} = \theta^{w_i} + gx_{w_i}$</div>  
+</li>
+<li><p>对于$context(w)$中的每一个词向量$x_k$(共有2c个)进行更新：</p>
+<div style="text-align:center">$x_k = x_k + e$</div>  
+</li>
+<li><p>如果梯度收敛，则结束梯度迭代，否则回到第三步继续迭代。</p>
+</li>
 </ul>
-<h2 id="自动生成模型"><a href="#自动生成模型" class="headerlink" title="自动生成模型"></a>自动生成模型</h2><p>Django自带叫做<code>inspectdb</code>的工具，可以按照现有的数据库创建模型。你可以运行以下命令，并查看输出：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py inspectdb</span><br></pre></td></tr></table></figure></p>
-<p>通过重定向Unix标准输出流来保存文件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py inspectdb &gt; models.py</span><br></pre></td></tr></table></figure></p>
-<p>这个特性是一个快捷方式，并不是一个确定的模型生成器。详见<code>inspectdb</code>文档 。</p>
-<p>一旦你创建好了你的模型，把文件命名为<code>models.py</code>，然后把它放到你应用的Python包中。然后把应用添加到你的<code>INSTALLED_APPS</code>设置中。</p>
-<p>默认情况下，<code>inspectdb</code>创建未被管理的模型。这就是说，模型的Meta类中的<code>managed = False</code>告诉Django不要管理每个表的创建、修改和删除<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    id = models.IntegerField(primary_key=<span class="keyword">True</span>)</span><br><span class="line">    first_name = models.CharField(max_length=<span class="number">70</span>)</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">       managed = <span class="keyword">False</span></span><br><span class="line">       db_table = <span class="string">'CENSUS_PERSONS'</span></span><br></pre></td></tr></table></figure></p>
-<p>如果你希望Django管理表的生命周期，你需要把<code>managed</code>选项改为<code>True</code>（<code>`</code>或者简单地把它移除，因为True是默认值）。</p>
-<h2 id="安装Django核心表"><a href="#安装Django核心表" class="headerlink" title="安装Django核心表"></a>安装Django核心表</h2><p>接下来，运行<code>migrate</code>命令来安装所有所需的额外的数据库记录，比如后台权限和内容类型:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure></p>
-<h2 id="测试和调整"><a href="#测试和调整" class="headerlink" title="测试和调整"></a>测试和调整</h2><p>上面就是所有基本的步骤了 —— 到目前为止你会想要调整Django自动生成的模型，直到他们按照你想要的方式工作。尝试通过Django数据库API访问你的数据，并且尝试使用Django后台页面编辑对象，以及相应地编辑模型文件。</p>
 
       
     </div>
@@ -373,9 +414,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i>Django</a>
-          
-            <a href="/tags/Django-rest-framework/" rel="tag"><i class="fa fa-tag"></i>Django rest framework</a>
+            <a href="/tags/自然语言处理/" rel="tag"><i class="fa fa-tag"></i>自然语言处理</a>
           
         </div>
       
@@ -388,8 +427,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/02/Django-序列化/" rel="next" title="Django 序列化">
-                <i class="fa fa-chevron-left"></i> Django 序列化
+              <a href="/2018/04/22/Hierarchical-Softmax-CBOW/" rel="next" title="Hierarchical Softmax --CBOW">
+                <i class="fa fa-chevron-left"></i> Hierarchical Softmax --CBOW
               </a>
             
           </div>
@@ -397,10 +436,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/19/推荐系统-LFM/" rel="prev" title="推荐系统--LFM">
-                推荐系统--LFM <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -545,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#将遗留数据库整合到Django"><span class="nav-number">1.</span> <span class="nav-text">将遗留数据库整合到Django</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#向Django提供你的数据库参数"><span class="nav-number">1.1.</span> <span class="nav-text">向Django提供你的数据库参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动生成模型"><span class="nav-number">1.2.</span> <span class="nav-text">自动生成模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Django核心表"><span class="nav-number">1.3.</span> <span class="nav-text">安装Django核心表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试和调整"><span class="nav-number">1.4.</span> <span class="nav-text">测试和调整</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于Negative-Sampling的模型概述"><span class="nav-number">1.</span> <span class="nav-text">基于Negative Sampling的模型概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于Negative-Sampling的模型梯度计算"><span class="nav-number">2.</span> <span class="nav-text">基于Negative Sampling的模型梯度计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Negative-Sampling负采样方法"><span class="nav-number">3.</span> <span class="nav-text">Negative Sampling负采样方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于Negative-Sampling的CBOW模型"><span class="nav-number">4.</span> <span class="nav-text">基于Negative Sampling的CBOW模型</span></a></li></ol></div>
             
 
           </div>
