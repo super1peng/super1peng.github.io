@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="HMM,机器学习," />
 
 
 
@@ -79,16 +79,20 @@
 
 
 
-<meta name="description" content="享受生活">
-<meta property="og:type" content="website">
-<meta property="og:title" content="大大大大碗面">
-<meta property="og:url" content="http://super1peng.xyz/archives/index.html">
+<meta name="description" content="今天来讲一个HMM在预测算法中的应用，属于无监督学习的范畴。   算法需要解决的问题是：在已知隐马尔可夫模型参数和观测序列的条件下，预测状态的序列。   今天在知乎上面看到一个形象的解释，在这里与大家分享一下。">
+<meta name="keywords" content="HMM,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="viterbi算法">
+<meta property="og:url" content="http://super1peng.xyz/2018/05/29/viterbi算法/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="享受生活">
+<meta property="og:description" content="今天来讲一个HMM在预测算法中的应用，属于无监督学习的范畴。   算法需要解决的问题是：在已知隐马尔可夫模型参数和观测序列的条件下，预测状态的序列。   今天在知乎上面看到一个形象的解释，在这里与大家分享一下。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://super1peng.xyz/2018/05/29/viterbi算法/viterbi.jpg">
+<meta property="og:updated_time" content="2018-05-29T11:55:00.889Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大大大大碗面">
-<meta name="twitter:description" content="享受生活">
+<meta name="twitter:title" content="viterbi算法">
+<meta name="twitter:description" content="今天来讲一个HMM在预测算法中的应用，属于无监督学习的范畴。   算法需要解决的问题是：在已知隐马尔可夫模型参数和观测序列的条件下，预测状态的序列。   今天在知乎上面看到一个形象的解释，在这里与大家分享一下。">
+<meta name="twitter:image" content="http://super1peng.xyz/2018/05/29/viterbi算法/viterbi.jpg">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://super1peng.xyz/archives/"/>
+  <link rel="canonical" href="http://super1peng.xyz/2018/05/29/viterbi算法/"/>
 
 
 
 
 
-  <title>归档 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>viterbi算法 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -144,7 +148,7 @@
 
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-archive">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     
     <a href="https://github.com/super1peng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
@@ -250,411 +254,177 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/05/29/viterbi算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="super1peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mangsen.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大大大大碗面">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">viterbi算法</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-29T19:09:04+08:00">
+                2018-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 14 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读总量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/29/viterbi算法/" itemprop="url">
-              
-                <span itemprop="name">viterbi算法</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-29T19:09:04+08:00"
-              content="2018-05-29" >
-          05-29
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/23/特征工程/" itemprop="url">
-              
-                <span itemprop="name">特征工程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-23T21:16:37+08:00"
-              content="2018-05-23" >
-          05-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/08/推荐算法概述/" itemprop="url">
-              
-                <span itemprop="name">推荐算法概述</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-08T15:20:43+08:00"
-              content="2018-05-08" >
-          05-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>今天来讲一个HMM在预测算法中的应用，属于无监督学习的范畴。  </p>
+<p>算法需要解决的问题是：在已知隐马尔可夫模型参数和观测序列的条件下，预测状态的序列。  </p>
+<p>今天在知乎上面看到一个形象的解释，在这里与大家分享一下。<br><a id="more"></a></p>
+<h1 id="1-题目背景"><a href="#1-题目背景" class="headerlink" title="1.题目背景"></a>1.题目背景</h1><p>从前有个村儿，村里的人的身体情况只有两种可能：健康或者发烧。  </p>
+<p>假设这个村儿的人没有体温计或者百度这种神奇东西，他唯一判断他身体情况的途径就是到村头金正月的小诊所询问。月儿通过询问村民的感觉，判断她的病情，再假设村民只会回答正常、头晕或冷。有一天村里奥巴驴就去月儿那去询问了。第一天她告诉月儿她感觉正常。第二天她告诉月儿感觉有点冷。第三天她告诉月儿感觉有点头晕。那么问题来了，月儿如何根据阿驴的描述的情况，推断出这三天中阿驴的一个身体状态呢?为此月儿上百度搜 google ，一番狂搜，发现<code>维特比算法</code>正好能解决这个问题。月儿乐了。</p>
+<h1 id="2-已知情况"><a href="#2-已知情况" class="headerlink" title="2.已知情况"></a>2.已知情况</h1><p><strong>HMM的所有可能状态集合 Q</strong>  </p>
+<p>隐含的身体状态 = { 健康 , 发烧 } </p>
+<p><strong>HMM的所有观测集合 O</strong>  </p>
+<p>可观察的感觉状态 = { 正常 , 冷 , 头晕 }</p>
+<p><strong>HMM中的初始状态序列 π</strong>  </p>
+<p>月儿预判的阿驴身体状态的概率分布 = { 健康：0.6 , 发烧： 0.4 }</p>
+<p><strong>HMM中的状态概率转移分布</strong>  </p>
+<p>月儿认为的阿驴身体健康状态的转换概率分布：<br>健康-&gt;健康： 0.7 ,<br>健康-&gt;发烧： 0.3 ,<br>发烧-&gt;健康：0.4 ,<br>发烧-&gt;发烧： 0.6  </p>
+<p><strong>HMM中的观测概率矩阵</strong>  </p>
+<p>月儿认为的在相应健康状况条件下，阿驴的感觉的概率分布：<br>健康，正常：0.5 ，冷 ：0.4 ，头晕： 0.1 ；<br>发烧，正常：0.1 ，冷 ：0.3 ，头晕： 0.6 ；  </p>
+<p>从上面我们可以发现，隐马尔可夫模型的三要素已经完备，同时知道阿驴连续三天的身体感觉依次是： 正常、冷、头晕 。（即观测序列）</p>
+<h1 id="3-题目"><a href="#3-题目" class="headerlink" title="3.题目"></a>3.题目</h1><p>求：阿驴这三天的身体健康状态变化的过程是怎么样的？即已知观测序列和HMM模型的情况下，求状态序列。</p>
+<h1 id="4-过程"><a href="#4-过程" class="headerlink" title="4.过程"></a>4.过程</h1><p><strong>1.初始化(第一天)</strong><br>对每一个状态（健康或者发烧），分别求出第一天身体感觉正常的概率：P(第一天健康) = P(正常|健康)<em>P(健康|初始情况) = 0.5 </em> 0.6 = 0.3  P(第一天发烧) = P(正常|发烧)<em>P(发烧|初始情况) = 0.1 </em> 0.4 = 0.04。  </p>
+<p><strong>2.第二天</strong><br>对每个状态，分别求在第一天状态为健康或者发烧情况下观察到冷的最大概率。在维特比算法中，我们先要求得路径的单个路径的最大概率，然后再乘上观测概率。P(第二天健康) = max{0.3<em>0.7, 0.04</em>0.4}<em>0.4=0.3</em>0.7<em>0.4=0.084 此时我们需要记录概率最大的路径的前一个状态，即0.084路径的前一个状态，我们在小本本上记下，第一天健康。 P(第二天发烧)=max{0.3</em>0.3, 0.04<em>0.6}</em>0.3=0.027, 同样的在0.027这个路径上，第一天也是健康的。这里我们选择的是max，这点也是维特比算法与向前算法主要区别。  </p>
+<p><strong>3.第三天</strong>  </p>
+<p>跟第二天一样。P(第三天健康)=max{0.084<em>0.7, 0.027</em>0.4}<em>0.1=0.00588，在这条路径上，第二天是健康的。P(第三天发烧)=max{0.084</em>0.3, 0.027<em>0.6}</em>0.6=0.01512,在这条路径上，第二天是健康的。  </p>
+<p><strong>4.最后一天</strong><br>最后一天的状态概率分布即为最优路径的概率，即P(最优)=0.01512，这样我们可以得到最优路径的终点，是发烧。  </p>
+<p><strong>5.回溯</strong><br>由最优路径开始回溯。请看我们的小本本，在求得第三天发烧概率的时候，我们的小本本上面写的是第二天健康，好了，第二天就应该是健康的状态，然后在第二天健康的情况下，我们记录的第一天是健康的。这样，我们的状态序列逆推出来了。即为：健康，健康，发烧。  </p>
+<p><img src="/2018/05/29/viterbi算法/viterbi.jpg" alt="viterbi算法"><br>这儿的箭头指向就是一个回溯查询小本本的过程，我们在编写算法的时候，其实也得注意，每一个概率最大的单条路径上都要把前一个状态记录下来。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/23/TensorFlow-一/" itemprop="url">
-              
-                <span itemprop="name">TensorFlow(一)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-23T14:22:54+08:00"
-              content="2018-04-23" >
-          04-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/23/Negative-Sampling-CBOW/" itemprop="url">
-              
-                <span itemprop="name">Negative-Sampling-CBOW</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-23T10:30:55+08:00"
-              content="2018-04-23" >
-          04-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/22/Hierarchical-Softmax-CBOW/" itemprop="url">
-              
-                <span itemprop="name">Hierarchical Softmax --CBOW</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-22T10:13:44+08:00"
-              content="2018-04-22" >
-          04-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/20/word2vec原理/" itemprop="url">
-              
-                <span itemprop="name">word2vec原理</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-20T16:50:01+08:00"
-              content="2018-04-20" >
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/19/转-交叉熵和相对熵/" itemprop="url">
-              
-                <span itemprop="name">转-交叉熵和相对熵</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-19T21:00:12+08:00"
-              content="2018-04-19" >
-          04-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/19/推荐系统-LFM/" itemprop="url">
-              
-                <span itemprop="name">推荐系统--LFM</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-19T10:26:16+08:00"
-              content="2018-04-19" >
-          04-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/02/Django-遗留数据库的整合/" itemprop="url">
-              
-                <span itemprop="name">Django 遗留数据库的整合</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-02T14:22:39+08:00"
-              content="2018-04-02" >
-          04-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HMM/" rel="tag"><i class="fa fa-tag"></i>HMM</a>
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i>机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/23/特征工程/" rel="next" title="特征工程">
+                <i class="fa fa-chevron-left"></i> 特征工程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -662,6 +432,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -682,8 +456,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -756,6 +539,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-题目背景"><span class="nav-number">1.</span> <span class="nav-text">1.题目背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-已知情况"><span class="nav-number">2.</span> <span class="nav-text">2.已知情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-题目"><span class="nav-number">3.</span> <span class="nav-text">3.题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-过程"><span class="nav-number">4.</span> <span class="nav-text">4.过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -910,6 +709,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
