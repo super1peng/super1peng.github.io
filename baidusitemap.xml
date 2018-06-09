@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/06/09/%E9%9B%86%E6%88%90%E7%AE%97%E6%B3%95-boosting/</loc>
+    <lastmod>2018-06-09T12:51:09.489Z</lastmod>
+    <data>
+        <display>
+        <title>集成算法--boosting</title>
+        <pubTime>2018-06-09T10:59:40.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/03/21/%E5%90%AF%E7%A8%8B/</loc>
+    <lastmod>2018-06-09T11:09:28.513Z</lastmod>
+    <data>
+        <display>
+        <title>启程</title>
+        <pubTime>2018-03-21T12:43:04.000Z</pubTime>
+        
+        <tag>碎碎念</tag>
+         
+        <tag>生活</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/06/06/Scrapy%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2018-06-06T06:25:54.304Z</lastmod>
+    <data>
+        <display>
+        <title>Scrapy爬虫框架</title>
+        <pubTime>2018-06-06T05:34:41.000Z</pubTime>
+        
+        <tag>Scrapy</tag>
+         
+        <tag>Spider</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/05/08/%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0/</loc>
+    <lastmod>2018-06-04T01:15:35.115Z</lastmod>
+    <data>
+        <display>
+        <title>推荐算法概述</title>
+        <pubTime>2018-05-08T07:20:43.000Z</pubTime>
+        
+        <tag>推荐系统</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/05/29/viterbi%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2018-05-29T11:55:00.889Z</lastmod>
+    <data>
+        <display>
+        <title>viterbi算法</title>
+        <pubTime>2018-05-29T11:09:04.000Z</pubTime>
+        
+        <tag>HMM</tag>
+         
+        <tag>机器学习</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/05/23/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/</loc>
+    <lastmod>2018-05-23T13:28:39.740Z</lastmod>
+    <data>
+        <display>
+        <title>特征工程</title>
+        <pubTime>2018-05-23T13:16:37.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+        <tag>特征工程</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/04/23/TensorFlow-%E4%B8%80/</loc>
+    <lastmod>2018-04-23T07:33:09.218Z</lastmod>
+    <data>
+        <display>
+        <title>TensorFlow(一)</title>
+        <pubTime>2018-04-23T06:22:54.000Z</pubTime>
+        
+        <tag>TensorFlow</tag>
+         
+        <tag>Deep learning</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/</loc>
+    <lastmod>2018-04-23T03:37:39.785Z</lastmod>
+    <data>
+        <display>
+        <title>Negative-Sampling-CBOW</title>
+        <pubTime>2018-04-23T02:30:55.000Z</pubTime>
+        
+        <tag>自然语言处理</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/04/22/Hierarchical-Softmax-CBOW/</loc>
+    <lastmod>2018-04-23T02:20:33.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hierarchical Softmax --CBOW</title>
+        <pubTime>2018-04-22T02:13:44.000Z</pubTime>
+        
+        <tag>自然语言处理</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/04/20/word2vec%E5%8E%9F%E7%90%86/</loc>
+    <lastmod>2018-04-22T02:11:34.618Z</lastmod>
+    <data>
+        <display>
+        <title>word2vec原理</title>
+        <pubTime>2018-04-20T08:50:01.000Z</pubTime>
+        
+        <tag>自然语言处理</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/04/19/%E8%BD%AC-%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8C%E7%9B%B8%E5%AF%B9%E7%86%B5/</loc>
+    <lastmod>2018-04-19T13:30:08.655Z</lastmod>
+    <data>
+        <display>
+        <title>转-交叉熵和相对熵</title>
+        <pubTime>2018-04-19T13:00:12.000Z</pubTime>
+        
+        <tag>转载</tag>
+         
+        <tag>因吹斯汀</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/04/19/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F-LFM/</loc>
+    <lastmod>2018-04-19T05:10:43.816Z</lastmod>
+    <data>
+        <display>
+        <title>推荐系统--LFM</title>
+        <pubTime>2018-04-19T02:26:16.000Z</pubTime>
+        
+        <tag>推荐系统</tag>
+         
+        <tag>算法</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/04/02/Django-%E9%81%97%E7%95%99%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B4%E5%90%88/</loc>
+    <lastmod>2018-04-02T06:29:57.831Z</lastmod>
+    <data>
+        <display>
+        <title>Django 遗留数据库的整合</title>
+        <pubTime>2018-04-02T06:22:39.000Z</pubTime>
+        
+        <tag>Django</tag>
+         
+        <tag>Django rest framework</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/03/29/Django-%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/</loc>
+    <lastmod>2018-04-02T02:59:54.020Z</lastmod>
+    <data>
+        <display>
+        <title>Django-执行查询</title>
+        <pubTime>2018-03-29T14:17:45.000Z</pubTime>
+        
+        <tag>Django</tag>
+         
+        <tag>Django rest framework</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/04/02/Django-%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
+    <lastmod>2018-04-02T02:59:11.000Z</lastmod>
+    <data>
+        <display>
+        <title>Django 序列化</title>
+        <pubTime>2018-04-02T01:16:53.000Z</pubTime>
+        
+        <tag>Django</tag>
+         
+        <tag>Django rest framework</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://super1peng.xyz/2018/03/29/Django-%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2018-03-29T06:32:54.932Z</lastmod>
+    <data>
+        <display>
+        <title>Django-模型</title>
+        <pubTime>2018-03-29T03:49:47.000Z</pubTime>
+        
+        <tag>Django</tag>
+         
+        <tag>Django rest framework</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+</urlset>
