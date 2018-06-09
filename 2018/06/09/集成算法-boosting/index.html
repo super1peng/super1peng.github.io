@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="碎碎念,生活," />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -79,20 +79,23 @@
 
 
 
-<meta name="description" content="之前搞了一段时间的公众号，但是一直没有解决数学公式的显示问题，同时也在大佬的安利之下，决定启用Hexo搭建个人博客，作为新手，还请大家多多提意见，新学习任务繁重，博客只能不定期更新啦。 有缘自会相见">
-<meta name="keywords" content="碎碎念,生活">
+<meta name="description" content="提升就是指每一步我都产生一个弱预测模型，然后加权累加到总模型中，然后每一步弱预测模型生成的的依据都是损失函数的负梯度方向，这样若干步以后就可以达到逼近损失函数局部最小值的目标。   Boosting算法的工作机制是首先从训练集用初始权重训练出一个弱学习器1，根据弱学习的学习误差率表现来更新训练样本的权重，使得之前弱学习器1学习误差率高的训练样本点的权重变高，使得这些误差率高的点在后面的弱学习器2中">
+<meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="启程">
-<meta property="og:url" content="http://super1peng.xyz/2018/03/21/启程/index.html">
+<meta property="og:title" content="集成算法--boosting">
+<meta property="og:url" content="http://super1peng.xyz/2018/06/09/集成算法-boosting/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="之前搞了一段时间的公众号，但是一直没有解决数学公式的显示问题，同时也在大佬的安利之下，决定启用Hexo搭建个人博客，作为新手，还请大家多多提意见，新学习任务繁重，博客只能不定期更新啦。 有缘自会相见">
+<meta property="og:description" content="提升就是指每一步我都产生一个弱预测模型，然后加权累加到总模型中，然后每一步弱预测模型生成的的依据都是损失函数的负梯度方向，这样若干步以后就可以达到逼近损失函数局部最小值的目标。   Boosting算法的工作机制是首先从训练集用初始权重训练出一个弱学习器1，根据弱学习的学习误差率表现来更新训练样本的权重，使得之前弱学习器1学习误差率高的训练样本点的权重变高，使得这些误差率高的点在后面的弱学习器2中">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://super1peng.xyz/2018/03/21/启程/集成算法-boosting/boosting.png">
-<meta property="og:updated_time" content="2018-06-09T11:09:28.513Z">
+<meta property="og:image" content="http://super1peng.xyz/2018/06/09/集成算法-boosting/boosting.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/06/09/集成算法-boosting/残差.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/06/09/集成算法-boosting/公式1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/06/09/集成算法-boosting/公式2.png">
+<meta property="og:updated_time" content="2018-06-09T12:51:09.489Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="启程">
-<meta name="twitter:description" content="之前搞了一段时间的公众号，但是一直没有解决数学公式的显示问题，同时也在大佬的安利之下，决定启用Hexo搭建个人博客，作为新手，还请大家多多提意见，新学习任务繁重，博客只能不定期更新啦。 有缘自会相见">
-<meta name="twitter:image" content="http://super1peng.xyz/2018/03/21/启程/集成算法-boosting/boosting.png">
+<meta name="twitter:title" content="集成算法--boosting">
+<meta name="twitter:description" content="提升就是指每一步我都产生一个弱预测模型，然后加权累加到总模型中，然后每一步弱预测模型生成的的依据都是损失函数的负梯度方向，这样若干步以后就可以达到逼近损失函数局部最小值的目标。   Boosting算法的工作机制是首先从训练集用初始权重训练出一个弱学习器1，根据弱学习的学习误差率表现来更新训练样本的权重，使得之前弱学习器1学习误差率高的训练样本点的权重变高，使得这些误差率高的点在后面的弱学习器2中">
+<meta name="twitter:image" content="http://super1peng.xyz/2018/06/09/集成算法-boosting/boosting.png">
 
 
 
@@ -122,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://super1peng.xyz/2018/03/21/启程/"/>
+  <link rel="canonical" href="http://super1peng.xyz/2018/06/09/集成算法-boosting/"/>
 
 
 
 
 
-  <title>启程 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>集成算法--boosting | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -268,7 +271,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/03/21/启程/">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/06/09/集成算法-boosting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="super1peng">
@@ -285,7 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">启程</h1>
+          <h1 class="post-title" itemprop="name headline">集成算法--boosting</h1>
         
 
         <div class="post-meta">
@@ -297,8 +300,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T20:43:04+08:00">
-                2018-03-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-09T18:59:40+08:00">
+                2018-06-09
               </time>
             
 
@@ -340,8 +343,27 @@
       
 
       
-        <p>之前搞了一段时间的公众号，但是一直没有解决数学公式的显示问题，同时也在大佬的安利之下，决定启用Hexo搭建个人博客，作为新手，还请大家多多提意见，新学习任务繁重，博客只能不定期更新啦。</p>
-<p><table><tr><td bgcolor="PowderBlue"><center>有缘自会相见</center></td></tr></table><br><a id="more"></a><br><img src="/2018/03/21/启程/集成算法-boosting/boosting.png" alt="boosting"></p>
+        <p>提升就是指每一步我都产生一个弱预测模型，然后加权累加到总模型中，然后每一步弱预测模型生成的的依据都是损失函数的负梯度方向，这样若干步以后就可以达到逼近损失函数局部最小值的目标。  </p>
+<p>Boosting算法的工作机制是首先从训练集用初始权重训练出一个弱学习器1，根据弱学习的学习误差率表现来更新训练样本的权重，使得之前弱学习器1学习误差率高的训练样本点的权重变高，使得这些误差率高的点在后面的弱学习器2中得到更多的重视。然后基于调整权重后的训练集来训练弱学习器2.，如此重复进行，直到弱学习器数达到事先指定的数目T，最终将这T个弱学习器通过集合策略进行整合，得到最终的强学习器。</p>
+<a id="more"></a>
+<p><img src="/2018/06/09/集成算法-boosting/boosting.png" alt="boosting"></p>
+<h2 id="Boost"><a href="#Boost" class="headerlink" title="Boost"></a>Boost</h2><p>下面我们来详细介绍一下boosting算法。首先boost是一个加法模型，它是由若干个基函数及权重乘积之和的累加。</p>
+<div style="text-align:center">$f(x)=\sum_{m=1}^{M}\beta _{m}b(x;\gamma _{m})$</div>
+
+<p>其中$b$是基函数，$\beta_{m}$是基函数的系数，$M$就是弱学习的个数这就是我们最终分类器的样子，现在的目标就是想办法使损失函数的期望取最小值，也就是：</p>
+<div style="text-align:center">$\min\limits_{\alpha_{m},\gamma_{m}}\sum_{i=1}^{N}L(y_{i},\sum_{m=1}^{M} \beta_{m}b(x;\gamma_{m}))$</div>
+
+<p>一下子对这$M$个分类器同时实行优化，不太现实，这问题也太复杂了，所以人们想了一个略微这种的办法，因为是加法模型，所以每一步只对其中一个基函数及其系数进行求解，这样逐步逼近损失函数的最小值，也就是说：</p>
+<div style="text-align:center">$\min\limits_{\alpha_{m},\gamma_{m}}\sum_{i=1}^{N}L(y_{i},f_{m-1} + \beta_{m}b(x;\gamma_{m}))$</div>
+
+<p>想要是损失函数最小，那么就得使新加的这一项刚好等于损失函数的负梯度，这样就可以一步一步使得损失函数最快下降了，那么就有下面的公式：</p>
+<div style="text-align:center">$\beta_{m}b(x;\gamma_{m}) = -\lambda \frac{\partial L(y,f_{m-1})}{\partial f}$</div><br>$\lambda$是随便写的一个参数，可以和$\beta$合并表示步长，那么对于这个基函数而言，其实它就是关于$x$和这个函数梯度的一个拟合，然后步长的选择可以根据<code>线性搜索法</code>，即寻找在这个梯度上下降到最小值的那个步长，这样可以尽快逼近损失函数的最小值。<br><br>到这里，梯度提升的原理其实就讲完了！<br><br>下面我们开始讲讲几个实际情况中的特例，包括<code>梯度下降提升树(GBDT)</code>、<code>自适应提升(AdaBoost)</code>、以及<code>XGBoost</code>等。<br><br>GBDT<br><br>首先既然是树，那么它的基函数肯定就是决策树啦，而损失函数则是根据我们具体的问题去分析，但方法都一样，最终都走上了梯度下降的老路，比如说进行到第m步的时候，首先计算 残差。<br><img src="/2018/06/09/集成算法-boosting/残差.png" alt="残差"><br>有了残差之后，我们再用$(x_i,r_{im})$去拟合第$m$个基函数，假设这棵树把输入空间划分成$j$个空间$R_{1m}，R_{2m}……，R_{jm}$，假设它在每个空间上的输出为$b_{jm}$，这样的话，第m棵树可以表示如下：<br><div style="text-align:center">$t_{m}(x) = \sum_{j=1}^{J}b_{jm}I(x \in R_{jm})$</div>
+
+<p>下一步，对树的每个区域分别用线性搜索的方式寻找最佳步长，这个步长可以和上面的区域预测值$b_{jm}$进行合并，最后就得到了第$m$步的目标函数：</p>
+<div style="text-align:center">$F_{m}\left ( x \right ) = F_{m-1} \left ( x \right ) + \sum_{j=1}^{J}\gamma_{jm}I(x \in R_{jm})$</div><br>当然了，对于GDBT比较容易出现过拟合的情况，所以有必要增加一点正则项，比如叶节点的数目或叶节点预测值的平方和，进而限制模型复杂度的过度提升。<br><br>AdaBoost<br>前面几步完全和上面的GDBT一样，区别在于<code>AdaBoost</code>给出了损失函数为指数损失函数，即：<br><div style="text-align:center">$L\left ( y,f\left ( x \right ) \right ) =exp\left ( -yf(x)  \right )$</div><br>很好理解，预测正确了$yf(x)$为正值，损失函数值就小，预测错误$yf(x)$为正值，损失函数值较大，然后我们来看一下第m步的损失函数<br><div style="text-align:center">$L\left ( y,f\left ( x \right ) \right ) =\sum_{i=1}^{N} exp\left ( -y_{i}f_{m-1}(x_{i}) +\alpha G(x_{i})  \right )$</div><br>现在就是分别求$\alpha$和$G(x)$使得损失函数最小值，按照之前的想法，直接算伪残差然后用$G(x)$拟合，不过这边我们先不着急。指数项中，$y_i$与$f_{m-1}$的乘积是不依赖于$\alpha$和$G(x)$的，所以可以提出来不用考虑，对于任意$\alpha&gt;0 $，在exp(-yi<em>fm-1)权值分布下，要exp(-yi</em>alpha*G(x))取最小值，也就是要$G(x)$对加权$y$预测的正确率最高。接下来，求$\alpha$很愉快，直接求导为0，公式推导过程就不打了，最后的结果如下：<br><div style="text-align:center">$a_{m}=1/2 \log \frac{1-e_{m}}{e_{m}}$</div><br>得到了参数之后就能愉快的迭代，使得训练数据上的正确率蹭蹭蹭地往上涨。<br>再回过头来看看AdaBoost的标准做法和我们推导的是否一致<br>1 第一步假设平均分布，权值都为$1/N$，训练数据得到分类器。<br>2 求第一步的分类器预测数据的错误率，计算$G(x)$的系数alpha。<br>3 更新权值分布，不过加了归一化因子，使权值满足概率分布。<br>4 基于新的权值分布建立新的分类器，累加在之前的模型中。<br>5 重复上述步骤，得到最终的分类器。<br>可以看出，除了在更新权值分布处加了一个归一化因子之外，其他的都和我们推导的一样。<br><br>Xgboost<br><br>其实说白了也很简单，之前用的梯度下降的方法我们都只考虑了一阶信息，根据泰勒展开，我们可以把二阶信息也用上，假如目标函数如下：<br><img src="/2018/06/09/集成算法-boosting/公式1.png" alt="公式2"><br><br>其中Ω为正则项，正如上面讲的，可表示如下<br><div style="text-align:center">$\Omega (f_{m}) = \gamma T_{t} + \lambda \frac{1}{2}\sum_{j=1}^{J}\omega_{j}^{2}$</div><br>然后对于决策树而言，最重要的就是一共有多少个节点以及每个节点的权值，所以决策树可以表示为<br><div style="text-align:center">$f_{m}(x) = \sum_{j-1}^{J}\omega_{j}I\left ( x\in R_{j} \right )$</div><br>这样就有了下一步的推导：<br><br><img src="/2018/06/09/集成算法-boosting/公式2.png" alt="公式2"><br><br>第二步是因为不管fm如何取值第一项的值都不变，所以优化过程中可以不用考虑，第三步是因为对于每个样本而言其预测值就是对应输入空间对应的权值，第四步则是把样本按照划分区域重新组合，然后定义<br><div style="text-align:center">$G_{j} = \sum \limits_{i\in I_{j}}g_i  \quad H_{j} = \sum \limits_{i\in I_{j}}h_i$</div><br>带入对w求偏导使其为0，这样就求得了<br><div style="text-align:center">$\omega _j = -\frac{G_j}{H_j + \lambda }$</div>
+
+<p>再回代，就可以把J（fm）中的w给消去了，得到了</p>
+<p><div style="text-align:center">$J(f_m) = -\frac{1}{2}\sum_{j=1}^{J}\frac{G_j^2}{H_j + \lambda } + \gamma T$</div><br>这样我们就把新一步函数的损失函数变成了只与上一步相关的一个新的损失函数，这样我们就可以遍历数据中所有的分割点，寻找新的损失函数下降最多的分割点，然后重复上述操作。<br>相比于梯度下降提升，XGBoost在划分新的树的时候还是用了二阶信息，因此能够更快地收敛。</p>
 
       
     </div>
@@ -359,9 +381,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/碎碎念/" rel="tag"><i class="fa fa-tag"></i>碎碎念</a>
-          
-            <a href="/tags/生活/" rel="tag"><i class="fa fa-tag"></i>生活</a>
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i>机器学习</a>
           
         </div>
       
@@ -374,15 +394,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/06/06/Scrapy爬虫框架/" rel="next" title="Scrapy爬虫框架">
+                <i class="fa fa-chevron-left"></i> Scrapy爬虫框架
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/29/Django-模型/" rel="prev" title="Django-模型">
-                Django-模型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -434,8 +454,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,6 +537,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Boost"><span class="nav-number">1.</span> <span class="nav-text">Boost</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
