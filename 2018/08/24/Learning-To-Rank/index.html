@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Scrapy,Spider," />
+  <meta name="keywords" content="learning to rank," />
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="Scrapy是一个基于Twisted的异步处理框架。其架构清晰，耦合程度低，可扩展性强，可以灵活完成各种需求。">
-<meta name="keywords" content="Scrapy,Spider">
+<meta name="description" content="Learning to rank，即排序学习，简称L2R，它是构建排序模型的机器学习方法，在信息检索、自然语言处理、数据挖掘等场景中具有重要作用。其达到的效果是：给定一组文档，对任意查询请求给出反映文档相关性的文档排序。">
+<meta name="keywords" content="learning to rank">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Scrapy爬虫框架">
-<meta property="og:url" content="http://super1peng.xyz/2018/06/06/Scrapy爬虫框架/index.html">
+<meta property="og:title" content="Learning To Rank">
+<meta property="og:url" content="http://super1peng.xyz/2018/08/24/Learning-To-Rank/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="Scrapy是一个基于Twisted的异步处理框架。其架构清晰，耦合程度低，可扩展性强，可以灵活完成各种需求。">
+<meta property="og:description" content="Learning to rank，即排序学习，简称L2R，它是构建排序模型的机器学习方法，在信息检索、自然语言处理、数据挖掘等场景中具有重要作用。其达到的效果是：给定一组文档，对任意查询请求给出反映文档相关性的文档排序。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://super1peng.xyz/2018/06/06/Scrapy爬虫框架/scrapy.png">
-<meta property="og:updated_time" content="2018-06-06T06:25:54.304Z">
+<meta property="og:updated_time" content="2018-08-24T11:54:56.487Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Scrapy爬虫框架">
-<meta name="twitter:description" content="Scrapy是一个基于Twisted的异步处理框架。其架构清晰，耦合程度低，可扩展性强，可以灵活完成各种需求。">
-<meta name="twitter:image" content="http://super1peng.xyz/2018/06/06/Scrapy爬虫框架/scrapy.png">
+<meta name="twitter:title" content="Learning To Rank">
+<meta name="twitter:description" content="Learning to rank，即排序学习，简称L2R，它是构建排序模型的机器学习方法，在信息检索、自然语言处理、数据挖掘等场景中具有重要作用。其达到的效果是：给定一组文档，对任意查询请求给出反映文档相关性的文档排序。">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://super1peng.xyz/2018/06/06/Scrapy爬虫框架/"/>
+  <link rel="canonical" href="http://super1peng.xyz/2018/08/24/Learning-To-Rank/"/>
 
 
 
 
 
-  <title>Scrapy爬虫框架 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Learning To Rank | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -268,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/06/06/Scrapy爬虫框架/">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/08/24/Learning-To-Rank/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="super1peng">
@@ -285,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Scrapy爬虫框架</h1>
+          <h1 class="post-title" itemprop="name headline">Learning To Rank</h1>
         
 
         <div class="post-meta">
@@ -297,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-06T13:34:41+08:00">
-                2018-06-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-24T19:10:53+08:00">
+                2018-08-24
               </time>
             
 
@@ -340,11 +338,25 @@
       
 
       
-        <p>Scrapy是一个基于Twisted的异步处理框架。其架构清晰，耦合程度低，可扩展性强，可以灵活完成各种需求。<br><a id="more"></a></p>
-<h1 id="架构介绍"><a href="#架构介绍" class="headerlink" title="架构介绍"></a>架构介绍</h1><p><img src="/2018/06/06/Scrapy爬虫框架/scrapy.png" alt="Scrapy爬虫框架"></p>
-<p>Engine。 引擎，处理整个系统的数据流处理、触发事务，是整个框架的核心。<br>Item。项目，它定义了爬取结果的数据结构，爬取的数据会被赋值成该Item对象。<br>Scheduler。调度器，接受引擎发过来的请求并将其加入队列中，在引擎再次请求的时候将请求提供给引擎。<br>Downloader。下载器，下载网页内容，并将网页内容返回给蜘蛛。<br>Spiders。蜘蛛，其内定义了爬取的逻辑和网页的解析规则，它主要负责解析响应并生成提取结果和新的要求。<br>Item Pipeline。项目管道，负责处理由蜘蛛从网页中抽取的项目，它的主要任务是清洗、验证、存储数据。<br>Downloader Middlewares。下载器中间件，位于引擎和下载器之间的钩子框架，主要处理引擎与下载器之间的请求及响应。<br>Spider Middlewaves。蜘蛛中间件，位于引擎和之间的钩子框架，主要处理蜘蛛输入的响应和输出结果及新的请求。</p>
-<h1 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h1><p>Scrapy中的数据流由引擎控制，数据流的过程如下。<br>（1）Engine首先打开一个网站，找到处理该网站的Spider，并向该Spider请求第一个要爬取URL。<br>（2）Engine从Spider中获取到第一个要爬取的URL，并通过Scheduler以Request的形式进行调度。<br>（3）Engine向Schedule请求下一个要爬取的URL。<br>（4）Scheduler返回下一个要爬取的URL给Engine，Engine将URL通过Downloader Middlewares转发给Downloader下载。<br>（5）一旦页面下载完毕，Downloader生成该页面的Response，并将其通过Downloader Middlewares发送给Engine。<br>（6）Engine从下载器中接收到Response，并将其通过Spider Middlewares发送给Spider处理。<br>（7）Spider处理Response，并返回爬取到的Item及新的Request给Engine。<br>（8）Engine将Spider返回的Item给Item Pipeline，将新的Request给Scheduler。<br>（9）重复（2）到（8）步，直到Schedler中没有更多的Request，Engine关闭该网址，爬取结束。</p>
-<h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><p>scrapy.cfg：它是Scrapy项目的配置文件，其内定义了项目的配置文件路径、部署相关信息等内容。<br>items.py：它定义Item数据结构，所有的Item的定义都可以放在这里。<br>pipelines.py：它定义Item Pipline的实现，所有的Item Pipeline的实现都可以放在这里<br>settings.py：它定义项目的全局配置。<br>middlewares.py：它定义Spider Middlewares和Downloader Middlewares的实现。<br>spiders：其内包含一个个Spider的实现，每个Spider都有一个文件。  </p>
+        <p>Learning to rank，即排序学习，简称L2R，它是构建排序模型的机器学习方法，在信息检索、自然语言处理、数据挖掘等场景中具有重要作用。其达到的效果是：给定一组文档，对任意查询请求给出反映文档相关性的文档排序。<br><a id="more"></a></p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>随着互联网的快速发展，L2R技术也越来越受到关注，这是机器学习常见的任务之一。信息检索时，给定一个查询目标，我们需要算出最符合要求的结果并返回，这里涉及一些特征计算、匹配等算法，对于海量的数据，如果仅靠人工来干预其中的一些参数来进行排序的话，是远远达不到要求的，而L2R算法就是用来解决这个问题的。</p>
+<h1 id="L2R算法"><a href="#L2R算法" class="headerlink" title="L2R算法"></a>L2R算法</h1><p>L2R算法主要包括三种类别：Pointwise、Pairwise、Listwise。</p>
+<h2 id="Pointwise"><a href="#Pointwise" class="headerlink" title="Pointwise"></a>Pointwise</h2><p>Pointwise将问题转化为多分类或者回归问题。如果归结为多分类问题，对于某个Query，对文档与此Query的相关程度打标签，标签分为有限的类别，这样就将问题转化为多分类问题；如果归结为回归问题，对于某个Query，则对文档与此Query的相关程度计算相似度Score，这样就将问题归结为回归问题。  </p>
+<p><strong>模型</strong><br>应用Pointwise的模型有：Subset Ranking、 OC SVM、 McRank、Prank等。<br><strong>输入</strong><br>特定的Query，文档的特征向量。<br><strong>输出</strong><br>文档与Query的标签类别或相关系数。<br><strong>损失函数</strong><br>回归Loss、分类Loss、有序回归Loss。<br><strong>优缺点</strong><br>Pointwise算法实现简单，易于理解，但是它只对给定Query单个文档的相关度进行建模，仅仅考虑了单个文档的相关度，Pointwise值学习到文档和 Query 的全局相关性，对排序先后顺序有一定的影响。在某一些场景下，排在最前面的几个文档对排序结果的影响非常重要，如搜索引擎的第一页的内容非常重要，而 Pointwise 没有考虑这方面的影响，不对排序的先后顺序优劣做惩罚。</p>
+<h2 id="Pairwise"><a href="#Pairwise" class="headerlink" title="Pairwise"></a>Pairwise</h2><p>上文提到Pointwise方法只考虑了单个文档和 Query 的绝对相关度，Pairwise 考虑的则是两个文档之间的相对相关度，比较不同文档的先后顺序。Pairwise 方法是目前比较流行的方法，它将整个排序问题转为二元分类问题，即构建的是一个二分类器，对一个文档对 &lt;Doc1, Doc2&gt; 做二分类，一类是 Doc1 排序前于 Doc2，另一类则相反，通过两两比较，模型可以学习到不同文档之间的先后顺序。  </p>
+<p><strong>模型</strong><br>应用 Pairwise 的模型有 Ranking SVM、RankBoost、RankNet、GBRank、IR SVM 等。<br><strong>输入</strong><br>特定 Query，文档对 &lt;Doc1, Doc2&gt;。<br><strong>输出</strong><br>文档对偏向得分，{-1, 1}。<br><strong>损失函数</strong><br>Pairwise 分类 Loss。<br><strong>优缺点</strong><br>Pairwise 方法通过考虑两两文档之间的相关度来进行排序，有一定进步。但 Pairwise 使用的是两文档之间相关相关度的损失函数，而它和真正衡量排序效果的指标之间存在很大不同，甚至可能是负相关的，如可能出现 Pairwise Loss 越来越低，但 NDCG 分数也越来越低的现象。另外此方法只考虑了两个文档的先后顺序，且没有考虑文档在搜索列表中出现的位置，导致最终排序效果并不理想。</p>
+<h2 id="Listwise"><a href="#Listwise" class="headerlink" title="Listwise"></a>Listwise</h2><p>Listwise 算法相对于 Pointwise 和 Pairwise 方法来说，它不再将排序问题转化为一个分类问题或者回归问题，而是直接针对评价指标对文档的排序结果进行优化，如常用的 MAP、NDCG 等。</p>
+<p><strong>模型</strong><br>应用 Listwise 的模型有 ListNet、ListMLE、SVM MAP、AdaRank、SoftRank、LambdaRank、LambdaMART。其中LambdaMART（对RankNet和 LambdaRank的改进）在Yahoo Learning to Rank Challenge表现出最好的性能。<br><strong>输入</strong><br>特定Query，文档集合<br><strong>输出</strong><br>所有文档的打分或者排列顺序<br><strong>损失函数</strong><br>评价指标如 NDCG、MAP 等。<br><strong>优缺点</strong><br>由于此种方法是针对评价指标直接进行优化，所以它往往表现出不错的效果。</p>
+<h1 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h1><p>L2R 评价指标主要有NDCG、MAP、WTA、MRR等</p>
+<h2 id="NDCG"><a href="#NDCG" class="headerlink" title="NDCG"></a>NDCG</h2><p>NDCG，全称为Normalized Discounted Cumulative Gain，是一种综合考虑模型排序结果和真实序列之间的关系的一种指标，也是最常用的衡量排序结果的指标，其计算公式如下：</p>
+<p><div style="text-align:center">$NDCG@k=\frac{DCG}{iDCG}$</div><br>NDCG其实是由DCG的值计算出来的，分子为模型计算出的DCG值，分母则为理想情况下的DCG值，而DCG的计算公式如下：</p>
+<p><div style="text-align:center">$DCG@k=\sum_{i=1}^{k}\frac{2^{r\left ( i \right )}- 1} {\log_{2}\left ( i+1 \right )}$</div><br>在DCG的表达式中，$r(i)$表示在模型给出的排序中，排名为$i$的元素的实际分数，这里通过$2^{r(i)}-1$运算放大了其分数的差异，$log_{2}(i+1)$是每个元素的这家，由于排序靠前的元素被选取的概率更大，所以这里可以使得排名前面的元素影响权重更大。</p>
+<h2 id="MAP"><a href="#MAP" class="headerlink" title="MAP"></a>MAP</h2><p>MAP，全称为Mean Average Precision，即平均准确率。对于每个真实相关的文档，考虑其在模型排序结果中的位置P，统计该位置之前的文档集合的分类准确率，取所有这些准确率的平均值。</p>
+<p><strong>举个栗子</strong><br>对于一个Query，原本有4个相关结果，查询时将4个结果都查询出来了，其 rank 分别为 1, 2, 4, 7，则MAP为(1/1 + 2/2 + 3/4 + 4/7)/4=0.83。对于另一个Query，原本有5个相关结果，查询只有3个相关结果，其 rank 分别为 1, 3, 5，则MAP为(1/1 + 2/3 + 3/5 + 0 + 0)/5 = 0.45。则MAP= (0.83 + 0.45)/2=0.64。</p>
+<h2 id="WTA"><a href="#WTA" class="headerlink" title="WTA"></a>WTA</h2><p>WTA，全称 Winners Take All，对于给定的查询 Query，如果模型返回的结果列表中，第一个文档是相关的，则 WTA =1， 否则为 0。  </p>
+<p>如对于一个 Query，本来有 5 个相关结果，查询结果中如果第一个结果是相关的，那么 WTA = 1，如果第一个结果是不相关的，则 WTA = 0。</p>
+<h2 id="MRR"><a href="#MRR" class="headerlink" title="MRR"></a>MRR</h2><p>MRR，全称 Mean Reciprocal Rank，是把相关文档在结果中的排序倒数作为准确度，然后再取平均。  </p>
+<p>如对于第一个Query，查询结果将正确结果排名rank为3，则其 Reciprocal Rank 为 1/3，对于第二个Query，查询结果将正确结果排名rank为2，则其 Reciprocal Rank为1/2，对于第三个Query，查询结果将正确结果排名rank为1，则其Reciprocal Rank为1，则 MRR=(1/3 + 1/2 + 1)/3=11/18=0.61。</p>
 
       
     </div>
@@ -362,9 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Scrapy/" rel="tag"><i class="fa fa-tag"></i>Scrapy</a>
-          
-            <a href="/tags/Spider/" rel="tag"><i class="fa fa-tag"></i>Spider</a>
+            <a href="/tags/learning-to-rank/" rel="tag"><i class="fa fa-tag"></i>learning to rank</a>
           
         </div>
       
@@ -377,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/29/viterbi算法/" rel="next" title="viterbi算法">
-                <i class="fa fa-chevron-left"></i> viterbi算法
+              <a href="/2018/08/20/FM-FFM-DeepFM/" rel="next" title="FM FFM DeepFM">
+                <i class="fa fa-chevron-left"></i> FM FFM DeepFM
               </a>
             
           </div>
@@ -386,10 +396,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/09/集成算法-boosting/" rel="prev" title="集成算法--boosting">
-                集成算法--boosting <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -539,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#架构介绍"><span class="nav-number">1.</span> <span class="nav-text">架构介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据流"><span class="nav-number">2.</span> <span class="nav-text">数据流</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目结构"><span class="nav-number">3.</span> <span class="nav-text">项目结构</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2R算法"><span class="nav-number">2.</span> <span class="nav-text">L2R算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pointwise"><span class="nav-number">2.1.</span> <span class="nav-text">Pointwise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pairwise"><span class="nav-number">2.2.</span> <span class="nav-text">Pairwise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Listwise"><span class="nav-number">2.3.</span> <span class="nav-text">Listwise</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#评价指标"><span class="nav-number">3.</span> <span class="nav-text">评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NDCG"><span class="nav-number">3.1.</span> <span class="nav-text">NDCG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAP"><span class="nav-number">3.2.</span> <span class="nav-text">MAP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WTA"><span class="nav-number">3.3.</span> <span class="nav-text">WTA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MRR"><span class="nav-number">3.4.</span> <span class="nav-text">MRR</span></a></li></ol></li></ol></div>
             
 
           </div>

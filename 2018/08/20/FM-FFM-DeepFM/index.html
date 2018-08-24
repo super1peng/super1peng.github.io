@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="大大大大碗面">
 <meta property="og:description" content="CTR预估综述点击率(Click Through Rate)是点击特定链接的用户与查看页面、电子邮件或者广告的总用户数量之比。它通常用于衡量某个网站的在线广告活动是否成功，以及电子邮件活动的有效性。   点击率是广告点击次数除以总展示次数(广告投放次数)   $CTR = \frac{number\,of\,click-throughs}{number\,of\,impressions}\time">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-23T06:51:25.518Z">
+<meta property="og:updated_time" content="2018-08-24T11:55:21.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FM FFM DeepFM">
 <meta name="twitter:description" content="CTR预估综述点击率(Click Through Rate)是点击特定链接的用户与查看页面、电子邮件或者广告的总用户数量之比。它通常用于衡量某个网站的在线广告活动是否成功，以及电子邮件活动的有效性。   点击率是广告点击次数除以总展示次数(广告投放次数)   $CTR = \frac{number\,of\,click-throughs}{number\,of\,impressions}\time">
@@ -340,7 +340,7 @@
       
         <h2 id="CTR预估综述"><a href="#CTR预估综述" class="headerlink" title="CTR预估综述"></a>CTR预估综述</h2><p>点击率(Click Through Rate)是点击特定链接的用户与查看页面、电子邮件或者广告的总用户数量之比。它通常用于衡量某个网站的在线广告活动是否成功，以及电子邮件活动的有效性。  </p>
 <p>点击率是广告点击次数除以总展示次数(广告投放次数)  </p>
-<div style="text-align:center">$CTR = \frac{number\,of\,click-throughs}{number\,of\,impressions}\times 100 \%$</div><br>目前，CTR的数值平均接近0.2%或者0.3%，超过2%被认为是非常成功的。<br><br>## Factorization Machines (FM)<br>FM的主要目标是：解决数据稀疏的情况下，特征怎样组合的问题。<br><br>根据<a href="https://www.csie.ntu.edu.tw/~b97053/paper/Rendle2010FM.pdf" target="_blank" rel="noopener">Paper</a>的描述，FM有以下三个优点：<br>1. 可以在非常稀疏的数据中进行合理的参数估计。<br>2. FM模型的时间复杂度是线性的。<br>3. FM是一个通用模型，它可以用于任何特征为实值的情况。<br><br><strong>算法的原理：</strong><br>在一般线性模型中，是各个特征单独考虑的，没有考虑到特征与特征之间相互关系。但是实际上，大量的特征之间是有关联的。<br><br>一般的线性模型表示如下：<br><div style="text-align:center">$y = w_{0} + \sum_{i=1}^{n}w_{i}x_{i}$</div><br>从上面的式子中看出，一般的线性模型没有考虑特征之间的关联。为了表述特征之间的相关性，我们采用多项式模型。在多项式模型中，特征$x_{i}$与$x_{j}$的组合用$x_{i}x_{j}$表示，为了简单起见，我们讨论二阶多项式模型。<br><div style="text-align:center">$y = w_{0} + \sum_{i=1}^{n}w_{i}x_{i} +  \sum_{i=1}^{n} \sum_{j=i+1}^{n}w_{ij}x_{i}x_{j}$</div><br>该多项式模型与线性模型相比，多了特征组合的部分，特征组合部分的参数有$\frac{n\left ( n+1 \right )}{2}$个。如果特征非常稀疏且维度很高的话，时间复杂度将大大增加。<br><br>为了降低时间复杂度，对每一个特征，引入辅助向量<code>latent vector:</code>$V_{i} = \left [ v_{i1},v_{i2},…,v_{ik} \right ]^{T}$，模型修改如下：<br><div style="text-align:center">$y = w_{0} + \sum_{i=1}^{n}w_{i}x_{i} +  \sum_{i=1}^{n} \sum_{j=i+1}^{n}\left \langle V_{i},V_{j} \right \rangle x_{i}x_{j}$</div><br>以上就是FM模型的表达式。其中，K是模型的超参数，即latent vector的维度，一般取30或者40，也可以取其他数值，(具体情况具体分析)。上式如果要计算的话，时间复杂度是$O\left ( kn^{2} \right )$，可以通过如下方式进行化简，对于FM的交叉项：<br><div style="text-align:center">$\sum_{i=1}^{n} \sum_{j=i+1}^{n}\left \langle V_{i},V_{j} \right \rangle x_{i}x_{j}$</div><br><div style="text-align:center">$ = \frac{1}{2} \sum_{i=1}^{n}\sum_{j=1}^{n}\left \langle V_{i},V_{j} \right \rangle x_{i}x_{j} - \frac{1}{2}\sum_{i=1}^{n}\left \langle V_{i},V_{i} \right \rangle x_{i}x_{i}$</div><br><div style="text-align:center">$ = \frac{1}{2} \sum_{i=1}^{n}\sum_{j=1}^{n} \sum_{f=1}^{k}v_{if}v_{jf} x_{i}x_{j} - \frac{1}{2}\sum_{i=1}^{n}\sum_{f=1}^{k}v_{if}v_{if} x_{i}x_{i}$</div><br><div style="text-align:center">$= \frac{1}{2} \sum_{f=1}^{k} ((\sum_{i=1}^{n}v_{if}  x_{i}) (\sum_{j=1}^{n} v_{jf}x_{j}) - \sum_{i=1}^{n}v_{if}^{2} x_{i}^{2})$</div><br><div style="text-align:center">$= \frac{1}{2} \sum_{f=1}^{k} ((\sum_{i=1}^{n}v_{if}  x_{i})^{2} - \sum_{i=1}^{n}v_{if}^{2} x_{i}^{2})$</div>
+<div style="text-align:center">$CTR = \frac{number\,of\,click-throughs}{number\,of\,impressions}\times 100 \%$</div><br>目前，CTR的数值平均接近0.2%或者0.3%，超过2%被认为是非常成功的。<br><br><a id="more"></a><br><br>## Factorization Machines (FM)<br>FM的主要目标是：解决数据稀疏的情况下，特征怎样组合的问题。<br><br>根据<a href="https://www.csie.ntu.edu.tw/~b97053/paper/Rendle2010FM.pdf" target="_blank" rel="noopener">Paper</a>的描述，FM有以下三个优点：<br>1. 可以在非常稀疏的数据中进行合理的参数估计。<br>2. FM模型的时间复杂度是线性的。<br>3. FM是一个通用模型，它可以用于任何特征为实值的情况。<br><br><strong>算法的原理：</strong><br>在一般线性模型中，是各个特征单独考虑的，没有考虑到特征与特征之间相互关系。但是实际上，大量的特征之间是有关联的。<br><br>一般的线性模型表示如下：<br><div style="text-align:center">$y = w_{0} + \sum_{i=1}^{n}w_{i}x_{i}$</div><br>从上面的式子中看出，一般的线性模型没有考虑特征之间的关联。为了表述特征之间的相关性，我们采用多项式模型。在多项式模型中，特征$x_{i}$与$x_{j}$的组合用$x_{i}x_{j}$表示，为了简单起见，我们讨论二阶多项式模型。<br><div style="text-align:center">$y = w_{0} + \sum_{i=1}^{n}w_{i}x_{i} +  \sum_{i=1}^{n} \sum_{j=i+1}^{n}w_{ij}x_{i}x_{j}$</div><br>该多项式模型与线性模型相比，多了特征组合的部分，特征组合部分的参数有$\frac{n\left ( n+1 \right )}{2}$个。如果特征非常稀疏且维度很高的话，时间复杂度将大大增加。<br><br>为了降低时间复杂度，对每一个特征，引入辅助向量<code>latent vector:</code>$V_{i} = \left [ v_{i1},v_{i2},…,v_{ik} \right ]^{T}$，模型修改如下：<br><div style="text-align:center">$y = w_{0} + \sum_{i=1}^{n}w_{i}x_{i} +  \sum_{i=1}^{n} \sum_{j=i+1}^{n}\left \langle V_{i},V_{j} \right \rangle x_{i}x_{j}$</div><br>以上就是FM模型的表达式。其中，K是模型的超参数，即latent vector的维度，一般取30或者40，也可以取其他数值，(具体情况具体分析)。上式如果要计算的话，时间复杂度是$O\left ( kn^{2} \right )$，可以通过如下方式进行化简，对于FM的交叉项：<br><div style="text-align:center">$\sum_{i=1}^{n} \sum_{j=i+1}^{n}\left \langle V_{i},V_{j} \right \rangle x_{i}x_{j}$</div><br><div style="text-align:center">$ = \frac{1}{2} \sum_{i=1}^{n}\sum_{j=1}^{n}\left \langle V_{i},V_{j} \right \rangle x_{i}x_{j} - \frac{1}{2}\sum_{i=1}^{n}\left \langle V_{i},V_{i} \right \rangle x_{i}x_{i}$</div><br><div style="text-align:center">$ = \frac{1}{2} \sum_{i=1}^{n}\sum_{j=1}^{n} \sum_{f=1}^{k}v_{if}v_{jf} x_{i}x_{j} - \frac{1}{2}\sum_{i=1}^{n}\sum_{f=1}^{k}v_{if}v_{if} x_{i}x_{i}$</div><br><div style="text-align:center">$= \frac{1}{2} \sum_{f=1}^{k} ((\sum_{i=1}^{n}v_{if}  x_{i}) (\sum_{j=1}^{n} v_{jf}x_{j}) - \sum_{i=1}^{n}v_{if}^{2} x_{i}^{2})$</div><br><div style="text-align:center">$= \frac{1}{2} \sum_{f=1}^{k} ((\sum_{i=1}^{n}v_{if}  x_{i})^{2} - \sum_{i=1}^{n}v_{if}^{2} x_{i}^{2})$</div>
 
 <p>通过对每个特征引入<code>latent vector</code>，并对表达式进行化简，可以把时间复杂度降低到$O(kn)$。</p>
 <h2 id="Field-aware-Factorization-Machines-FFM"><a href="#Field-aware-Factorization-Machines-FFM" class="headerlink" title="Field-aware Factorization Machines (FFM)"></a>Field-aware Factorization Machines (FFM)</h2><p><a href="https://www.csie.ntu.edu.tw/~cjlin/papers/ffm.pdf" target="_blank" rel="noopener">FFM</a>最初的概念来自Yu-Chin Juan（阮毓钦，毕业于中国台湾大学，现在美国Criteo工作）与其比赛队员，提出了FM的升级版模型。FFM把相同性质的特征归于同一个field。在FFM中，每一维特征$x_i$，针对其它特征的每一种<code>field</code>$f_j$，都会学习一个隐向量$V_{if_{j}}$。因此，隐向量不仅与特征相关，也与field相关。  </p>
@@ -385,6 +385,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/24/Learning-To-Rank/" rel="prev" title="Learning To Rank">
+                Learning To Rank <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -470,7 +474,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -483,7 +487,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
