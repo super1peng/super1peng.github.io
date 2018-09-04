@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="通过本篇文章可以对机器学习的常用算法有个常识性的认识，没有代码，没有复杂的理论推导，就是图解一下，知道这个算法是什么，它们是怎么应用的，例子主要是分类问题。">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通俗理解机器学习常用算法">
+<meta property="og:url" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/index.html">
+<meta property="og:site_name" content="大大大大碗面">
+<meta property="og:description" content="通过本篇文章可以对机器学习的常用算法有个常识性的认识，没有代码，没有复杂的理论推导，就是图解一下，知道这个算法是什么，它们是怎么应用的，例子主要是分类问题。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/决策树.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/随机森林_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/随机森林_2.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/随机森林_3.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/随机森林_4.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/逻辑回归_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/逻辑回归_2.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/逻辑回归_3.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/逻辑回归_4.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/逻辑回归_5.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/逻辑回归_6.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/SVM_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/SVM_2.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/SVM_3.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/SVM_4.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/SVM_5.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/SVM_6.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/贝叶斯_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/贝叶斯_2.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/贝叶斯_3.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/贝叶斯_4.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/贝叶斯_5.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/最近邻_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/最近邻_2.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/K均值_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/K均值_2.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/K均值_3.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/K均值_4.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/boosting.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/Ada_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/Ada_2.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/Ada_3.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/Ada_4.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/Ada_6.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/Ada_5.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/NN_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/NN_2.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/马尔_1.png">
+<meta property="og:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/马尔_2.png">
+<meta property="og:updated_time" content="2018-09-04T02:13:18.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通俗理解机器学习常用算法">
+<meta name="twitter:description" content="通过本篇文章可以对机器学习的常用算法有个常识性的认识，没有代码，没有复杂的理论推导，就是图解一下，知道这个算法是什么，它们是怎么应用的，例子主要是分类问题。">
+<meta name="twitter:image" content="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/决策树.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/"/>
+
+
+
+
+
+  <title>通俗理解机器学习常用算法 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <a href="https://github.com/super1peng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大大大大碗面</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/09/04/通俗理解机器学习常用算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="super1peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/nice.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大大大大碗面">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">通俗理解机器学习常用算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-04T08:41:35+08:00">
+                2018-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读总量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通过本篇文章可以对机器学习的常用算法有个常识性的认识，没有代码，没有复杂的理论推导，就是图解一下，知道这个算法是什么，它们是怎么应用的，例子主要是分类问题。<br><a id="more"></a><br>今天的算法主要如下：</p>
+<ol>
+<li><a href="#决策树">决策树 Dicision Tree</a></li>
+<li><a href="#随机森林">随机森林 Random Forest</a></li>
+<li><a href="#逻辑回归">逻辑回归 Logistic Regression</a></li>
+<li><a href="#SVM">SVM support vector machine</a></li>
+<li><a href="#朴素贝叶斯">朴素贝叶斯 Naive Bayesian</a></li>
+<li><a href="#K最近邻">K最近邻算法 K nearest neighbours</a></li>
+<li><a href="#K均值">K均值算法 K Means</a></li>
+<li><a href="#Adaboost">Adaboost算法</a></li>
+<li><a href="#神经网络">神经网络</a></li>
+<li><a href="#马尔科夫">马尔科夫</a></li>
+</ol>
+<h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><p>根据一些 feature 进行分类，每个节点提一个问题，通过判断，将数据分为两类，再继续提问。这些问题是根据已有数据学习出来的，再投入新数据的时候，就可以根据这棵树上的问题，将数据划分到合适的叶子上。<br><img src="/2018/09/04/通俗理解机器学习常用算法/决策树.png" alt="决策树"></p>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><p>在原始数据中随机选取数据，组成几个子集：<br><img src="/2018/09/04/通俗理解机器学习常用算法/随机森林_1.png" alt="随机森林1"><br>$S$矩阵是源数据，有$1…N$条数据，$A,B,C$是feature，最后一列$C$是类别：<br><img src="/2018/09/04/通俗理解机器学习常用算法/随机森林_2.png" alt="随机森林2"><br>由$S$随机生成$M$个子矩阵：<br><img src="/2018/09/04/通俗理解机器学习常用算法/随机森林_3.png" alt="随机森林3"><br>这$M$个子集得到$M$个决策树，将新数据投入到这$M$个树中，得到$M$个分类结果，计数看预测成哪一类的数目最多，就将此类别作为最后的预测结果（这里使用的投票决策）。<br><img src="/2018/09/04/通俗理解机器学习常用算法/随机森林_4.png" alt="随机森林4"></p>
+<h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><p>当预测目标是概率这样的，值域需要满足大于等于0，小于等于1的，这个时候单纯的线性模型是做不到的，因为在定义域不在某个范围之内时，值域也超出了规定区间。<br><img src="/2018/09/04/通俗理解机器学习常用算法/逻辑回归_1.png" alt="逻辑回归1"><br>所以此时需要这样形状的模型会比较好一点：<br><img src="/2018/09/04/通俗理解机器学习常用算法/逻辑回归_2.png" alt="逻辑回归2"><br>那么如何得到这样一个模型呢？<br>这个模型需要满足两个条件：（1）大于等于0（2）小于等于1。大于等于0的模型可以选择绝对值，平方值，这里用<code>指数函数</code>，这样值一定大于0。小于等于1用除法，分子是自己，分母是自身加上1，那一定是小于1的了。<br><img src="/2018/09/04/通俗理解机器学习常用算法/逻辑回归_3.png" alt="逻辑回归3"><br>再做一下变形，就得到了logistic regression模型<br><img src="/2018/09/04/通俗理解机器学习常用算法/逻辑回归_4.png" alt="逻辑回归4"><br>通过源数据计算可以得到相应的系数了<br><img src="/2018/09/04/通俗理解机器学习常用算法/逻辑回归_5.png" alt="逻辑回归5"><br>最后得到 logistic 的图形<br><img src="/2018/09/04/通俗理解机器学习常用算法/逻辑回归_6.png" alt="逻辑回归6"></p>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><p>要将两类分开，想要得到一个超平面，最优的超平面是到两类的margin达到最大，margin就是超平面与离它最近一点的距离，如下图，Z2&gt;Z1，所以绿色的超平面比较好。<br><img src="/2018/09/04/通俗理解机器学习常用算法/SVM_1.png" alt="SVM1"><br>将这个超平面表示成一个线性方程，在线上方的一类，都大于等于1，另一类小于等于－1。<br><img src="/2018/09/04/通俗理解机器学习常用算法/SVM_2.png" alt="SVM2"><br>点到面的距离公式根据图中的距离公式计算：<br><img src="/2018/09/04/通俗理解机器学习常用算法/SVM_3.png" alt="SVM3"><br>所以得到total margin的表达式如下，目标是最大化这个margin，就需要最小化分母，于是变成了一个优化问题。<br><img src="/2018/09/04/通俗理解机器学习常用算法/SVM_4.png" alt="SVM4"><br>举个栗子，三个点，找到最优的超平面，定义了weight vector＝（2，3）－（1，1）：<br><img src="/2018/09/04/通俗理解机器学习常用算法/SVM_5.png" alt="SVM5"><br>得到 weight vector 为（a，2a），将两个点代入方程，代入（2，3）另其值＝1，代入（1，1）另其值＝-1，求解出 a 和 截矩 w0 的值，进而得到超平面的表达式。<br><img src="/2018/09/04/通俗理解机器学习常用算法/SVM_6.png" alt="SVM6"><br>a 求出来后，代入（a，2a）得到的就是support vector，a 和 w0 代入超平面的方程就是support vector machine。</p>
+<h1 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h1><p>这里我们例举一个在NLP中的应用：给定一段文字，返回情感分类，这段文字的态度是positive，还是negative。<br><img src="/2018/09/04/通俗理解机器学习常用算法/贝叶斯_1.png" alt="贝叶斯1"><br>为了解决这个问题，我们只看其中的一些单词：<br><img src="/2018/09/04/通俗理解机器学习常用算法/贝叶斯_2.png" alt="贝叶斯2"><br>这段文字，将仅由一些单词和它们的计数代表：<br><img src="/2018/09/04/通俗理解机器学习常用算法/贝叶斯_3.png" alt="贝叶斯3"><br>原始的问题是：给你一句话，它属于哪一类，通过Bayes Rules变成一个比较简单容易求得的问题。<br><img src="/2018/09/04/通俗理解机器学习常用算法/贝叶斯_4.png" alt="贝叶斯4"><br>即问题变成：这一类中这句话出现的概率是多少，当然，别忘了公式里的另外两个概率。<br>栗子：单词 love 在 positive 的情况下出现的概率是 0.1，在 negative 的情况下出现的概率是 0.001。<br><img src="/2018/09/04/通俗理解机器学习常用算法/贝叶斯_5.png" alt="贝叶斯5"></p>
+<h1 id="K最近邻"><a href="#K最近邻" class="headerlink" title="K最近邻"></a>K最近邻</h1><p>给一个新的数据时，离它最近的 k 个点中，哪个类别多，这个数据就属于哪一类。<br>栗子：要区分猫和狗，通过claws和sound两个feature来判断的话，圆形和三角形是已知分类的了，那么这star代表的是哪一类呢？<br><img src="/2018/09/04/通俗理解机器学习常用算法/最近邻_1.png" alt="最近邻1"><br>K=3时，这三条线连接的点就是最近的三个点，那么圆形多一点，所以这个star属于猫。<br><img src="/2018/09/04/通俗理解机器学习常用算法/最近邻_2.png" alt="最近邻2"></p>
+<h1 id="K均值"><a href="#K均值" class="headerlink" title="K均值"></a>K均值</h1><p>想要将一组数据，分为三类，粉色数值大，黄色数值小。最开心先初始化，这里面选了最简单的3，2，1 作为各类的初始值剩下的数据里，每个都与三个初始值计算距离，然后归类到离它最近的初始值所在类别。<br><img src="/2018/09/04/通俗理解机器学习常用算法/K均值_1.png" alt="K均值1"><br>分类好之后，计算每一个类别的平均值，作为新一轮的中心点：<br><img src="/2018/09/04/通俗理解机器学习常用算法/K均值_2.png" alt="K均值2"><br>几轮之后，分组不再变化，就可以停止了。<br><img src="/2018/09/04/通俗理解机器学习常用算法/K均值_3.png" alt="K均值3"><br><img src="/2018/09/04/通俗理解机器学习常用算法/K均值_4.png" alt="K均值4"></p>
+<h1 id="Adaboost"><a href="#Adaboost" class="headerlink" title="Adaboost"></a>Adaboost</h1><p>Adaboost是Boosting算法中最著名的一种，Boosting属于集成学习，它的框架如下：<br><img src="/2018/09/04/通俗理解机器学习常用算法/boosting.png" alt="boosting"><br>举个例子：图中“+”和“-”表示两种类别，共10个样本，故每个样本权值为0.1：<br><img src="/2018/09/04/通俗理解机器学习常用算法/Ada_1.png" alt="Ada1"><br>第一次划分有3个点划分错误，根据误差表达式得到误差：e1=（0.1+0.1+0.1）/1.0=0.3<br><img src="/2018/09/04/通俗理解机器学习常用算法/Ada_2.png" alt="Ada2"><br>分类器权重：<br><img src="/2018/09/04/通俗理解机器学习常用算法/Ada_3.png" alt="Ada3"><br>根据算法，对于正确分类的7个点，权值不变，仍为0.1, 对于错分的3个点，权值为：D1=D0<em>(1-e1)/e1=0.1</em>(1-0.3)/0.3=0.2333。<br><img src="/2018/09/04/通俗理解机器学习常用算法/Ada_4.png" alt="Ada4"><br>第二次分类，有3个 “-“ 分类错误，按照算法计算如下：<br>上轮分类后权值之和为：0.17+0.23333=1.3990；分类误差：e2=0.1<em>3/1.3990=0.2144。<br>分类器权重 a2=0.6493；错分的3个点权值为：D2=0.1</em>（1-0.2144）/0.2144=0.3664。<br>第三次：<br><img src="/2018/09/04/通俗理解机器学习常用算法/Ada_6.png" alt="Ada6"><br>最后将三次的分类器结合起来，得到上面的分类结果：<br><img src="/2018/09/04/通俗理解机器学习常用算法/Ada_5.png" alt="Ada5"></p>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><p>Neural Networks 适合一个input可能落入至少两个类别里。NN由若干层神经元，和它们之间的联系组成第一层是<code>input</code>层，最后一层是<code>output</code>层。<br><img src="/2018/09/04/通俗理解机器学习常用算法/NN_1.png" alt="NN1"><br>input 输入到网络中，被激活，计算的分数被传递到下一层，激活后面的神经层，最后output 层的节点上的分数代表属于各类的分数，下图例子得到分类结果为class 1。同样的 input 被传输到不同的节点上，之所以会得到不同的结果是因为各自节点有不同的weights和bias这也就是<code>forward propagation</code>。<br><img src="/2018/09/04/通俗理解机器学习常用算法/NN_2.png" alt="NN2"></p>
+<h1 id="马尔科夫"><a href="#马尔科夫" class="headerlink" title="马尔科夫"></a>马尔科夫</h1><p>Markov Chains 由 state 和 transitions 组成。<br>栗子，根据这一句话 ‘the quick brown fox jumps over the lazy dog’，要得到 markov chain。步骤，先给每一个单词设定成一个状态，然后计算状态间转换的概率。<br><img src="/2018/09/04/通俗理解机器学习常用算法/马尔_1.png" alt="马尔1"><br>这是一句话计算出来的概率，当你用大量文本去做统计的时候，会得到更大的状态转移矩阵，例如the后面可以连接的单词，及相应的概率。<br><img src="/2018/09/04/通俗理解机器学习常用算法/马尔_2.png" alt="马尔2"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i>机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/24/Learning-To-Rank/" rel="next" title="Learning To Rank">
+                <i class="fa fa-chevron-left"></i> Learning To Rank
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzIwOC8xMzc0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/nice.jpg"
+                alt="super1peng" />
+            
+              <p class="site-author-name" itemprop="name">super1peng</p>
+              <p class="site-description motion-element" itemprop="description">享受生活</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/super1peng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:super1peng@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=30 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=1&height=66"></iframe>
+</div>
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#决策树"><span class="nav-number">1.</span> <span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随机森林"><span class="nav-number">2.</span> <span class="nav-text">随机森林</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归"><span class="nav-number">3.</span> <span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SVM"><span class="nav-number">4.</span> <span class="nav-text">SVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯"><span class="nav-number">5.</span> <span class="nav-text">朴素贝叶斯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K最近邻"><span class="nav-number">6.</span> <span class="nav-text">K最近邻</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K均值"><span class="nav-number">7.</span> <span class="nav-text">K均值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Adaboost"><span class="nav-number">8.</span> <span class="nav-text">Adaboost</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络"><span class="nav-number">9.</span> <span class="nav-text">神经网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#马尔科夫"><span class="nav-number">10.</span> <span class="nav-text">马尔科夫</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-child"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">super1peng</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
