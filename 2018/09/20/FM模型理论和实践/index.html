@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="自然语言处理," />
+  <meta name="keywords" content="推荐系统,CTR," />
 
 
 
@@ -79,24 +79,29 @@
 
 
 
-<meta name="description" content="word2vec是google在2013年推出的一个NLP工具，它的特点是将所有的词进行向量化，这样词与词就可以在定量的去度量他们之间的关系，挖掘词与词之间的联系。">
-<meta name="keywords" content="自然语言处理">
+<meta name="description" content="FM背景在计算广告和推荐系统中，CTR预估(click-through rate)是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。在进行CTR预估时，除了单特征外，往往要对特征进行组合。对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。今天我们就来讲讲FM算法。">
+<meta name="keywords" content="推荐系统,CTR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="word2vec原理">
-<meta property="og:url" content="http://super1peng.xyz/2018/04/20/word2vec原理/index.html">
+<meta property="og:title" content="FM模型理论和实践">
+<meta property="og:url" content="http://super1peng.xyz/2018/09/20/FM模型理论和实践/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="word2vec是google在2013年推出的一个NLP工具，它的特点是将所有的词进行向量化，这样词与词就可以在定量的去度量他们之间的关系，挖掘词与词之间的联系。">
+<meta property="og:description" content="FM背景在计算广告和推荐系统中，CTR预估(click-through rate)是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。在进行CTR预估时，除了单特征外，往往要对特征进行组合。对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。今天我们就来讲讲FM算法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://super1peng.xyz/2018/04/20/word2vec原理/1.png">
-<meta property="og:image" content="http://super1peng.xyz/2018/04/20/word2vec原理/2.png">
-<meta property="og:image" content="http://super1peng.xyz/2018/04/20/word2vec原理/3.png">
-<meta property="og:image" content="http://super1peng.xyz/2018/04/20/word2vec原理/4.png">
-<meta property="og:image" content="http://super1peng.xyz/2018/04/20/word2vec原理/5.png">
-<meta property="og:updated_time" content="2018-04-22T02:11:34.618Z">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0vtoligj308503st98.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0xofd6gj30jq035q3s.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0zuc3woj304i01pweg.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fvg10jgrb6j308j01uglw.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fvg12mr6dwj308x038mxa.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fvg13zdl5zj309302ydfu.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fvg14sox4zj30760123yi.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg15eydlnj30b908tta0.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fvg16765f0j30vs0q0hdt.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fvg17dxp1pj309a02k0t4.jpg">
+<meta property="og:updated_time" content="2018-09-20T07:21:50.400Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="word2vec原理">
-<meta name="twitter:description" content="word2vec是google在2013年推出的一个NLP工具，它的特点是将所有的词进行向量化，这样词与词就可以在定量的去度量他们之间的关系，挖掘词与词之间的联系。">
-<meta name="twitter:image" content="http://super1peng.xyz/2018/04/20/word2vec原理/1.png">
+<meta name="twitter:title" content="FM模型理论和实践">
+<meta name="twitter:description" content="FM背景在计算广告和推荐系统中，CTR预估(click-through rate)是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。在进行CTR预估时，除了单特征外，往往要对特征进行组合。对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。今天我们就来讲讲FM算法。">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0vtoligj308503st98.jpg">
 
 
 
@@ -126,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://super1peng.xyz/2018/04/20/word2vec原理/"/>
+  <link rel="canonical" href="http://super1peng.xyz/2018/09/20/FM模型理论和实践/"/>
 
 
 
 
 
-  <title>word2vec原理 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>FM模型理论和实践 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -272,7 +277,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/04/20/word2vec原理/">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/09/20/FM模型理论和实践/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="super1peng">
@@ -289,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">word2vec原理</h1>
+          <h1 class="post-title" itemprop="name headline">FM模型理论和实践</h1>
         
 
         <div class="post-meta">
@@ -301,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-20T16:50:01+08:00">
-                2018-04-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-20T15:03:37+08:00">
+                2018-09-20
               </time>
             
 
@@ -344,15 +349,23 @@
       
 
       
-        <p>word2vec是google在2013年推出的一个NLP工具，它的特点是将所有的词进行向量化，这样词与词就可以在定量的去度量他们之间的关系，挖掘词与词之间的联系。<br><a id="more"></a></p>
-<h1 id="词向量基础"><a href="#词向量基础" class="headerlink" title="词向量基础"></a>词向量基础</h1><p>用词向量来表示词并不是word2vec的首创，在很久以前就已经出现了。最早的词向量是很冗长的，它的词向量维度大小为整个词汇表的大小。对于每个具体的词汇表中的词，将对应的位置设为1。  </p>
-<p>举个栗子：比如我们有下面的5个词组成的词汇表，词“Queen”的序号为2，那么它的词向量就是(0,1,0,0,0）。同样的原理，词“Woman”的词向量就是(0,0,0,1,0)。这种词向量的编码方式我们一般叫做“1-of-N represention”或者“one hot represention”。<br><img src="/2018/04/20/word2vec原理/1.png" alt="one-hot"><br>One hot represention用来表示词向量非常简单，但是却有很多的问题。最大的问题就是一般我们的词汇表非常大，通常情况下是百万级的，这样每个词都用百万维的向量来表示简直就是内存灾难。这样的向量其实除了一个位置是1，其余的位置全部都是0，表达的效率不高，能不能把词向量的维度变小呢？  </p>
-<p>下面我们就要来介绍一种方法，他可以解决one hot represention存在的问题，他就是Distributed representation。它的思路是通过训练，将每个单词都映射到一个较短的词向量上来。所有的这些词向量就构成了向量空间，进而可以用普通统计学的方法来研究词与词之间的关系，这个较短的词向量的维度一般需要我们在训练时自己来指定。（50，100等）  </p>
-<p>举个栗子：比如下图我们将词汇表里的词用”Royalty”,”Masculinity”, “Femininity”和”Age”4个维度来表示，King这个词对应的词向量可能是(0.99,0.99,0.05,0.7)。当然在实际情况中，我们并不能对词向量的每个维度做一个很好的解释。<br><img src="/2018/04/20/word2vec原理/2.png" alt="词向量"><br>有了用Distributed representation表示的较短的词向量，我们就可以比较容易的分析词之间的关系了，比如我们将维度降到2维上，如图：<br><img src="/2018/04/20/word2vec原理/3.png" alt="词向量空间"><br>从图中我们可以得到这样的向量关系：<br><img src="/2018/04/20/word2vec原理/4.png" alt="向量关系"><br>可见我们只要得到了词汇表里所有词对应的词向量，那么我们就可以做很多有趣的事情了。不过，怎么训练得到合适的词向量呢？一个很常见的方法是使用<code>神经网络语言模型</code>。</p>
-<h1 id="CBOW与Skip-Gram用于神经网络语言模型"><a href="#CBOW与Skip-Gram用于神经网络语言模型" class="headerlink" title="CBOW与Skip-Gram用于神经网络语言模型"></a>CBOW与Skip-Gram用于神经网络语言模型</h1><p>在word2vec出现之前，已经有用神经网络DNN来用训练词向量进而处理词与词之间的关系了。采用的方法一般是一个三层的神经网络结构（当然也可以多层），分为输入层，隐藏层和输出层(softmax层)。<br>这个模型是如何定义数据的输入和输出呢？一般分为<code>CBOW(Continuous Bag-of-Words</code>与<code>Skip-Gram</code>两种模型。</p>
-<h2 id="CBOW模型"><a href="#CBOW模型" class="headerlink" title="CBOW模型"></a>CBOW模型</h2><p>CBOW模型的输入是某一个特征词的上下文相关的词对应的词向量，而输出就是特定的一个词的词向量。例如：我们的上下文大小取值为4，特定的这个词是“learning”，也就是我们需要的输出词向量，上下文对应的词共8个，前4个后4个，这8个词是我们模型的输入。由于CBOW使用的是词袋模型，因此这8个词都是平等的，也就是不考虑他们和我们关注的词之间的距离大小，只要在我们上下文之内即可。<br><img src="/2018/04/20/word2vec原理/5.png" alt="CBOW"><br>这样我们这个CBOW的例子里，我们的输入是8个词向量，输出是所有词的softmax概率（训练的目标是期望训练样本特定词对应的softmax概率最大），对应的CBOW神经网络模型输入层有8个神经元，输出层有词汇表大小个神经元。隐藏层的神经元个数我们可以自己指定。通过DNN的反向传播算法，我们可以求出DNN模型的参数，同时得到所有的词对应的词向量。这样当我们有新的需求，要求出某8个词对应的最可能的输出中心词时，我们可以通过一次DNN前向传播算法并通过softmax激活函数找到概率最大的词对应的神经元即可。  </p>
-<h2 id="Skip-Gram"><a href="#Skip-Gram" class="headerlink" title="Skip-Gram"></a>Skip-Gram</h2><p>Skip-Gram模型和CBOW模型的思路是反着来的，即输入是特定的一个词的词向量，而输出是特定词对应的上下文向量。还是上面的例子，我们的上下文大小取值是4，特定的词“Learning”是我们的输入，而这8个上下文的词是我们的输出。这样我们这个Skip-Gram的例子里，我们的输入是特定词， 输出是softmax概率排前8的8个词，对应的Skip-Gram神经网络模型输入层有1个神经元，输出层有词汇表大小个神经元。隐藏层的神经元个数我们可以自己指定。通过DNN的反向传播算法，我们可以求出DNN模型的参数，同时得到所有的词对应的词向量。这样当我们有新的需求，要求出某1个词对应的最可能的8个上下文词时，我们可以通过一次DNN前向传播算法得到概率大小排前8的softmax概率对应的神经元所对应的词即可。</p>
-<h2 id="实际使用"><a href="#实际使用" class="headerlink" title="实际使用"></a>实际使用</h2><p>在实际使用中，word2vec不使用上文的DNN模型，而使用继续优化出的新方法，这样的原因是什么呢？最主要的问题是DNN模型的这个处理过程非常耗时，我们的词汇表一般在百万级别以上，这意味着DNN的输出层需要进行softmax计算各个词的输出概率的计算量将是很大的。</p>
+        <h1 id="FM背景"><a href="#FM背景" class="headerlink" title="FM背景"></a>FM背景</h1><p>在计算广告和推荐系统中，CTR预估(click-through rate)是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。在进行CTR预估时，除了单特征外，往往要对特征进行组合。对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。今天我们就来讲讲FM算法。<br><a id="more"></a></p>
+<h1 id="One-hot编码带来的问题"><a href="#One-hot编码带来的问题" class="headerlink" title="One-hot编码带来的问题"></a>One-hot编码带来的问题</h1><p>FM(Factorization Machine)主要是为了解决数据稀疏的情况下，特征怎样组合的问题。已一个广告分类的问题为例，根据用户与广告位的一些特征，来预测用户是否会点击广告。数据如下：(本例来自美团技术团队分享的paper)<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0vtoligj308503st98.jpg" alt="1"></p>
+<p>click是分类值，表明用户有没有点击该广告。1表示点击，0表示未点击。而country,day,ad_type则是对应的特征。对于这种categorical特征，一般都是进行one-hot编码处理。  </p>
+<p>将上面的数据进行one-hot编码以后，就变成了下面这样：<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0xofd6gj30jq035q3s.jpg" alt="2"></p>
+<p>因为是categorical特征，所以经过one-hot编码以后，不可避免的样本的数据就变得很稀疏。举个非常简单的例子，假设淘宝或者京东上的item为100万，如果对item这个维度进行one-hot编码，光这一个维度数据的稀疏度就是百万分之一。由此可见，数据的稀疏性，是我们在实际应用场景中面临的一个非常常见的挑战与问题。  </p>
+<p>one-hot编码带来的另一个问题是特征空间变大。同样以上面淘宝上的item为例，将item进行one-hot编码以后，样本空间有一个categorical变为了百万维的数值特征，特征空间一下子暴增一百万。所以大厂动不动上亿维度，就是这么来的。</p>
+<h1 id="对特征进行组合"><a href="#对特征进行组合" class="headerlink" title="对特征进行组合"></a>对特征进行组合</h1><p>普通的线性模型，我们都是将各个特征独立考虑的，并没有考虑到特征与特征之间的相互关系。但实际上，大量的特征之间是有关联的。最简单的以电商为例，一般女性用户看化妆品服装之类的广告比较多，而男性更青睐各种球类装备。那很明显，女性这个特征与化妆品类服装类商品有很大的关联性，男性这个特征与球类装备的关联性更为密切。如果我们能将这些有关联的特征找出来，显然是很有意义的。  </p>
+<p>一般的线性模型如下：<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0zuc3woj304i01pweg.jpg" alt="3"></p>
+<p>从上面的式子很容易看出，一般的线性模型压根没有考虑特征间的关联。为了表述特征间的相关性，我们采用多项式模型。在多项式模型中，特征xi与xj的组合用xixj表示。为了简单起见，我们讨论二阶多项式模型。具体的模型表达式如下：<br><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fvg10jgrb6j308j01uglw.jpg" alt="4"></p>
+<p>上式中，n表示样本的特征数量，xi表示第i个特征。与线性模型相比，FM的模型就多了后面特征组合的部分。</p>
+<h1 id="FM求解"><a href="#FM求解" class="headerlink" title="FM求解"></a>FM求解</h1><p>从上面的式子可以很容易看出，组合部分的特征相关参数共有n(n−1)/2个。但是如第二部分所分析，在数据很稀疏的情况下，满足xi,xj都不为0的情况非常少，这样将导致ωij无法通过训练得出。  </p>
+<p>为了求出ωij，我们对每一个特征分量xi引入辅助向量Vi=(vi1,vi2,⋯,vik)。然后，利用vivj^T对ωij进行求解。<br><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fvg12mr6dwj308x038mxa.jpg" alt="5"></p>
+<p>那么ωij组成的矩阵可以表示为:<br><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fvg13zdl5zj309302ydfu.jpg" alt="6"></p>
+<p>那么如何求解vi和vj呢？主要采用的公式为：<br><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fvg14sox4zj30760123yi.jpg" alt="7"></p>
+<p>具体过程如下：<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg15eydlnj30b908tta0.jpg" alt="8"></p>
+<p>下面详细讲述一下第一步如何进行推导：<br><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fvg16765f0j30vs0q0hdt.jpg" alt="9"></p>
+<p>这样，经过分解之后，我们就可以通过随机梯度下降SGD来进行求解：<br><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fvg17dxp1pj309a02k0t4.jpg" alt="10"></p>
 
       
     </div>
@@ -370,7 +383,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/自然语言处理/" rel="tag"><i class="fa fa-tag"></i>自然语言处理</a>
+            <a href="/tags/推荐系统/" rel="tag"><i class="fa fa-tag"></i>推荐系统</a>
+          
+            <a href="/tags/CTR/" rel="tag"><i class="fa fa-tag"></i>CTR</a>
           
         </div>
       
@@ -383,8 +398,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/19/转-交叉熵和相对熵/" rel="next" title="转-交叉熵和相对熵">
-                <i class="fa fa-chevron-left"></i> 转-交叉熵和相对熵
+              <a href="/2018/09/20/推荐系统基础/" rel="next" title="推荐系统基础">
+                <i class="fa fa-chevron-left"></i> 推荐系统基础
               </a>
             
           </div>
@@ -393,8 +408,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/22/Hierarchical-Softmax-CBOW/" rel="prev" title="Hierarchical Softmax --CBOW">
-                Hierarchical Softmax --CBOW <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/20/FFM模型理论和实践/" rel="prev" title="FFM模型理论和实践">
+                FFM模型理论和实践 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -545,7 +560,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#词向量基础"><span class="nav-number">1.</span> <span class="nav-text">词向量基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CBOW与Skip-Gram用于神经网络语言模型"><span class="nav-number">2.</span> <span class="nav-text">CBOW与Skip-Gram用于神经网络语言模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CBOW模型"><span class="nav-number">2.1.</span> <span class="nav-text">CBOW模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Skip-Gram"><span class="nav-number">2.2.</span> <span class="nav-text">Skip-Gram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际使用"><span class="nav-number">2.3.</span> <span class="nav-text">实际使用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FM背景"><span class="nav-number">1.</span> <span class="nav-text">FM背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#One-hot编码带来的问题"><span class="nav-number">2.</span> <span class="nav-text">One-hot编码带来的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对特征进行组合"><span class="nav-number">3.</span> <span class="nav-text">对特征进行组合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FM求解"><span class="nav-number">4.</span> <span class="nav-text">FM求解</span></a></li></ol></div>
             
 
           </div>
