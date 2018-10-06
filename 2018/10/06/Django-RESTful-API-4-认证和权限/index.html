@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Django,Django rest framework," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用户才">
+<meta name="keywords" content="Django,Django rest framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django RESTful API (4) 认证和权限">
+<meta property="og:url" content="http://super1peng.xyz/2018/10/06/Django-RESTful-API-4-认证和权限/index.html">
+<meta property="og:site_name" content="大大大大碗面">
+<meta property="og:description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用户才">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyib0v3xlj30o90k70v8.jpg">
+<meta property="og:updated_time" content="2018-10-06T08:09:46.313Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django RESTful API (4) 认证和权限">
+<meta name="twitter:description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用户才">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyib0v3xlj30o90k70v8.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://super1peng.xyz/2018/10/06/Django-RESTful-API-4-认证和权限/"/>
+
+
+
+
+
+  <title>Django RESTful API (4) 认证和权限 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <a href="https://github.com/super1peng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大大大大碗面</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/10/06/Django-RESTful-API-4-认证和权限/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="super1peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/nice.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大大大大碗面">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Django RESTful API (4) 认证和权限</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-06T16:09:14+08:00">
+                2018-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读总量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。  </p>
+<p>但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能： </p>
+<ul>
+<li>sinppet与其他创建者相互关联；</li>
+<li>只有经过身份验证（登录）的用户才可以创建snippets;</li>
+<li>只有创建该snippet的用户才可以对其进行更改或者删除；</li>
+<li>未经验证的用户具有访问（只读）的功能。</li>
+</ul>
+<a id="more"></a>
+<h2 id="修改snippet模型"><a href="#修改snippet模型" class="headerlink" title="修改snippet模型"></a>修改snippet模型</h2><p>首先，我们想让snippets都和它们的创建用户关联起来，所以我们自然的要在Snippet模型添加一个owner字段来表示。另外，我们还添加一个highlighted字段用来实现代码高亮，修改snippets/models.py的Snippet：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">owner = models.ForeignKey(<span class="string">'auth.User'</span>, related_name=<span class="string">'snippets'</span>, on_delete=models.CASCADE)</span><br><span class="line">highlighted = models.TextField()</span><br></pre></td></tr></table></figure></p>
+<p>想要实现代码高亮，不是上面一行代码就可以搞定的，它现在还只是一个普通的字段而已。我们要做的是在保存的时候，也就是当执行save()时, 我们使用pygments生成高亮后的HTML，还是在 model.py，首先导入相关的库:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pygments.lexers <span class="keyword">import</span> get_lexer_by_name</span><br><span class="line"><span class="keyword">from</span> pygments.formatters.html <span class="keyword">import</span> HtmlFormatter</span><br><span class="line"><span class="keyword">from</span> pygments <span class="keyword">import</span> highlight</span><br></pre></td></tr></table></figure></p>
+<p>然后在Snippet类中添加save()方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def save(self, *args, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    使用pygments库来生成能使代码高亮的HTML代码</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    lexer = get_lexer_by_name(self.language)</span><br><span class="line">    linenos = self.linenos and &apos;table&apos; or False</span><br><span class="line">    options = self.title and &#123;&apos;title&apos;: self.title&#125; or &#123;&#125;</span><br><span class="line">    formatter = HtmlFormatter(style=self.style, linenos=linenos,</span><br><span class="line">                              full=True, **options)</span><br><span class="line">    self.highlighted = highlight(self.code, lexer, formatter)</span><br><span class="line">    super(Snippet, self).save(*args, **kwargs)</span><br></pre></td></tr></table></figure></p>
+<p>在保存数据的时候就会执行上面这个方法，整个方法的功能如注释所示，在这一篇文章中还不会具体的展示这个功能，在接下来的文章中会展示。  </p>
+<p>修改了模型当然需要同步一下数据库了，在这里我们和官网文档一样把数据库删了在重新生成，首先把工程目录下的 db.sqlite3 以及 snippets 下的 migrations 文件夹删除，然后再执行迁移步骤：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations snippets</span><br><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure></p>
+<p>同时，由于我们想要实现的是访问各个snippet时显示相应的创建者，所以这里需要创建几个不同的账户稍后才可以显示。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span><br></pre></td></tr></table></figure></p>
+<h2 id="为我们的用户模型添加端点"><a href="#为我们的用户模型添加端点" class="headerlink" title="为我们的用户模型添加端点"></a>为我们的用户模型添加端点</h2><p>原理和之前的SnippetSerializer基本一样，在snippets/serializers.py中添加一个User序列化器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    snippets = serializers.PrimaryKeyRelatedField(many=<span class="keyword">True</span>, queryset=Snippet.objects.all())</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = User</span><br><span class="line">        fields = (<span class="string">'id'</span>, <span class="string">'username'</span>, <span class="string">'snippets'</span>)</span><br></pre></td></tr></table></figure>
+<p>需要注意的是：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snippets = serializers.PrimaryKeyRelatedField(many=<span class="keyword">True</span>, queryset=Snippet.objects.all())</span><br></pre></td></tr></table></figure></p>
+<p>因为snippets在User模型中是一个反向关系，在使用ModelSerializer类时默认情况是不会包括这个关系，换一句话说，通过Snippet的owner能查询到User，而User这边查询不到一个用户创建的snippet，所以我们需要手动为用户序列添加这个字段。  </p>
+<p>弄好了User的序列器，接着就要让其能够显示出来，所以要添加相关的视图类，编辑 view.py。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> UserSerializer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserList</span><span class="params">(generics.ListAPIView)</span>:</span></span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserDetail</span><span class="params">(generics.RetrieveAPIView)</span>:</span></span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br></pre></td></tr></table></figure>
+<p>配置分发路由，编辑snippets/urls.py，添加下面的匹配模式：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url(<span class="string">r'^users/$'</span>, views.UserList.as_view()),</span><br><span class="line">url(<span class="string">r'^users/(?P&lt;pk&gt;[0-9]+)/$'</span>, views.UserDetail.as_view()),</span><br></pre></td></tr></table></figure></p>
+<h2 id="把Snippets和Users关联起来"><a href="#把Snippets和Users关联起来" class="headerlink" title="把Snippets和Users关联起来"></a>把Snippets和Users关联起来</h2><p>到了这里，如果像之前那样创建代码段的话，我们还不能把Snippets和Users关联起来。因为在使用的时候User的数据是通过request传入的，而不是以序列化的数据传递过来。  </p>
+<p>而我们刚才添加了一个owner作为外键，这个时候就要看到它的用处了，编辑 view.py，为SnippetList视图类添加一个方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetList</span><span class="params">(generics.ListCreateAPIView)</span>:</span></span><br><span class="line">    queryset = Snippet.objects.all()</span><br><span class="line">    serializer_class = SnippetSerializer</span><br><span class="line">    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perform_create</span><span class="params">(self, serializer)</span>:</span></span><br><span class="line">        serializer.save(owner=self.request.user)</span><br></pre></td></tr></table></figure>
+<p>这个perform_create()可以让用户在通过POST请求创建一个新的Snippet是，在保存新的Snippet数据的时候吧request中的user赋值给Snippet的owner。</p>
+<h2 id="更新serializer"><a href="#更新serializer" class="headerlink" title="更新serializer"></a>更新serializer</h2><p>现在已经把两者关联起来了，owner会在创建新的Snippet的时候拥有User的各个属性，那么在API中要让owner显示id还是用户名，为了提高可读性，答案当然是显示用户名了，所以我们在SnippetSerializer 下面增加一个字段：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">owner = serializers.ReadOnlyField(source=<span class="string">'owner.username'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>这里的source参数就指定了哪个属性用于填充字段，为了在使用的时候显示owner，但是还要把它添加进Meta类里面，所以整个SnippetSerializer如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="comment"># 这里可以使用也 CharField(read_only=True) 来替换</span></span><br><span class="line">    owner = serializers.ReadOnlyField(source=<span class="string">'owner.username'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Snippet</span><br><span class="line">        fields = (<span class="string">'id'</span>, <span class="string">'title'</span>, <span class="string">'code'</span>, <span class="string">'linenos'</span>, <span class="string">'language'</span>, <span class="string">'style'</span>,<span class="string">'owner'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="添加权限"><a href="#添加权限" class="headerlink" title="添加权限"></a>添加权限</h2><p>也就是实现我们上面所说的几点。  </p>
+<p>首先在views.py导入一个库：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> permissions</span><br></pre></td></tr></table></figure></p>
+<p>接着为SnippetList 和 SnippetDetail 添加权限判断，在这两个视图类中都加入：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">permission_classes = (permissions.IsAuthenticatedOrReadOnly,)</span><br></pre></td></tr></table></figure></p>
+<p>++这里的逗号一定要加上去，不然会报错！++  </p>
+<p>这行代码的作用就是判断当前用户是否为该Snippet的创建者，而其他用户只有只读属性，就是只能查看。</p>
+<h2 id="为可浏览的API添加登录功能"><a href="#为可浏览的API添加登录功能" class="headerlink" title="为可浏览的API添加登录功能"></a>为可浏览的API添加登录功能</h2><p>如果没有登录用户，那就相当于游客啦，什么功能都没有只能看，所以在浏览器浏览API的时候就需要登录 功能。在这里，强大的django-rest-framework又为我们做了很多事情，想要在添加登录按钮和页面，只需要修改一个rest_tutorial/urls.py，添加一个URL匹配：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns += [</span><br><span class="line">    url(<span class="string">r'^api-auth/'</span>, include(<span class="string">'rest_framework.urls'</span>,</span><br><span class="line">                               namespace=<span class="string">'rest_framework'</span>)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>这里的r’^api-auth/‘你可以设置成任意你喜欢的，但是命名空间一定要相同，就是namespace=’rest_framework’。</p>
+<p>登录完后，这个时候访问单个用户的详情，就可以看到该用户创建的所有Snippet的id值（需要先创建好几个Snippet，可以按照本系列第一篇文章中在shell模式中的方法来创建）。比如访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000/users/2/</span><br></pre></td></tr></table></figure></p>
+<p>可以看到：  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyib0v3xlj30o90k70v8.jpg" width="60%"></p>
+<h2 id="添加对象权限"><a href="#添加对象权限" class="headerlink" title="添加对象权限"></a>添加对象权限</h2><p>我们要实现的是让所有的Snippet可以被所有人访问到，但是每个Snippet只有其创建者才可以对其进行更改、删除等操作。  </p>
+<p>因此，我们需要设置一下自定义权限，使每个Snippet只允许其创建者编辑它。在snippets目录下新建一个 permissions.py：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> permissions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IsOwnerOrReadOnly</span><span class="params">(permissions.BasePermission)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使每个Snippet只允许其创建者编辑它</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">has_object_permission</span><span class="params">(self, request, view, obj)</span>:</span></span><br><span class="line">        <span class="comment"># 任何用户或者游客都可以访问任何Snippet，所以当请求动作在安全范围内，</span></span><br><span class="line">        <span class="comment"># 也就是GET，HEAD，OPTIONS请求时，都会被允许</span></span><br><span class="line">        <span class="keyword">if</span> request.method <span class="keyword">in</span> permissions.SAFE_METHODS:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 而当请求不是上面的安全模式的话，那就需要判断一下当前的用户</span></span><br><span class="line">        <span class="comment"># 如果Snippet所有者和当前的用户一致，那就允许，否则返回错误信息</span></span><br><span class="line">        <span class="keyword">return</span> obj.owner == request.user</span><br></pre></td></tr></table></figure></p>
+<p>然后我们要把它运用起来，在view.py中的SnippetDetail 修改一下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> snippets.permissions <span class="keyword">import</span> IsOwnerOrReadOnly</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnippetDetail</span><span class="params">(generics.RetrieveUpdateDestroyAPIView)</span>:</span></span><br><span class="line">    queryset = Snippet.objects.all()</span><br><span class="line">    serializer_class = SnippetSerializer</span><br><span class="line">    permission_classes = (permissions.IsAuthenticatedOrReadOnly,</span><br><span class="line">                          IsOwnerOrReadOnly,)</span><br></pre></td></tr></table></figure></p>
+<p>现在用浏览器打开单个Snippet详情页，如果你当前登录的用户是这个Snippet的创建者，那你会发现多了DELETE和PUT两个操作，比如访问<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;img src=&quot;https://ws1.sinaimg.cn/large/006tNbRwgy1fvyifpocwhj30ji0h3ach.jpg&quot; width=60%&gt;</span><br><span class="line"></span><br><span class="line">## 使用API授权</span><br><span class="line">由于现在我们还没使用 authentication 类，所以项目目前还是使用默认的SessionAuthentication 和 BasicAuthentication.</span><br><span class="line"></span><br><span class="line">在使用浏览器访问API的时候，浏览器会帮我们保存会话信息，所以当权限满足时就可以对一个Snippet进行删除或者更改，或者是创建一个新的Snippet。</span><br><span class="line"></span><br><span class="line">当如果是通过命令行来操作API，我们就必须在每次发送请求的时候添加授权信息，也就是用户名和密码，没有的话就会报错，比如：</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">http POST http://127.0.0.1:8000/snippets/ code=&quot;print 123&quot;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;detail&quot;: &quot;Authentication credentials were not provided.&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>正确的操作如下：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">http -a username1:password POST http://127.0.0.1:8000/snippets/ code="print 789"</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    "id": 1,</span><br><span class="line">    "owner": "username1",</span><br><span class="line">    "title": "",</span><br><span class="line">    "code": "print 789",</span><br><span class="line">    "linenos": false,</span><br><span class="line">    "language": "python",</span><br><span class="line">    "style": "friendly"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i>Django</a>
+          
+            <a href="/tags/Django-rest-framework/" rel="tag"><i class="fa fa-tag"></i>Django rest framework</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/06/Django-RESTful-API-3-基于类的视图/" rel="next" title="Django RESTful API (3) 基于类的视图">
+                <i class="fa fa-chevron-left"></i> Django RESTful API (3) 基于类的视图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/06/Django-RESTful-API-5-添加超链接提高模型间的关联性/" rel="prev" title="Django RESTful API (5) 添加超链接提高模型间的关联性">
+                Django RESTful API (5) 添加超链接提高模型间的关联性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzIwOC8xMzc0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/nice.jpg"
+                alt="super1peng" />
+            
+              <p class="site-author-name" itemprop="name">super1peng</p>
+              <p class="site-description motion-element" itemprop="description">享受生活</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/super1peng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:super1peng@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=30 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=1&height=66"></iframe>
+</div>
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改snippet模型"><span class="nav-number">2.</span> <span class="nav-text">修改snippet模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为我们的用户模型添加端点"><span class="nav-number">3.</span> <span class="nav-text">为我们的用户模型添加端点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把Snippets和Users关联起来"><span class="nav-number">4.</span> <span class="nav-text">把Snippets和Users关联起来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新serializer"><span class="nav-number">5.</span> <span class="nav-text">更新serializer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加权限"><span class="nav-number">6.</span> <span class="nav-text">添加权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为可浏览的API添加登录功能"><span class="nav-number">7.</span> <span class="nav-text">为可浏览的API添加登录功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加对象权限"><span class="nav-number">8.</span> <span class="nav-text">添加对象权限</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-child"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">super1peng</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
