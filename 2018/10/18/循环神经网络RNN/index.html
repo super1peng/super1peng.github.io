@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="推荐系统,CTR," />
+  <meta name="keywords" content="深度学习,RNN," />
 
 
 
@@ -79,26 +79,29 @@
 
 
 
-<meta name="description" content="FFM理论在CTR预估中，经常会遇到One-hot类型的变量，One-hot类型变量会导致严重的数据特征稀疏，为了解决这一个问题，上一节我们讲述了FM模型，而在这一节中，我们将介绍一种在FM基础上发展出来的算法FFM(Field-aware Factorization Machine)。">
-<meta name="keywords" content="推荐系统,CTR">
+<meta name="description" content="RNN相较于CNN在图像识别和检测方面的广泛应用，基于序列模型的RNN的应用方面是语音识别、文本翻译和自然语言处理等其他更为令人心动的领域。">
+<meta name="keywords" content="深度学习,RNN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FFM模型理论和实践">
-<meta property="og:url" content="http://super1peng.xyz/2018/09/20/FFM模型理论和实践/index.html">
+<meta property="og:title" content="循环神经网络RNN">
+<meta property="og:url" content="http://super1peng.xyz/2018/10/18/循环神经网络RNN/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="FFM理论在CTR预估中，经常会遇到One-hot类型的变量，One-hot类型变量会导致严重的数据特征稀疏，为了解决这一个问题，上一节我们讲述了FM模型，而在这一节中，我们将介绍一种在FM基础上发展出来的算法FFM(Field-aware Factorization Machine)。">
+<meta property="og:description" content="RNN相较于CNN在图像识别和检测方面的广泛应用，基于序列模型的RNN的应用方面是语音识别、文本翻译和自然语言处理等其他更为令人心动的领域。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgb1ksgppj30cg05sdhf.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fvgb572chlj30gm02s3ze.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fvgb6mfayrj30eu03o0to.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgb7k0qa7j30io09ego7.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fvgb88ua0nj30hy03oabk.jpg">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fvgb9dupzvj30i2030gmj.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgbb3wezgj30gr0dz11y.jpg">
-<meta property="og:updated_time" content="2018-09-20T13:11:54.484Z">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fwc4vlx70aj30jx0ec40n.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fwc5huq5t2j30o909w751.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fwc5nsax3zj30u00d5dgw.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fwc5pv9h8vj30u00b8dgm.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fwc5r697tyj30o909w751.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fwc5udbzvkj30ja0k2acm.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fwc5yfmne4j30m20dk76c.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fwc5z5k4whj30go0efjsa.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fwc61iemtfj30u00jjjt4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwgy1fwc62tghacj30u00c1q43.jpg">
+<meta property="og:updated_time" content="2018-10-18T03:31:45.977Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FFM模型理论和实践">
-<meta name="twitter:description" content="FFM理论在CTR预估中，经常会遇到One-hot类型的变量，One-hot类型变量会导致严重的数据特征稀疏，为了解决这一个问题，上一节我们讲述了FM模型，而在这一节中，我们将介绍一种在FM基础上发展出来的算法FFM(Field-aware Factorization Machine)。">
-<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgb1ksgppj30cg05sdhf.jpg">
+<meta name="twitter:title" content="循环神经网络RNN">
+<meta name="twitter:description" content="RNN相较于CNN在图像识别和检测方面的广泛应用，基于序列模型的RNN的应用方面是语音识别、文本翻译和自然语言处理等其他更为令人心动的领域。">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fwc4vlx70aj30jx0ec40n.jpg">
 
 
 
@@ -128,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://super1peng.xyz/2018/09/20/FFM模型理论和实践/"/>
+  <link rel="canonical" href="http://super1peng.xyz/2018/10/18/循环神经网络RNN/"/>
 
 
 
 
 
-  <title>FFM模型理论和实践 | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>循环神经网络RNN | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -274,7 +277,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/09/20/FFM模型理论和实践/">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2018/10/18/循环神经网络RNN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="super1peng">
@@ -291,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">FFM模型理论和实践</h1>
+          <h1 class="post-title" itemprop="name headline">循环神经网络RNN</h1>
         
 
         <div class="post-meta">
@@ -303,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-20T20:59:21+08:00">
-                2018-09-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-18T11:27:55+08:00">
+                2018-10-18
               </time>
             
 
@@ -346,18 +349,44 @@
       
 
       
-        <h1 id="FFM理论"><a href="#FFM理论" class="headerlink" title="FFM理论"></a>FFM理论</h1><p>在CTR预估中，经常会遇到One-hot类型的变量，One-hot类型变量会导致严重的数据特征稀疏，为了解决这一个问题，上一节我们讲述了FM模型，而在这一节中，我们将介绍一种在FM基础上发展出来的算法FFM(Field-aware Factorization Machine)。<br><a id="more"></a></p>
-<p>FFM模型中引入了类别的概念，即field。还是拿上一讲中的数据来讲，先看下图：<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgb1ksgppj30cg05sdhf.jpg" alt="1"><br>在上面的广告点击案例中，“Day=26/11/15”、“Day=1/7/14”、“Day=19/2/15”这三个特征都是代表日期的，可以放到同一个field中。同理，Country也可以放到一个field中。简单来说，同一个categorical特征经过One-Hot编码生成的数值特征都可以放到同一个field，包括用户国籍，广告类型，日期等等。  </p>
-<p>在FFM中，每一维特征xi，针对其它特征的每一种field fj，都会学习一个隐向量v_i,fj。因此，隐向量不仅与特征相关，也与field相关。也就是说，“Day=26/11/15”这个特征与“Country”特征和“Ad_type”特征进行关联的时候使用不同的隐向量，这与“Country”和“Ad_type”的内在差异相符，也是FFM中“field-aware”的由来。  </p>
-<p>假设样本的n个特征属于f个field，那么FFM的二次项有nf个隐向量。而在FM模型中，每一维特征的隐向量只有一个。FM可以看作FFM的特例，是把所有特征都归属到一个field时的FFM模型。根据FFM的field敏感特性，可以导出其模型方程。</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fvgb572chlj30gm02s3ze.jpg" alt="2">  </p>
-<p>可以看到，如果隐向量的长度为k，那么FFM的二次参数有nfk个，远多于FM模型的nk个。此外，由于隐向量与field相关，FFM二次项并不能够化简，其预测复杂度是O(kn^2)。  </p>
-<p>下面以一个例子简单说明FFM的特征组合方式。输入记录如下：<br><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fvgb6mfayrj30eu03o0to.jpg" alt="3"></p>
-<p>这条记录可以编码成5个特征，其中“Genre=Comedy”和“Genre=Drama”属于同一个field，“Price”是数值型，不用One-Hot编码转换。为了方便说明FFM的样本格式，我们将所有的特征和对应的field映射成整数编号。  </p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgb7k0qa7j30io09ego7.jpg" alt="4"></p>
-<p>那么组合特征如下：<br><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fvgb88ua0nj30hy03oabk.jpg" alt="5"><br>其中，红色是field编号，蓝色是特征编号。  </p>
-<h1 id="FFM实现细节"><a href="#FFM实现细节" class="headerlink" title="FFM实现细节"></a>FFM实现细节</h1><h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>FFM将问题定义为分类问题，使用的是logistic loss，同时加入了正则项。<br><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fvgb9dupzvj30i2030gmj.jpg" alt="6"><br>什么，这是logisitc loss？第一眼看到我是懵逼的，逻辑回归的损失函数我很熟悉啊，不是长这样的啊？其实是我目光太短浅了。逻辑回归其实是有两种表述方式的损失函数的，取决于你将类别定义为0和1还是1和-1。当我们将类别设定为1和-1的时候，逻辑回归的损失函数就是上面的样子。</p>
-<h2 id="随机梯度下降"><a href="#随机梯度下降" class="headerlink" title="随机梯度下降"></a>随机梯度下降</h2><p>训练FFM使用的是随机梯度下降方法，即每次只选一条数据进行训练，这里还有必要补一补梯度下降的知识，梯度下降是有三种方式的：<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgbb3wezgj30gr0dz11y.jpg" alt="7"></p>
+        <h2 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h2><p>相较于CNN在图像识别和检测方面的广泛应用，基于序列模型的RNN的应用方面是语音识别、文本翻译和自然语言处理等其他更为令人心动的领域。<br><a id="more"></a></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fwc4vlx70aj30jx0ec40n.jpg" width="50%"></p>
+<h3 id="RNN使用场景"><a href="#RNN使用场景" class="headerlink" title="RNN使用场景"></a>RNN使用场景</h3><p>假设我们在进行语音识别时，给定了一个输入音频片段$x$，要求我们输出一个文本片段$y$，其中输入$x$是一个按照时间播放的音频片段，$y$是一个按照顺序排列的单词组成的一句话，所以在<code>RNN</code>中我们的输入输出都是序列性质的。针对这样的输入输出$(x,y)$的有监督学习，最适合的神经网络结构就是<code>循环神经网络</code>。</p>
+<p>对序列问题使用常规的神经网络会有什么问题：</p>
+<p>假设我们现在需要对输入的一段话识别其中每个单词是否是人名，即输入是一段文本序列，输出是一个每个单词是否是人名的序列。假设这段话有9个单词，我们将其转化为9 个<code>one-hot</code>向量输入到标准神经网络中去，经过一些隐藏层和激活函数得到最终9个值为<code>0/1</code>的输出。</p>
+<ul>
+<li>输入输出的长度是否相等以及输入大小不固定的问题。在语音识别问题中，输入音频序列和输出文本序列很少情况下是长度相等的，普通网络难以处理这种问题。</li>
+<li>普通神经网络结构不能共享从文本不同位置上学到的特征，简单来说就是如果神经网络已经从位置1学到了louwill是一个人名，那么如果louwill出现在其他位置，神经网络就可以自动识别到它就是已经学习过的人名，这种共享可以减少训练参数和提高网络效率，普通网络不能达到这样的目的。</li>
+</ul>
+<h3 id="RNN结构"><a href="#RNN结构" class="headerlink" title="RNN结构"></a>RNN结构</h3><p>假设我们将一个句子输入<code>RNN</code>，第一个输入的单词就是$x_1$, 我们将$x_1$输入到神经网络，经过隐藏层得到输出判断其是否为人名，即输出为$y_1$。同时网络初始化隐藏层激活值，并在隐藏层中结合输入$x_1$进行激活计算传入到下一个时间步。当输入第二个单词$x_2$的时候，除了使用$x_2$预测输出$y_2$之外，当前时间步的激活函数会基于上一个时间步的进行激活计算，即第二个时间步利用了第一个时间步的信息。这便是循环<code>（Recurrent）</code>的含义。如此下去，一直到网络在最后一个时间步输出$y_n$和激活值$a_n$。所以在每一个时间步中，<code>RNN</code>传递一个激活值到下一个时间步中用于计算。    </p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fwc5huq5t2j30o909w751.jpg" width="40%">     </p>
+<p>上图便是循环神经网络的基本结构。左边是一个统一的表现形式，右边则是左边的展开图解。在这样的循环神经网络中，当我们在预测$y_t$时，不仅要使用$x_t$的信息，还要使用$x_{t-1}$时刻的信息，因为在横轴路径上的隐藏层激活信息得以帮助我们预测$y_t$。</p>
+<p>RNN 单元结构通常需要两次计算，一次是隐藏层隐变量激活函数的计算（计算每个时刻的输出），一个是结合隐变量和输入的计算（计算每个时刻的隐藏层状态）。一个<code>RNN</code>单元和两次计算如下图所示：   </p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fwc5nsax3zj30u00d5dgw.jpg" width="40%">   </p>
+<p>其中隐藏层的激活函数一般采用<code>tanh</code>，而输入输出的激活函数一半使用<code>sigmoid</code>或者<code>softmax</code>函数。 </p>
+<p>将多个<code>RNN单元</code>组合到一起便是<code>RNN结构</code>。  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fwc5pv9h8vj30u00b8dgm.jpg" width="40%"></p>
+<h3 id="RNN的4中类型"><a href="#RNN的4中类型" class="headerlink" title="RNN的4中类型"></a>RNN的4中类型</h3><h4 id="N-vs-N"><a href="#N-vs-N" class="headerlink" title="N vs N"></a>N vs N</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fwc5r697tyj30o909w751.jpg" width="40%">  </p>
+<p>所谓<code>N VS N</code>，即<code>RNN</code>的输入输出序列是等长的。作为一种经典的<code>RNN</code>结构，<code>N VS N</code>也有着广泛的应用：比如说信息抽取中的命名实体识别，我们需要判断每一个输入单词是否是命名实体的一部分，再比如我们要对视频的每一帧的分类标签进行分类，这也是一个<code>N VS N</code>的<code>RNN</code>结构。 </p>
+<h4 id="N-vs-1"><a href="#N-vs-1" class="headerlink" title="N vs 1"></a>N vs 1</h4><p>类比于<code>N VS N</code>，<code>N VS 1</code>要处理的问题是输入为一个序列，但输出却是一个单值的情况。这种情况 RNN 结构应该做怎样的变化呢？很简单，只要将之前每一个<code>y</code> 输出去掉，统一在最后一个时间步对全部输入进行进行输出变换即可。<code>N VS 1</code>的结构如下图所示： </p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fwc5udbzvkj30ja0k2acm.jpg" width="40%">  </p>
+<p>由上图可以看到，输入$x$有5个时间步的输入，但是仅在最后一个隐变量激活时才做出输出转换为$y$。<code>N VS 1</code>常用来处理序列分类问题，比如文本的情感分类，视频内容分类等等。</p>
+<h4 id="1-vs-N"><a href="#1-vs-N" class="headerlink" title="1 vs N"></a>1 vs N</h4><p>如果把<code>N VS 1</code>的输入输出对换一下就得到了<code>1 VS N</code>的<code>RNN</code>结构。即输入为单一值，输出为一个序列。其结构图就是<code>N VS 1</code>调换过来，如下图所示：  </p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fwc5yfmne4j30m20dk76c.jpg" width="40%"></p>
+<p>还有另外一种变体形式：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fwc5z5k4whj30go0efjsa.jpg" width="30%">  </p>
+<p><code>1 VS N</code>通常用于给定类别生成一段音乐，或者给定图像生成一段文字等等。</p>
+<h4 id="N-vs-M"><a href="#N-vs-M" class="headerlink" title="N vs M"></a>N vs M</h4><p>RNN 结构的最后一种变体结构，也是最重要的一种是<code>N VS M</code>结构，这也是一种多对多的<code>RNN</code>，这种<code>N VS M</code>模型也叫做<code>seq2seq 模型</code>（序列对序列），<code>N VS M</code>符合实际序列建模的大多数情况，即很多时候我们的输入输出序列并不等长，比如我们进行汉译英的机器翻译，输入汉语句子和输出英文句子基本不会等长。 </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fwc61iemtfj30u00jjjt4.jpg" width="40%"></p>
+<p>我们可以通过对最后一个隐变量以<code>c</code>进行赋值，然后展开来写。编码完成后我们再用一个<code>RNN</code>对<code>c</code>的结果进行解码，简而言之就是将<code>c</code>作为初始状态的隐变量输入到解码网络，如下图所示： </p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwgy1fwc62tghacj30u00c1q43.jpg" width="40%"></p>
+<p>这种结构因为对输入输出长度没有要求，因此有着特别广泛的应用，包括：</p>
+<ul>
+<li>语音识别</li>
+<li>机器翻译</li>
+<li>DNA序列分析</li>
+<li>文本摘要生成</li>
+</ul>
 
       
     </div>
@@ -375,9 +404,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/推荐系统/" rel="tag"><i class="fa fa-tag"></i>推荐系统</a>
+            <a href="/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i>深度学习</a>
           
-            <a href="/tags/CTR/" rel="tag"><i class="fa fa-tag"></i>CTR</a>
+            <a href="/tags/RNN/" rel="tag"><i class="fa fa-tag"></i>RNN</a>
           
         </div>
       
@@ -390,8 +419,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/20/FM模型理论和实践/" rel="next" title="FM模型理论和实践">
-                <i class="fa fa-chevron-left"></i> FM模型理论和实践
+              <a href="/2018/10/06/Django-RESTful-API-5-添加超链接提高模型间的关联性/" rel="next" title="Django RESTful API (5) 添加超链接提高模型间的关联性">
+                <i class="fa fa-chevron-left"></i> Django RESTful API (5) 添加超链接提高模型间的关联性
               </a>
             
           </div>
@@ -399,10 +428,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/01/Django-RESTful-API-1-序列化/" rel="prev" title="Django RESTful API (1)  序列化">
-                Django RESTful API (1)  序列化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -552,7 +577,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FFM理论"><span class="nav-number">1.</span> <span class="nav-text">FFM理论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FFM实现细节"><span class="nav-number">2.</span> <span class="nav-text">FFM实现细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-number">2.1.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">2.2.</span> <span class="nav-text">随机梯度下降</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN"><span class="nav-number">1.</span> <span class="nav-text">RNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RNN使用场景"><span class="nav-number">1.1.</span> <span class="nav-text">RNN使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RNN结构"><span class="nav-number">1.2.</span> <span class="nav-text">RNN结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RNN的4中类型"><span class="nav-number">1.3.</span> <span class="nav-text">RNN的4中类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#N-vs-N"><span class="nav-number">1.3.1.</span> <span class="nav-text">N vs N</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#N-vs-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">N vs 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-vs-N"><span class="nav-number">1.3.3.</span> <span class="nav-text">1 vs N</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#N-vs-M"><span class="nav-number">1.3.4.</span> <span class="nav-text">N vs M</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
