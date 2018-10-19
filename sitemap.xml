@@ -2,72 +2,205 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://super1peng.xyz/2018/10/18/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9CRNN/</loc>
+    <loc>http://super1peng.xyz/2018/06/09/%E9%9B%86%E6%88%90%E7%AE%97%E6%B3%95-boosting/</loc>
     
-    <lastmod>2018-10-18T03:31:45.977Z</lastmod>
+    <lastmod>2018-10-19T12:35:28.645Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/09/04/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2018-10-19T12:35:15.678Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/04/19/%E8%BD%AC-%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8C%E7%9B%B8%E5%AF%B9%E7%86%B5/</loc>
+    
+    <lastmod>2018-10-19T12:35:09.472Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/06/15/%E8%87%AA%E5%8A%A8%E7%BC%96%E7%A0%81%E6%9C%BA/</loc>
+    
+    <lastmod>2018-10-19T12:35:03.699Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/05/23/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/</loc>
+    
+    <lastmod>2018-10-19T12:34:54.140Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/04/19/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F-LFM/</loc>
+    
+    <lastmod>2018-10-19T12:34:46.165Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/05/08/%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0/</loc>
+    
+    <lastmod>2018-10-19T12:34:35.242Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/04/20/word2vec%E5%8E%9F%E7%90%86/</loc>
+    
+    <lastmod>2018-10-19T12:34:22.926Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/05/29/viterbi%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2018-10-19T12:34:17.693Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/04/23/TensorFlow-%E4%B8%80/</loc>
+    
+    <lastmod>2018-10-19T12:34:11.048Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/06/06/Scrapy%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6/</loc>
+    
+    <lastmod>2018-10-19T12:34:05.681Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://super1peng.xyz/2018/06/11/RNN-LSTM/</loc>
     
-    <lastmod>2018-10-18T03:28:33.777Z</lastmod>
+    <lastmod>2018-10-19T12:33:57.730Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://super1peng.xyz/2018/10/06/Django-RESTful-API-5-%E6%B7%BB%E5%8A%A0%E8%B6%85%E9%93%BE%E6%8E%A5%E6%8F%90%E9%AB%98%E6%A8%A1%E5%9E%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E6%80%A7/</loc>
+    <loc>http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/</loc>
     
-    <lastmod>2018-10-06T08:13:32.768Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/10/06/Django-RESTful-API-4-%E8%AE%A4%E8%AF%81%E5%92%8C%E6%9D%83%E9%99%90/</loc>
-    
-    <lastmod>2018-10-06T08:09:46.313Z</lastmod>
+    <lastmod>2018-10-19T12:33:48.296Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://super1peng.xyz/2018/10/06/Django-RESTful-API-3-%E5%9F%BA%E4%BA%8E%E7%B1%BB%E7%9A%84%E8%A7%86%E5%9B%BE/</loc>
+    <loc>http://super1peng.xyz/2018/08/24/Learning-To-Rank/</loc>
     
-    <lastmod>2018-10-06T08:09:00.565Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/10/01/Django-RESTful-API-2-%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94/</loc>
-    
-    <lastmod>2018-10-01T12:34:45.222Z</lastmod>
+    <lastmod>2018-10-19T12:33:40.506Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://super1peng.xyz/2018/10/01/Django-RESTful-API-1-%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
+    <loc>http://super1peng.xyz/2018/04/22/Hierarchical-Softmax-CBOW/</loc>
     
-    <lastmod>2018-10-01T12:33:15.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/09/20/FFM%E6%A8%A1%E5%9E%8B%E7%90%86%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5/</loc>
-    
-    <lastmod>2018-09-20T13:11:54.484Z</lastmod>
+    <lastmod>2018-10-19T12:33:33.294Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://super1peng.xyz/2018/09/20/FM%E6%A8%A1%E5%9E%8B%E7%90%86%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5/</loc>
     
-    <lastmod>2018-09-20T07:21:50.400Z</lastmod>
+    <lastmod>2018-10-19T12:33:26.689Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://super1peng.xyz/2018/08/20/FM-FFM-DeepFM/</loc>
     
-    <lastmod>2018-09-20T07:02:44.548Z</lastmod>
+    <lastmod>2018-10-19T12:33:19.617Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/09/20/FFM%E6%A8%A1%E5%9E%8B%E7%90%86%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5/</loc>
+    
+    <lastmod>2018-10-19T12:33:13.896Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/04/02/Django-%E9%81%97%E7%95%99%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B4%E5%90%88/</loc>
+    
+    <lastmod>2018-10-19T12:33:05.683Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/03/29/Django-%E6%A8%A1%E5%9E%8B/</loc>
+    
+    <lastmod>2018-10-19T12:32:58.540Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/03/29/Django-%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/</loc>
+    
+    <lastmod>2018-10-19T12:32:53.176Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/04/02/Django-%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
+    
+    <lastmod>2018-10-19T12:32:47.910Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/10/06/Django-RESTful-API-5-%E6%B7%BB%E5%8A%A0%E8%B6%85%E9%93%BE%E6%8E%A5%E6%8F%90%E9%AB%98%E6%A8%A1%E5%9E%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E6%80%A7/</loc>
+    
+    <lastmod>2018-10-19T12:32:43.127Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/10/06/Django-RESTful-API-4-%E8%AE%A4%E8%AF%81%E5%92%8C%E6%9D%83%E9%99%90/</loc>
+    
+    <lastmod>2018-10-19T12:32:38.119Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/10/01/Django-RESTful-API-1-%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
+    
+    <lastmod>2018-10-19T12:32:27.900Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/10/01/Django-RESTful-API-2-%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94/</loc>
+    
+    <lastmod>2018-10-19T12:32:26.166Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/10/06/Django-RESTful-API-3-%E5%9F%BA%E4%BA%8E%E7%B1%BB%E7%9A%84%E8%A7%86%E5%9B%BE/</loc>
+    
+    <lastmod>2018-10-19T12:32:22.144Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/10/18/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9CRNN/</loc>
+    
+    <lastmod>2018-10-19T12:31:09.579Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://super1peng.xyz/2018/10/19/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B/</loc>
+    
+    <lastmod>2018-10-19T12:29:35.808Z</lastmod>
     
   </url>
   
@@ -79,135 +212,9 @@
   </url>
   
   <url>
-    <loc>http://super1peng.xyz/2018/09/04/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</loc>
-    
-    <lastmod>2018-09-04T02:13:18.065Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/08/24/Learning-To-Rank/</loc>
-    
-    <lastmod>2018-08-24T12:13:35.977Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/06/15/%E8%87%AA%E5%8A%A8%E7%BC%96%E7%A0%81%E6%9C%BA/</loc>
-    
-    <lastmod>2018-06-15T06:58:31.190Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/06/09/%E9%9B%86%E6%88%90%E7%AE%97%E6%B3%95-boosting/</loc>
-    
-    <lastmod>2018-06-09T12:51:09.489Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://super1peng.xyz/2018/03/21/%E5%90%AF%E7%A8%8B/</loc>
     
     <lastmod>2018-06-09T11:09:28.513Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/06/06/Scrapy%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6/</loc>
-    
-    <lastmod>2018-06-06T06:25:54.304Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/05/08/%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0/</loc>
-    
-    <lastmod>2018-06-04T01:15:35.115Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/05/29/viterbi%E7%AE%97%E6%B3%95/</loc>
-    
-    <lastmod>2018-05-29T11:55:00.889Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/05/23/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/</loc>
-    
-    <lastmod>2018-05-23T13:28:39.740Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/04/23/TensorFlow-%E4%B8%80/</loc>
-    
-    <lastmod>2018-04-23T07:33:09.218Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/</loc>
-    
-    <lastmod>2018-04-23T03:37:39.785Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/04/22/Hierarchical-Softmax-CBOW/</loc>
-    
-    <lastmod>2018-04-23T02:20:33.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/04/20/word2vec%E5%8E%9F%E7%90%86/</loc>
-    
-    <lastmod>2018-04-22T02:11:34.618Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/04/19/%E8%BD%AC-%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8C%E7%9B%B8%E5%AF%B9%E7%86%B5/</loc>
-    
-    <lastmod>2018-04-19T13:30:08.655Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/04/19/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F-LFM/</loc>
-    
-    <lastmod>2018-04-19T05:10:43.816Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/04/02/Django-%E9%81%97%E7%95%99%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B4%E5%90%88/</loc>
-    
-    <lastmod>2018-04-02T06:29:57.831Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/03/29/Django-%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/</loc>
-    
-    <lastmod>2018-04-02T02:59:54.020Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/04/02/Django-%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
-    
-    <lastmod>2018-04-02T02:59:11.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://super1peng.xyz/2018/03/29/Django-%E6%A8%A1%E5%9E%8B/</loc>
-    
-    <lastmod>2018-03-29T06:32:54.932Z</lastmod>
     
   </url>
   
