@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="作为一个学渣，自己前段时间才开始接触NLP领域，才疏学浅，但是因为平时有做笔记的习惯，所以将我收集整理的知识进行整理，方便自己和大家理解。其中可能有不对的地方，欢迎大家指出，互相学习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谷歌最强NLP模型-BERT">
+<meta property="og:url" content="http://super1peng.xyz/2019/01/05/谷歌最强NLP模型-BERT/index.html">
+<meta property="og:site_name" content="大大大大碗面">
+<meta property="og:description" content="作为一个学渣，自己前段时间才开始接触NLP领域，才疏学浅，但是因为平时有做笔记的习惯，所以将我收集整理的知识进行整理，方便自己和大家理解。其中可能有不对的地方，欢迎大家指出，互相学习。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fyvmiyimjuj30bm0gw3z2.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fyvmmykk6gj30vw0j4hai.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fyvmtxh8qsj30os0codjz.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fyvn3ccopaj30oo0aqdo8.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fyvnjnpyabj30os09ngok.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fyvnnv8vepj30jk0aqgnj.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fyvnuxfvypj30n10ad0vh.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fyvo19k986j30ou07r0wx.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fyvpa9n3qej30ob08y0w6.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fyvpiw4r2pj315z0d5ak1.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fyvpx4wmyij30of0aldkk.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fyvq733tiyj30vz0d243q.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fyvqoxxo08j30k00b5wfb.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fyvqrupas8j30in02eglo.jpg ">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fyvqtvndl2j30ji02eaa5.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fyvshjxe1dj30qm0i0jy4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fyvrqf97hqj30k00agjs3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fyvrrp3dxlj30k006l75d.jpg ">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fyvsdlv6iaj30u00fatas.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fyvsf4v4wwj30h80humyd.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fyvsgebsphj30h80h4myh.jpg">
+<meta property="og:updated_time" content="2019-01-05T09:12:36.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谷歌最强NLP模型-BERT">
+<meta name="twitter:description" content="作为一个学渣，自己前段时间才开始接触NLP领域，才疏学浅，但是因为平时有做笔记的习惯，所以将我收集整理的知识进行整理，方便自己和大家理解。其中可能有不对的地方，欢迎大家指出，互相学习。">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fyvmiyimjuj30bm0gw3z2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://super1peng.xyz/2019/01/05/谷歌最强NLP模型-BERT/"/>
+
+
+
+
+
+  <title>谷歌最强NLP模型-BERT | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <a href="https://github.com/super1peng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大大大大碗面</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2019/01/05/谷歌最强NLP模型-BERT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="super1peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/nice.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大大大大碗面">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">谷歌最强NLP模型-BERT</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T17:11:31+08:00">
+                2019-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读总量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>作为一个学渣，自己前段时间才开始接触NLP领域，才疏学浅，但是因为平时有做笔记的习惯，所以将我收集整理的知识进行整理，方便自己和大家理解。其中可能有不对的地方，欢迎大家指出，互相学习。</p>
+<a id="more"></a>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Bert最近很火，应该是最近最火爆的AI进展，网上的评价很高。在11项NLP tasks中取得了state-of-the-art 的结果，包括NER、问答等领域的任务。本文不仅针对这篇论文进行介绍，而且对它的前世今生进行梳理，其中引用了多篇知乎博文，我在参考文献中一一列出。</p>
+<p>在谷歌宣布他们的预训练模型BERT之前，大家所知道的BERT，就是美国的儿童节目“芝麻街”里的人物BERT，就是下面这位），今天我们所讨论的可不是“芝麻街”里的BERT，而是谷歌的预训练语言模型BERT(Bidirectional Encoder Representations from Transformers)。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fyvmiyimjuj30bm0gw3z2.jpg" width="15%"></p>
+<p>有意思的是，在BERT的实验部分，作者将BERT模型与OpenAI GPT和EMLo等都进行了对比，而其中EMLo竟然也是“芝麻街”中的人物。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fyvmmykk6gj30vw0j4hai.jpg" width="20%"></p>
+<p>下面就让我们来研究探讨一下这篇文章吧！</p>
+<hr>
+<p>这一部分基本上引用自张俊林大佬的文章《从Word Embedding到Bert模型—自然语言处理中的预训练技术发展史》</p>
+<h4 id="图像领域的预训练"><a href="#图像领域的预训练" class="headerlink" title="图像领域的预训练"></a>图像领域的预训练</h4><p>首先，BERT模型是一个预训练模型。自从深度学习火起来后，预训练过程就是做图像或者视频领域的一种比较常规的做法，有比较长的历史了，而且这种做法很有效，能明显促进应用的效果。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fyvmtxh8qsj30os0codjz.jpg" width="60%"></p>
+<p>上图展示了在CV领域中，是如何进行预训练。当我们设计好网络结构以后，对于图像来说一般是CNN的多层叠加网络结构，可以先用某个训练集合比如训练集合A或者训练集合B对这个网络进行预先训练，在A任务上或者B任务上学会网络参数，然后存起来以备后用。当我们面临第三个任务C时，网络结构采取相同的网络结构，在比较浅的几层CNN结构，网络参数初始化的时候可以加载A任务或者B任务学习好的参数，其它CNN高层参数仍然随机初始化。之后我们用C任务的训练数据来训练网络，此时有两种做法，一种是浅层加载的参数在训练C任务过程中不动，这种方法被称为“Frozen”；另外一种是底层网络参数尽管被初始化了，在C任务训练过程中仍然随着训练的进程不断改变，这种一般叫“Fine-Tuning”，顾名思义，就是更好地把参数进行调整使得更适应当前的C任务。一般图像或者视频领域要做预训练一般都这么做。</p>
+<p>这么做有几个好处，首先，如果手头任务C的训练集合数据量较少的话，现阶段的好用的CNN比如Resnet/Densenet/Inception等网络结构层数很深，几百万上千万参数量算起步价，上亿参数的也很常见，训练数据少很难很好地训练这么复杂的网络，但是如果其中大量参数通过大的训练集合比如ImageNet预先训练好直接拿来初始化大部分网络结构参数，然后再用C任务手头比较可怜的数据量上Fine-tuning过程去调整参数让它们更适合解决C任务，那事情就好办多了。这样原先训练不了的任务就能解决了，即使手头任务训练数据也不少，加个预训练过程也能极大加快任务训练的收敛速度。</p>
+<h4 id="图像领域预训练的可行性"><a href="#图像领域预训练的可行性" class="headerlink" title="图像领域预训练的可行性"></a>图像领域预训练的可行性</h4><p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fyvn3ccopaj30oo0aqdo8.jpg" width="60%"></p>
+<p>对于层级结构的CNN来说，不同层级的神经元学习到了不同类型的图像特征，由底向上特征形成层级结构，如上图所示，如果我们手头是个人脸识别任务，训练好网络后，把每层神经元学习到的特征可视化肉眼看一看每层学到了啥特征，你会看到最底层的神经元学到的是线段等特征，图示的第二个隐层学到的是人脸五官的轮廓，第三层学到的是人脸的轮廓，通过三步形成了特征的层级结构，越是底层的特征越是所有不论什么领域的图像都会具备的比如边角线弧线等底层基础特征，越往上抽取出的特征越与手头任务相关。正因为此，所以预训练好的网络参数，尤其是底层的网络参数抽取出特征跟具体任务越无关，越具备任务的通用性，所以这是为何一般用底层预训练好的参数初始化新任务网络参数的原因。而高层特征跟任务关联较大，实际可以不用使用，或者采用Fine-tuning用新数据集合清洗掉高层无关的特征抽取器。</p>
+<h3 id="NLP领域的预训练"><a href="#NLP领域的预训练" class="headerlink" title="NLP领域的预训练"></a>NLP领域的预训练</h3><p>既然预训练在CV领域如此好用，那么它在NLP甚至其他领域是否也能发挥其作用？众多的学者进行了研究，提出了各自的模型。word embedding其实就是NLP里的早期预训练技术，但是这项技术总体而言不太成功，一般加到下游任务里，有1到2个点的性能提升，提升的幅度并没有像在图像领域那样喜人。</p>
+<h4 id="Word-Embedding"><a href="#Word-Embedding" class="headerlink" title="Word Embedding"></a>Word Embedding</h4><p>在说Word Embedding之前，先更粗略地说下语言模型，因为一般NLP里面做预训练一般的选择是用语言模型任务来做。</p>
+<h5 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h5><p>什么是语言模型？简单地说，语言模型就是用来计算一个句子的概率的模型，也就是判断一句话是否是人话的概率？为了能够量化地衡量哪个句子更像一句人话，可以设计如上图所示函数，核心函数P的思想是根据句子里面前面的一系列前导单词预测后面跟哪个单词的概率大小。句子里面每个单词都有个根据上文预测自己的过程，把所有这些单词的产生概率乘起来，数值越大代表这越像一句人话。（同时可以加入n-gram）</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fyvnjnpyabj30os09ngok.jpg" width="60%"></p>
+<p>随着神经网络的兴起，越来越多的深度学习模型被运用其中，来进行语言模型这个任务——给你很多语料做这个事情，训练好一个神经网络，训练好之后，以后输入一句话的前面几个单词，要求这个网络输出后面紧跟的单词应该是哪个，你会怎么做？</p>
+<h5 id="神经网络语言模型（NNLM）"><a href="#神经网络语言模型（NNLM）" class="headerlink" title="神经网络语言模型（NNLM）"></a>神经网络语言模型（NNLM）</h5><p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fyvnnv8vepj30jk0aqgnj.jpg" width="60%"></p>
+<p>NNLM是Bengio 在2003年发表在JMLR上的论文。NNLM的学习任务是：输入某个句中单词 $W_t$=“Bert” 前面句子的t-1个单词，要求网络正确预测单词Bert，即最大化：</p>
+<p>$P(W_t= ‘Bert’ |W_1,W_2,…W_(t-1);θ)$</p>
+<p>前面任意单词$W_i$ 用Onehot编码（比如：0001000）作为原始单词输入，之后乘以矩阵Q后获得向量$C(W_i )$，每个单词的$C(W_i)$拼接，上接隐层，然后接softmax去预测后面应该后续接哪个单词。这个$C(W_i)$是什么？这其实就是单词对应的Word Embedding值，那个矩阵Q包含V行，V代表词典大小，每一行内容代表对应单词的Word embedding值。只不过Q的内容也是网络参数，需要学习获得，训练刚开始用随机值初始化矩阵Q，当这个网络训练好之后，矩阵Q的内容被正确赋值，每一行代表一个单词对应的Word embedding值。所以你看，通过这个网络学习语言模型任务，这个网络不仅自己能够根据上文预测后接单词是什么，同时获得一个副产品，就是那个矩阵Q，这就是单词的Word Embedding是被如何学会的。</p>
+<p>2013年最火的用语言模型做Word Embedding的工具是Word2Vec，后来又出了Glove。</p>
+<h5 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h5><p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fyvnuxfvypj30n10ad0vh.jpg" width="60%"></p>
+<p>Word2Vec有两种训练方法，一种叫CBOW，核心思想是从一个句子里面把一个词抠掉，用这个词的上文和下文去预测被抠掉的这个词；第二种叫做Skip-gram，和CBOW正好反过来，输入某个单词，要求网络预测它的上下文单词。而你回头看看，NNLM是怎么训练的？是输入一个单词的上文，去预测这个单词。这是有显著差异的。为什么Word2Vec这么处理？原因很简单，因为Word2Vec和NNLM不一样，NNLM的主要任务是要学习一个解决语言模型任务的网络结构，语言模型就是要看到上文预测下文，而word embedding只是无心插柳的一个副产品。但是Word2Vec目标不一样，它单纯就是要word embedding的，这是主产品，所以它完全可以随性地这么去训练网络。</p>
+<h5 id="如何使用Word-Embedding"><a href="#如何使用Word-Embedding" class="headerlink" title="如何使用Word Embedding"></a>如何使用Word Embedding</h5><p>我们的主题是预训练，那么问题是Word Embedding这种做法能算是预训练吗？这其实就是标准的预训练过程。要理解这一点要看看学会Word Embedding后下游任务是怎么用它的。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fyvo19k986j30ou07r0wx.jpg" width="60%"></p>
+<p>NLP任务在使用Word Embedding的时候也类似图像有两种做法，一种是Frozen，就是Word Embedding那层网络参数固定不动；另外一种是Fine-Tuning，就是Word Embedding这层参数使用新的训练集合训练也需要跟着训练过程更新掉。</p>
+<ul>
+<li>缺点</li>
+</ul>
+<p>在图中我们也已经进行的标注，这是2018年之前NLP领域广泛采用的预训练方式，之前的文章中已经提到了，Word Embedding其实对于很多下游的NLP有帮助，但是帮助的程度没有想象中的那么大而已。所以，究竟是什么原因导致这样的问题呢？</p>
+<p>多义词问题。比如多义词Bank，有两个常用含义，但是Word Embedding在对bank这个单词进行编码的时候，是区分不开这两个含义的，因为它们尽管上下文环境中出现的单词不同，但是在用语言模型训练的时候，不论什么上下文的句子经过word2vec，都是预测相同的单词bank，而同一个单词占的是同一行的参数空间，这导致两种不同的上下文信息都会编码到相同的word embedding空间里去。所以word embedding无法区分多义词的不同语义，这就是它的一个比较严重的问题。</p>
+<h3 id="从Word-Embedding到ELMo"><a href="#从Word-Embedding到ELMo" class="headerlink" title="从Word Embedding到ELMo"></a>从Word Embedding到ELMo</h3><p>++可以说，EMLo是基于特征融合的Word Embedding 方式。++</p>
+<p>ELMo是“Embedding from Language Models”的简称，但是论文的题目“Deep contextualized word representation”更能体现其精髓。在EMLo之前，Word Embedding本质上是个静态的方式，所谓静态指的是训练好之后每个单词的表达就固定住了，以后使用的时候，不论新句子上下文单词是什么，这个单词的Word Embedding不会跟着上下文场景的变化而改变，所以对于比如Bank这个词，它事先学好的Word Embedding中混合了几种语义 ，在应用中来了个新句子，即使从上下文中（比如句子包含money等词）明显可以看出它代表的是“银行”的含义，但是对应的Word Embedding内容也不会变，它还是混合了多种语义。</p>
+<p>而ELMo的本质思想是：我事先用语言模型学好一个单词的Word Embedding，此时多义词无法区分，不过这没关系。在我实际使用Word Embedding的时候，单词已经具备了特定的上下文了，这个时候我可以根据上下文单词的语义去调整单词的Word Embedding表示，这样经过调整后的Word Embedding更能表达在这个上下文中的具体含义，自然也就解决了多义词的问题了。所以ELMo本身是个根据当前上下文对Word Embedding动态调整的思路。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fyvpa9n3qej30ob08y0w6.jpg" width="60%"></p>
+<p>ELMo采用了典型的两阶段过程，第一个阶段是利用语言模型进行预训练；第二个阶段是在做下游任务时，从预训练网络中提取对应单词的网络各层的Word Embedding作为新特征补充到下游任务中。上图展示的是其预训练过程，它的网络结构采用了双层双向LSTM，目前语言模型训练的任务目标是根据单词$W_i$的上下文去正确预测单词$W_i$，$W_i$之前的单词序列Context-before称为上文，之后的单词序列Context-after称为下文。图中左端的前向双层LSTM代表正方向编码器，输入的是从左到右顺序的除了预测单词外$W_i$的上文Context-before；右端的逆向双层LSTM代表反方向编码器，输入的是从右到左的逆序的句子下文Context-after；每个编码器的深度都是两层LSTM叠加。这个网络结构其实在NLP中是很常用的。使用这个网络结构利用大量语料做语言模型任务就能预先训练好这个网络，如果训练好这个网络后，输入一个新句子$S_{new}$，句子中每个单词都能得到对应的三个Embedding:最底层是单词的Word Embedding，往上走是第一层双向LSTM中对应单词位置的Embedding，这层编码单词的句法信息更多一些；再往上走是第二层LSTM中对应单词位置的Embedding，这层编码单词的语义信息更多一些。也就是说，ELMo的预训练过程不仅仅学会单词的Word Embedding，还学会了一个双层双向的LSTM网络结构，而这两者后面都有用。</p>
+<ul>
+<li>如何使用</li>
+</ul>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fyvpiw4r2pj315z0d5ak1.jpg" width="80%"></p>
+<p>在完成预训练之后，下游任务的句子中每个单词在EMlo网络中都能获得对应的三个Embedding，之后给予这三个Embedding中的每一个Embedding一个权重a，这个权重可以学习得来，根据各自权重累加求和，将三个Embedding整合成一个。然后将整合后的这个Embedding作为X句在自己任务的那个网络结构中对应单词的输入，以此作为补充的新特征给下游任务使用。</p>
+<ul>
+<li>EMlo的缺点</li>
+</ul>
+<p>第一点，在做序列编码任务时，使用的是LSTM。（有待提高）</p>
+<p>第二点，ELMo采取双向拼接这种融合特征的能力可能比Bert一体化的融合特征方式弱。（只是猜测）</p>
+<h3 id="从Word-Embedding到GPT"><a href="#从Word-Embedding到GPT" class="headerlink" title="从Word Embedding到GPT"></a>从Word Embedding到GPT</h3><p>++相对的，GPT可以看成是基于“Fine-tuning”的Word Embedding。++</p>
+<p>GPT是“Generative Pre-Training”的简称，从名字看其含义是指的生成式的预训练。GPT也采用两阶段过程，第一个阶段是利用语言模型进行预训练，第二阶段通过Fine-tuning的模式解决下游任务。上图展示了GPT的预训练过程，其实和ELMo是类似的，主要不同在于两点：首先，特征抽取器不是用的RNN，而是用的Transformer，它的特征抽取能力要强于RNN，这个选择很明显是很明智的；其次，GPT的预训练虽然仍然是以语言模型作为目标任务，但是采用的是单向的语言模型，所谓“单向”的含义是指：GPT只采用Context-before这个单词的上文来进行预测，而抛开了下文。这个选择现在看不是个太好的选择，原因很简单，它没有把单词的下文融合进来，这限制了其在更多应用场景的效果，比如阅读理解这种任务，在做任务的时候是可以允许同时看到上文和下文一起做决策的。如果预训练时候不把单词的下文嵌入到Word Embedding中，将丢掉了很多信息。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fyvpx4wmyij30of0aldkk.jpg" width="60%"></p>
+<ul>
+<li>如何使用</li>
+</ul>
+<p>首先，对于不同的下游任务来说，本来你可以任意设计自己的网络结构，现在不行了，你要向GPT的网络结构看齐，把任务的网络结构改造成和GPT的网络结构是一样的。然后，在做下游任务的时候，利用第一步预训练好的参数初始化GPT的网络结构，这样通过预训练学到的语言学知识就被引入到你手头的任务里来了，这是个非常好的事情。再次，你可以用手头的任务去训练这个网络，对网络参数进行Fine-tuning，使得这个网络更适合解决手头的问题。</p>
+<ul>
+<li>改造下游任务</li>
+</ul>
+<p>在GPT的论文中，作者给出了何如改造下游任务的方式。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fyvq733tiyj30vz0d243q.jpg" width="60%"></p>
+<h3 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h3><p>BERT和GPT一样，都是属于基于“Fine-Tuning”模式来解决下游任务，只是将GPT的单项模型，变成了双向；也正是如此，在GPT模型中，采用的是Transformer Decoder，每个时刻的Attention计算只能依赖于该时刻前的所有时刻的输出；在BERT模型中，采用的是Transformer Encoder，每个时刻Attention计算可以得到全部时刻的输出。</p>
+<h4 id="“双向”的区别"><a href="#“双向”的区别" class="headerlink" title="“双向”的区别"></a>“双向”的区别</h4><h5 id="“双向”-in-ELMo"><a href="#“双向”-in-ELMo" class="headerlink" title="“双向” in ELMo"></a>“双向” in ELMo</h5><p>在上文中我们提到EMLo也是一种“双向”的模型，但是实际上从模型中我们发现，EMLo实现“双向”的方式是通过特征拼接实现的，即，使用两个单项的RNNs构成的语言模型的拼接。如下图所示：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fyvqoxxo08j30k00b5wfb.jpg" width="60%"></p>
+<p>公式表达如下：</p>
+<p>前向RNNs（当前词的概率只依赖前面出现的词）的语言模型计算是：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fyvqrupas8j30in02eglo.jpg " width="40%"></p>
+<p>后向RNNs（当前词的概率只依赖后面出现的词）的语言模型计算是：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fyvqtvndl2j30ji02eaa5.jpg" width="40%"></p>
+<h5 id="“双向”-in-BERT"><a href="#“双向”-in-BERT" class="headerlink" title="“双向” in BERT"></a>“双向” in BERT</h5><p>BERT提出了Masked Language Model，也就是随机去掉句子中的部分token，然后模型来预测被去掉的token是什么。这样实际上已经不是传统的神经网络语言模型(类似于生成模型)了，而是单纯作为分类问题，根据这个时刻的hidden state来预测这个时刻的token应该是什么，而不是预测下一个时刻的词的概率分布了。</p>
+<p>具体操作是：随机mask语料中15%的token，然后将masked token 位置输出的final hidden vectors送入softmax，来预测masked token。但是这样会导致一些问题。这样虽然可以放心的双向encoding了，但是这样在encoding时把这些盖住的标记也给encoding进去了，而这些mask标记在下游任务中是不存在的。所以作者提出了一些策略来解决这个问题：</p>
+<ul>
+<li><p>有80%的概率用“[mask]”标记来替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my dog is hairy → my dog is [MASK]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>有10%的概率用随机采样的一个单词来替换</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my dog is hairy → my dog is apple</span><br></pre></td></tr></table></figure>
+<ul>
+<li>有10%的概率不做替换（虽然不做替换，但是还是要预测哈）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my dog is hairy → my dog is hairy</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：在训练过程中只有15%的token被预测，正常的语言模型实际上是预测每个token的，因此Masked LM相比正常LM会收敛地慢一些。如下图：</p>
+</blockquote>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fyvshjxe1dj30qm0i0jy4.jpg" width="30%"></p>
+<h5 id="Other-Task-Next-Sentence-Prediction"><a href="#Other-Task-Next-Sentence-Prediction" class="headerlink" title="Other Task - Next Sentence Prediction"></a>Other Task - Next Sentence Prediction</h5><p>很多需要解决的NLP tasks依赖于句子间的关系，例如问答任务等，这个关系语言模型是获取不到的，因此将下一句话预测作为了第二个预训练任务。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fyvrqf97hqj30k00agjs3.jpg" width="60%"></p>
+<h4 id="模型输入"><a href="#模型输入" class="headerlink" title="模型输入"></a>模型输入</h4><p>在BERT中模型的输入分为三个部分。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fyvrrp3dxlj30k006l75d.jpg " width="60%"></p>
+<ul>
+<li>Token embedding 表示当前词的embedding，词向量。</li>
+<li>Segment Embedding 表示当前词所在句子的index embedding，用于区分不同句子。</li>
+<li>Position Embedding 表示当前词所在位置的index embedding，单词的位置信息。</li>
+</ul>
+<blockquote>
+<p>相比于Transformer模型输入的是Token Embeddings和Position Embeddings，在BERT模型中有多加入了Segment Embeddings为将句子整体的Embedding给对应句子中的每个单词。对于句子对，这样可以区分两个句子，比如，两个句子中都包含单词“我”，那么每个单词分别加上单词所在句子的Embedding就能够区分每个“我”到底是在哪个句子里，另外，paper还提出了使用[SEP]作为分隔符来区分两个句子。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">同时，每个句子或者每个句子对（句子序列）前有[CLS]标识符，</span><br><span class="line">这个标识符的Embedding可以代表整个句子或者句子序列的Embedding。</span><br></pre></td></tr></table></figure>
+<h4 id="下游任务改造"><a href="#下游任务改造" class="headerlink" title="下游任务改造"></a>下游任务改造</h4><h5 id="文本分类任务"><a href="#文本分类任务" class="headerlink" title="文本分类任务"></a>文本分类任务</h5><p>既然句子和句子对的上层表示都得到了，那么当然要对文本分类任务进行改造，方式十分简单，对[CLS]的表示进行分类即可。下图为单个句子与句子对的分类任务改造。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fyvsdlv6iaj30u00fatas.jpg" width="60%"></p>
+<h5 id="序列标注任务"><a href="#序列标注任务" class="headerlink" title="序列标注任务"></a>序列标注任务</h5><p>对于每一个token的输出，加一层softmax即可。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fyvsf4v4wwj30h80humyd.jpg" width="27%"></p>
+<h5 id="抽取式任务"><a href="#抽取式任务" class="headerlink" title="抽取式任务"></a>抽取式任务</h5><p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fyvsgebsphj30h80h4myh.jpg" width="27%"></p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p>再次强调，本文是对网上众多关于BERT解读的汇总。</p>
+<p>知乎问题：<a href="https://www.zhihu.com/search?type=content&amp;q=BERT" target="_blank" rel="noopener">https://www.zhihu.com/search?type=content&amp;q=BERT</a></p>
+<p>张俊林：<a href="https://zhuanlan.zhihu.com/p/49271699" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/49271699</a></p>
+<p>李入魔：<a href="https://zhuanlan.zhihu.com/p/46652512" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/46652512</a></p>
+<p>夕小瑶：<a href="https://zhuanlan.zhihu.com/p/47488095" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/47488095</a></p>
+<p>习翔宇：<a href="https://zhuanlan.zhihu.com/p/46833276" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/46833276</a></p>
+<p>陈猛：<a href="https://zhuanlan.zhihu.com/p/51255438" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/51255438</a></p>
+<p>[1] Devlin J , Chang M W , Lee K , et al. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding[J]. 2018.</p>
+<p>[2] Vaswani A, Shazeer N, Parmar N, et al. Attention is all you need[C]//Advances in Neural Information Processing Systems. 2017: 5998-6008.</p>
+<p>[3] Peters M E, Neumann M, Iyyer M, et al. Deep contextualized word representations[J]. arXiv preprint arXiv:1802.05365, 2018.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/26/Attention-is-All-You-Need/" rel="next" title="Attention is All You Need">
+                <i class="fa fa-chevron-left"></i> Attention is All You Need
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzIwOC8xMzc0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/nice.jpg"
+                alt="super1peng" />
+            
+              <p class="site-author-name" itemprop="name">super1peng</p>
+              <p class="site-description motion-element" itemprop="description">享受生活</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/super1peng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:super1peng@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=30 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=1&height=66"></iframe>
+</div>
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#图像领域的预训练"><span class="nav-number">1.1.</span> <span class="nav-text">图像领域的预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图像领域预训练的可行性"><span class="nav-number">1.2.</span> <span class="nav-text">图像领域预训练的可行性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NLP领域的预训练"><span class="nav-number">2.</span> <span class="nav-text">NLP领域的预训练</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Word-Embedding"><span class="nav-number">2.1.</span> <span class="nav-text">Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#语言模型"><span class="nav-number">2.1.1.</span> <span class="nav-text">语言模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#神经网络语言模型（NNLM）"><span class="nav-number">2.1.2.</span> <span class="nav-text">神经网络语言模型（NNLM）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Word2Vec"><span class="nav-number">2.1.3.</span> <span class="nav-text">Word2Vec</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何使用Word-Embedding"><span class="nav-number">2.1.4.</span> <span class="nav-text">如何使用Word Embedding</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从Word-Embedding到ELMo"><span class="nav-number">3.</span> <span class="nav-text">从Word Embedding到ELMo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从Word-Embedding到GPT"><span class="nav-number">4.</span> <span class="nav-text">从Word Embedding到GPT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BERT"><span class="nav-number">5.</span> <span class="nav-text">BERT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#“双向”的区别"><span class="nav-number">5.1.</span> <span class="nav-text">“双向”的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#“双向”-in-ELMo"><span class="nav-number">5.1.1.</span> <span class="nav-text">“双向” in ELMo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#“双向”-in-BERT"><span class="nav-number">5.1.2.</span> <span class="nav-text">“双向” in BERT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Other-Task-Next-Sentence-Prediction"><span class="nav-number">5.1.3.</span> <span class="nav-text">Other Task - Next Sentence Prediction</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型输入"><span class="nav-number">5.2.</span> <span class="nav-text">模型输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下游任务改造"><span class="nav-number">5.3.</span> <span class="nav-text">下游任务改造</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#文本分类任务"><span class="nav-number">5.3.1.</span> <span class="nav-text">文本分类任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#序列标注任务"><span class="nav-number">5.3.2.</span> <span class="nav-text">序列标注任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#抽取式任务"><span class="nav-number">5.3.3.</span> <span class="nav-text">抽取式任务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考资料"><span class="nav-number">5.4.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-child"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">super1peng</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
