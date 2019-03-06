@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,推荐系统," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="《Collaborative Metric Learning》发表在2017年WWW，其主旨是将Metric Learning和Collaborative Filtering结合提升推荐效果。  本文指出基于矩阵分解的CF模型使用product dot 度量user vector和 item vector的方式不满足三角不等式，导致MF模型无法捕获用户的细粒度偏好。因此作者想到使用Large-Ma">
+<meta name="keywords" content="深度学习,推荐系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Collaborative Metric Learning">
+<meta property="og:url" content="http://super1peng.xyz/2019/03/06/Collaborative-Metric-Learning/index.html">
+<meta property="og:site_name" content="大大大大碗面">
+<meta property="og:description" content="《Collaborative Metric Learning》发表在2017年WWW，其主旨是将Metric Learning和Collaborative Filtering结合提升推荐效果。  本文指出基于矩阵分解的CF模型使用product dot 度量user vector和 item vector的方式不满足三角不等式，导致MF模型无法捕获用户的细粒度偏好。因此作者想到使用Large-Ma">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t7xhe30qj31ji0bu40n.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t88fdn73j30a803g3yq.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t8aj9mpxj30aa05sq33.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t8dkjaz8j30oy05aabj.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t8eo9iwdj30di021jrg.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t8i66ycnj30gu02amxw.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t8n6pttcj310204cgnr.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t8ntw5ibj30mk08ggow.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t8oqgbhrj31bi040juf.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t90wje5xj30kg02cjrl.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t91icxhtj30lg02c74i.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t94z31foj30pu02q74g.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t97mk7l6j30u006idgu.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t9be0jnfj30fs03u74h.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t9c9apg4j310k03y0t7.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t9g54qdhj30hn07odgr.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t9k99kusj30qa0bsabr.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t9wnmktkj30bw02gwej.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t9y1fzhjj30vy03sq3g.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t9zlr19dj30ta0dowgy.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ta5vlpw8j30w802oq3g.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0ta9cze6hj30jw03sjrm.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0tabbwltaj30t40lcn6b.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0tag7cu5gj30qu04kmyi.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0tah1k1ncj30s805a75r.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1g0taiz2zboj30tu07yjtn.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0tak6ug0dj31m00l6qf6.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0tam1rxcsj31ly0l0x6p.jpg">
+<meta property="og:updated_time" content="2019-03-06T11:52:49.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Collaborative Metric Learning">
+<meta name="twitter:description" content="《Collaborative Metric Learning》发表在2017年WWW，其主旨是将Metric Learning和Collaborative Filtering结合提升推荐效果。  本文指出基于矩阵分解的CF模型使用product dot 度量user vector和 item vector的方式不满足三角不等式，导致MF模型无法捕获用户的细粒度偏好。因此作者想到使用Large-Ma">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t7xhe30qj31ji0bu40n.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://super1peng.xyz/2019/03/06/Collaborative-Metric-Learning/"/>
+
+
+
+
+
+  <title>Collaborative Metric Learning | 大大大大碗面</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <a href="https://github.com/super1peng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大大大大碗面</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://super1peng.xyz/2019/03/06/Collaborative-Metric-Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="super1peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/nice.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大大大大碗面">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Collaborative Metric Learning</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T19:49:35+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读总量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《Collaborative Metric Learning》发表在2017年WWW，其主旨是将Metric Learning和Collaborative Filtering结合提升推荐效果。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t7xhe30qj31ji0bu40n.jpg"></p>
+<p>本文指出基于矩阵分解的CF模型使用product dot 度量user vector和 item vector的方式不满足三角不等式，导致MF模型无法捕获用户的细粒度偏好。因此作者想到使用Large-Margin Nearest Neighbor（LMNN）中提到的“异类远离”的思想，即一个用户所喜欢的商品要远离这个用户不喜欢的商品，并且该距离也会被一个与Rank（物品排序）有关的权重控制。在论文中，作者进一步考虑了使用Deep Learning进行特征的映射、正则项的约束、特征损失等Tickets。最后，通过实验表明，该模型在一系列标准的数据集上性能得到了显著的提升。</p>
+<h3 id="度量学习"><a href="#度量学习" class="headerlink" title="度量学习"></a>度量学习</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>度量学习（Metric Learning）它的目的就是用来比较两个对象之间的相似程度，通常用于图像识别领域，比如人脸的相似性、姿势的相似性等。相似性的度量函数$d(x,y)$一般根据处理的问题进行选择，但是要尽量满足以下的条件：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t88fdn73j30a803g3yq.jpg"></p>
+<p>所以常见的相似性度量方法有：欧氏距离、曼哈顿距离、切比雪夫距离、闵可夫斯基距离、马氏距离、夹角余弦、信息熵等。相似性度量描述链各个对象之间的相似程度，假设特征向量x和y分别表示为：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t8aj9mpxj30aa05sq33.jpg"></p>
+<p>相似性度量函数$d(x,y)$越小则表示x和y越相似。距离度量可以理解为相似度， 任何方法只要用到相似度，就会涉及到度量学习。度量学习的目的就是使得相似的样本距离更小，不相似的样本距离更大。</p>
+<p>由于人的面部识别、姿态识别、步态识别甚至行为识别等特征的维度之间往往具有很强的相关性，因此度量学习的主流就是马氏距离学习、欧氏距离等。欧式距离源自欧式空间中两个点之间的距离公式，其计算公式为（语义信息）：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t8dkjaz8j30oy05aabj.jpg"></p>
+<p>而马氏距离（协方差信息）的定义为：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t8eo9iwdj30di021jrg.jpg"></p>
+<h4 id="常用的度量学习损失函数"><a href="#常用的度量学习损失函数" class="headerlink" title="常用的度量学习损失函数"></a>常用的度量学习损失函数</h4><p>这里以图像领域行人识别进行举例：</p>
+<ul>
+<li>对比损失</li>
+</ul>
+<p>输入为两张图片，每一对训练图片都有一个标签y，y=1表示两张图片属于同一个人（正样本对），反之y=0，表示他们属于不同的人（负样本对）；则它的对比损失函数为：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t8i66ycnj30gu02amxw.jpg"></p>
+<p>当输入为正样本对的时候，$d(I_a,I_b)$逐渐减小，属于同一个人的图片会持续在特征空间中形成聚类；反之，当输入的是负样本对时，$d(I_a,I_b)$逐渐变大，知道超过设定的阈值（安全距离）$\alpha$。通过最小化损失函数，最后可以使正样本对之间距离逐渐变小，负样本对之间距离逐渐变大，从而满足行人重识别任务的需要。</p>
+<ul>
+<li>三元组损失（Triplet loss）</li>
+</ul>
+<p>三元组损失是一种被广泛应用的度量学习损失，之后的大量度量学习方法也是基于三元组损失演变而来。顾名思义，三元组损失需要三张输入图片。和对比损失不同，一个输入的三元组（Triplet）包括一对正样本对和一对负样本对。三张图片分别命名为固定图片(Anchor) a、正样本图片(Positive)p和负样本图片(Negative) n 。图片 a 和图片 p 为一对正样本对，图片 a 和图片 n 为一对负样本对。则三元组损失表示为：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t8n6pttcj310204cgnr.jpg"></p>
+<p>如下图所示，三元组可以拉近正样本对之间的距离，推开负样本对之间的距离，最后使得相同ID的行人图片在特征空间里形成聚类，达到行人重识别的目的。如下图所示：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t8ntw5ibj30mk08ggow.jpg"></p>
+<p>改进：原版的Triplet loss只考虑正负样本对之间的相对距离，而并没有考虑正样本对之间的绝对距离，为此提出改进三元组损失(Improved triplet loss)：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t8oqgbhrj31bi040juf.jpg"><br>保证网络不仅能够在特征空间把正负样本推开，也能保证正样本对之间的距离很近。</p>
+<ul>
+<li>四元组损失(Quadruplet loss)</li>
+<li>难样本采样三元组损失(Triplet loss with batch hard mining, TriHard loss)</li>
+<li>边界挖掘损失(Margin sample mining loss, MSML)</li>
+</ul>
+<p>这里不再详细介绍。</p>
+<h4 id="度量学习通用框架"><a href="#度量学习通用框架" class="headerlink" title="度量学习通用框架"></a>度量学习通用框架</h4><p>令$χ={x1,x2,…,xn}$是空间$ℝ^m$上的一个数据集，将相似对记为：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t90wje5xj30kg02cjrl.jpg"></p>
+<p>非相似对记为：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t91icxhtj30lg02c74i.jpg"></p>
+<p>最普通的度量学习方法采用的是马氏距离度量： </p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t94z31foj30pu02q74g.jpg"></p>
+<p>这相当于将输入x投影到新空间$ℝ^m$上，度量学习的训练目的就是解决如下凸优化问题：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t97mk7l6j30u006idgu.jpg"></p>
+<p>一个输入x，我们把离x近的数据点作为它的target neighbors。并且假设x的target neighbors构建了不同类标之间的边界。不同类标的输入侵入边界被作为importors。这里，学习的目标就是最小化importors的个数。</p>
+<p> 一种为人知模型是LMNN，它使用2个损失函数来表达上述目标函数。 </p>
+<ul>
+<li><p>Pull Loss，公式如下：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t9be0jnfj30fs03u74h.jpg"></p>
+</li>
+</ul>
+<p>其中，j是i的target neighbor。</p>
+<ul>
+<li>Push Loss，公式如下：</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t9c9apg4j310k03y0t7.jpg"></p>
+<p>其中，如果i和k拥有同一个类标，则$y_{ik}=1$,否则，$y_{ik}=0$，$[z]+=max(z,0)$，完整的损失函数是结合上述两个损失函数。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t9g54qdhj30hn07odgr.jpg"></p>
+<h3 id="CML（Collaborative-Metric-Learning）"><a href="#CML（Collaborative-Metric-Learning）" class="headerlink" title="CML（Collaborative Metric Learning）"></a>CML（Collaborative Metric Learning）</h3><p>Matrix Factorization的CF模型都使用了Dot-Product来衡量用户向量（User Vector）和物品向量（Item Vector）的距离。也就是说，如果Dot-Product的值大， 就代表两个向量相近，值小就代表距离远。但是Dot-Product并不是一个合理的距离测度，因此可能会带来对于相似度的学习不准确的问题。（Dot Product 不满足“三角等式关系”），也就是说距离（相似度）的大小是有传递性的。举例来说，就是如果X与Y和Z都相近，那么Y和Z也应该相近。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t9k99kusj30qa0bsabr.jpg"></p>
+<p>上图左边是通过传统矩阵分解得到的User/Item的向量，而右侧是通过度量学习得到的User/Item的向量，从上图可以明显发现，传统的矩阵分解Dot Product没有距离的传递性。</p>
+<hr>
+<p>为了解决这个问题，作者将用户对物品是否喜欢的这种关系类比上文中物品之间的相似度关系，创造性的将度量学习进入到协同过滤中来。</p>
+<p>详细地，在文中作者使用$u_i$与$v_i$分别作为用户与物品的特征描述。定义用户ui与vi之前距离，使用的是欧式距离：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t9wnmktkj30bw02gwej.jpg"></p>
+<p>Metric Loss function为：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g0t9y1fzhjj30vy03sq3g.jpg"></p>
+<p>其中，用户i喜欢物品j，同时用户i不喜欢物品j，$[z]<em>+$表示铰链损失（合叶损失函数），$w</em>{ij}$表示排名的权重。m表示安全距离，可以将相关对集合S与不相关的数据对分离开来。如下图所示：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1g0t9zlr19dj30ta0dowgy.jpg"></p>
+<p>对于User喜欢的物品（Positive item），其渐变向User移动。同时，User不喜欢的物品，在计算的过程中，会逐渐从向外移动，直到被推出圈外（一个安全的距离m）。</p>
+<p>本文的Metric Loss Function与LMNN有三点不同：</p>
+<ul>
+<li>User的目标邻居（target neighbors）为用户喜欢的所有items，items没有目标邻居。CML是以每一个User作为一个分类标签，items只属于某个特定的类。</li>
+<li>CML没有Lpull, 只保留了Lpush项。item可以被很多user喜欢，最小化Lpull明显是不合理的。</li>
+<li>本文采用加权的排名损失（weighted ranking loss）优化Top-K recommendations。</li>
+</ul>
+<h4 id="Approximated-Ranking-Weight"><a href="#Approximated-Ranking-Weight" class="headerlink" title="Approximated Ranking Weight"></a>Approximated Ranking Weight</h4><p>作者对用户的low rank进行惩罚（距离直接利用欧式距离，惩罚采用WARP）。low rank可以理解为User的推荐item列表的位置靠后的item。low rank penalize的目的就是通过给$rank(i,j)$大的样本更大的权重$w_{ij}$，使得在训练的过程中更加重视这些样本。rank越大，惩罚越大。它的计算方式如下：</p>
+<ul>
+<li>对于每个user-item对$(i,j)$，采样U个负样本item，并计算距离损失函数。</li>
+<li>让M代表U中impostor的个数，J为所有的item数。则其中$rankd(i,j)$可近似为：</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0ta5vlpw8j30w802oq3g.jpg"></p>
+<h4 id="Deep-Learning"><a href="#Deep-Learning" class="headerlink" title="Deep Learning"></a>Deep Learning</h4><p>在论文中，作者使用deep learing学习将物品feature到物品的latent vector的映射函数$f(x)$，所以损失函数中需要添加一项：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0ta9cze6hj30jw03sjrm.jpg"></p>
+<p>特征损失函数目的是把item的特征向量作为item本身的一种先验，来调整$v_j$的位置，即相同feature的item理应离得更近，并且能改善那些很少评分的item的位置。$f(x)$由MLP+dropout实现。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0tabbwltaj30t40lcn6b.jpg"></p>
+<h4 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h4><p>正则项损失函数：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0tag7cu5gj30qu04kmyi.jpg"></p>
+<p>其中$C$为协方差矩阵：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0tah1k1ncj30s805a75r.jpg"></p>
+<p>其中$y_{i}^{n}$为user或者item的向量，n为batch中的索引，i<br>为向量的维度。$\mu _{i} =\frac{1}{N} \Sigma <em>{n}y</em>{i}^{n}$ ，N为batch大小。协方差正则项的引入，主要是接触各维度间的相关性，因为协方差可以看作向量间的冗余。这样能是的整个空间能进行更多信息的表达。</p>
+<p>综上，系统整体的损失函数为：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g0taiz2zboj30tu07yjtn.jpg"></p>
+<p>下方的限制条件为保证空间可计算性。整个过程为Mini-Batch SGD训练，学习率采用AdaGrad控制。</p>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><p>本文将CML与CF中的许多方法在各领域都进行了对比实验。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0tak6ug0dj31m00l6qf6.jpg"></p>
+<p>实验结果中可以看到，CML超过了几乎所有的方法，并且是在各领域都达到了state-of-the-art。并且CML方法在对于注重用户兴趣的数据集上比较好，说明CML能很好的发现用户的preference。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0tam1rxcsj31ly0l0x6p.jpg"></p>
+<p>作者发现，对映射后的特征进行聚类，Item与Item之间有很好的相似性。</p>
+<h4 id="参考及引用"><a href="#参考及引用" class="headerlink" title="参考及引用"></a>参考及引用</h4><ul>
+<li><a href="http://www.cs.cornell.edu/~ylongqi/paper/HsiehYCLBE17.pdf" target="_blank" rel="noopener">http://www.cs.cornell.edu/~ylongqi/paper/HsiehYCLBE17.pdf</a> – 论文原文</li>
+<li><a href="http://www.cs.cornell.edu/~ylongqi/presentation/HsiehYCLBE17Slides.pdf" target="_blank" rel="noopener">http://www.cs.cornell.edu/~ylongqi/presentation/HsiehYCLBE17Slides.pdf</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/2" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/2</a></li>
+<li><a href="https://www.infosec-wiki.com/?p=275996" target="_blank" rel="noopener">https://www.infosec-wiki.com/?p=275996</a></li>
+<li><a href="https://blog.csdn.net/chunyun0716/article/details/76473579" target="_blank" rel="noopener">https://blog.csdn.net/chunyun0716/article/details/76473579</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i>深度学习</a>
+          
+            <a href="/tags/推荐系统/" rel="tag"><i class="fa fa-tag"></i>推荐系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/05/谷歌最强NLP模型-BERT/" rel="next" title="谷歌最强NLP模型-BERT">
+                <i class="fa fa-chevron-left"></i> 谷歌最强NLP模型-BERT
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzIwOC8xMzc0Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/nice.jpg"
+                alt="super1peng" />
+            
+              <p class="site-author-name" itemprop="name">super1peng</p>
+              <p class="site-description motion-element" itemprop="description">享受生活</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/super1peng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:super1peng@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=30 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=1&height=66"></iframe>
+</div>
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#度量学习"><span class="nav-number">1.</span> <span class="nav-text">度量学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的度量学习损失函数"><span class="nav-number">1.2.</span> <span class="nav-text">常用的度量学习损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#度量学习通用框架"><span class="nav-number">1.3.</span> <span class="nav-text">度量学习通用框架</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CML（Collaborative-Metric-Learning）"><span class="nav-number">2.</span> <span class="nav-text">CML（Collaborative Metric Learning）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Approximated-Ranking-Weight"><span class="nav-number">2.1.</span> <span class="nav-text">Approximated Ranking Weight</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Deep-Learning"><span class="nav-number">2.2.</span> <span class="nav-text">Deep Learning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Regularization"><span class="nav-number">2.3.</span> <span class="nav-text">Regularization</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验结果"><span class="nav-number">3.</span> <span class="nav-text">实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考及引用"><span class="nav-number">3.1.</span> <span class="nav-text">参考及引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-child"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">super1peng</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
