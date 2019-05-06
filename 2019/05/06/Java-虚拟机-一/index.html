@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="1 运行时数据区域Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，这些数据区域都有各自的用途，以及创建和销毁的时间。  1.1 程序计数器（线程私有）是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计">
+<meta name="description" content="1 运行时数据区域Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，这些数据区域都有各自的用途，以及创建和销毁的时间。">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 虚拟机(一)">
 <meta property="og:url" content="http://super1peng.xyz/2019/05/06/Java-虚拟机-一/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="1 运行时数据区域Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，这些数据区域都有各自的用途，以及创建和销毁的时间。  1.1 程序计数器（线程私有）是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计">
+<meta property="og:description" content="1 运行时数据区域Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，这些数据区域都有各自的用途，以及创建和销毁的时间。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g2rp24no6oj30db0ajgmr.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g2rq2s4jetj30h008rgmq.jpg">
@@ -104,10 +104,10 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g2rqdxwr0ej30kw03udhl.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g2rqef8hu9j30g507b3zy.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79ly1g2rqexmqc3j30lb05bwgw.jpg">
-<meta property="og:updated_time" content="2019-05-06T09:47:18.855Z">
+<meta property="og:updated_time" content="2019-05-06T09:50:59.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 虚拟机(一)">
-<meta name="twitter:description" content="1 运行时数据区域Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，这些数据区域都有各自的用途，以及创建和销毁的时间。  1.1 程序计数器（线程私有）是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计">
+<meta name="twitter:description" content="1 运行时数据区域Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，这些数据区域都有各自的用途，以及创建和销毁的时间。">
 <meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g2rp24no6oj30db0ajgmr.jpg">
 
 
@@ -356,8 +356,8 @@
       
 
       
-        <a id="more"></a>
-<h2 id="1-运行时数据区域"><a href="#1-运行时数据区域" class="headerlink" title="1 运行时数据区域"></a>1 运行时数据区域</h2><p>Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，这些数据区域都有各自的用途，以及创建和销毁的时间。</p>
+        <h2 id="1-运行时数据区域"><a href="#1-运行时数据区域" class="headerlink" title="1 运行时数据区域"></a>1 运行时数据区域</h2><p>Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，这些数据区域都有各自的用途，以及创建和销毁的时间。</p>
+<a id="more"></a>
 <p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g2rp24no6oj30db0ajgmr.jpg"></p>
 <h3 id="1-1-程序计数器（线程私有）"><a href="#1-1-程序计数器（线程私有）" class="headerlink" title="1.1 程序计数器（线程私有）"></a>1.1 程序计数器（线程私有）</h3><p>是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。</p>
 <h3 id="1-2-Java虚拟机栈（线程私有）"><a href="#1-2-Java虚拟机栈（线程私有）" class="headerlink" title="1.2 Java虚拟机栈（线程私有）"></a>1.2 Java虚拟机栈（线程私有）</h3><p>它的生命周期与线程相同，虚拟机栈描述的是Java方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧（Stack Frame）用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每个方法从调用直至执行完成的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。</p>
