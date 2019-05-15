@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="循环神经网络(RNN)人们的每次思考并不都是从零开始的。比如说你在阅读这篇文章时，你基于对前面的文字的理解来理解你目前阅读到的文字，而不是每读到一个文字时，都抛弃掉前面的思考，从头开始。你的记忆是有持久性的。传统的神经网络并不能如此，这似乎是一个主要的缺点。例如，假设你在看一场电影，你想对电影里的每一个场景进行分类。传统的神经网络不能够基于前面的已分类场景来推断接下来的场景分类。循环神经网络(Re">
+<meta name="description" content="循环神经网络(RNN)人们的每次思考并不都是从零开始的。比如说你在阅读这篇文章时，你基于对前面的文字的理解来理解你目前阅读到的文字，而不是每读到一个文字时，都抛弃掉前面的思考，从头开始。你的记忆是有持久性的。传统的神经网络并不能如此，这似乎是一个主要的缺点。例如，假设你在看一场电影，你想对电影里的每一个场景进行分类。传统的神经网络不能够基于前面的已分类场景来推断接下来的场景分类。循环神经网络(">
 <meta name="keywords" content="深度学习,RNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RNN_LSTM">
 <meta property="og:url" content="http://super1peng.xyz/2018/06/11/RNN-LSTM/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="循环神经网络(RNN)人们的每次思考并不都是从零开始的。比如说你在阅读这篇文章时，你基于对前面的文字的理解来理解你目前阅读到的文字，而不是每读到一个文字时，都抛弃掉前面的思考，从头开始。你的记忆是有持久性的。传统的神经网络并不能如此，这似乎是一个主要的缺点。例如，假设你在看一场电影，你想对电影里的每一个场景进行分类。传统的神经网络不能够基于前面的已分类场景来推断接下来的场景分类。循环神经网络(Re">
+<meta property="og:description" content="循环神经网络(RNN)人们的每次思考并不都是从零开始的。比如说你在阅读这篇文章时，你基于对前面的文字的理解来理解你目前阅读到的文字，而不是每读到一个文字时，都抛弃掉前面的思考，从头开始。你的记忆是有持久性的。传统的神经网络并不能如此，这似乎是一个主要的缺点。例如，假设你在看一场电影，你想对电影里的每一个场景进行分类。传统的神经网络不能够基于前面的已分类场景来推断接下来的场景分类。循环神经网络(">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://super1peng.xyz/2018/06/11/RNN-LSTM/pic_1.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/06/11/RNN-LSTM/pic_2.png">
@@ -103,10 +103,10 @@
 <meta property="og:image" content="http://super1peng.xyz/2018/06/11/RNN-LSTM/pic_14.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/06/11/RNN-LSTM/pic_15.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/06/11/RNN-LSTM/pic_16.png">
-<meta property="og:updated_time" content="2018-10-19T12:33:57.730Z">
+<meta property="og:updated_time" content="2019-05-15T07:31:35.152Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RNN_LSTM">
-<meta name="twitter:description" content="循环神经网络(RNN)人们的每次思考并不都是从零开始的。比如说你在阅读这篇文章时，你基于对前面的文字的理解来理解你目前阅读到的文字，而不是每读到一个文字时，都抛弃掉前面的思考，从头开始。你的记忆是有持久性的。传统的神经网络并不能如此，这似乎是一个主要的缺点。例如，假设你在看一场电影，你想对电影里的每一个场景进行分类。传统的神经网络不能够基于前面的已分类场景来推断接下来的场景分类。循环神经网络(Re">
+<meta name="twitter:description" content="循环神经网络(RNN)人们的每次思考并不都是从零开始的。比如说你在阅读这篇文章时，你基于对前面的文字的理解来理解你目前阅读到的文字，而不是每读到一个文字时，都抛弃掉前面的思考，从头开始。你的记忆是有持久性的。传统的神经网络并不能如此，这似乎是一个主要的缺点。例如，假设你在看一场电影，你想对电影里的每一个场景进行分类。传统的神经网络不能够基于前面的已分类场景来推断接下来的场景分类。循环神经网络(">
 <meta name="twitter:image" content="http://super1peng.xyz/2018/06/11/RNN-LSTM/pic_1.png">
 
 
@@ -355,7 +355,9 @@
       
 
       
-        <h2 id="循环神经网络-RNN"><a href="#循环神经网络-RNN" class="headerlink" title="循环神经网络(RNN)"></a>循环神经网络(RNN)</h2><p>人们的每次思考并不都是从零开始的。比如说你在阅读这篇文章时，你基于对前面的文字的理解来理解你目前阅读到的文字，而不是每读到一个文字时，都抛弃掉前面的思考，从头开始。你的记忆是有持久性的。<br>传统的神经网络并不能如此，这似乎是一个主要的缺点。例如，假设你在看一场电影，你想对电影里的每一个场景进行分类。传统的神经网络不能够基于前面的已分类场景来推断接下来的场景分类。<br>循环神经网络(Recurrent Neural Networks)解决了这个问题。这种神经网络带有环，可以将信息持久化。<br><a id="more"></a><br><img src="/2018/06/11/RNN-LSTM/pic_1.png" alt="pic_1"><br>在上图所示的神经网络$A$中，输入为$X_t$，输出为$h_t$。$A$上的环允许将每一步产生的信息传递到下一步中。环的加入使得RNN变得神秘。不过，如果你多思考一下的话，其实RNN跟普通的神经网络也没有那么不同。一个RNN可以看作是同一个网络的多份副本，每一份都将信息传递到下一个副本。如果我们将环展开的话：<br><img src="/2018/06/11/RNN-LSTM/pic_2.png" alt="pic_2"><br>这种链式结构展示了RNN与序列和列表的密切关系。RNN的这种结构能够非常自然地使用这类数据。而且事实的确如此。在过去的几年里，RNN在一系列的任务中都取得了令人惊叹的成就，比如语音识别，语言建模，翻译，图片标题等等。<br>LSTM是这一系列成功中的必要组成部分。LSTM(Long Short Term Memory)是一种特殊的循环神经网络，在许多任务中，LSTM表现得比标准的RNN要出色得多。几乎所有基于RNN的令人赞叹的结果都是LSTM取得的。本文接下来将着重介绍LSTM。  </p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<h2 id="循环神经网络-RNN"><a href="#循环神经网络-RNN" class="headerlink" title="循环神经网络(RNN)"></a>循环神经网络(RNN)</h2><p>人们的每次思考并不都是从零开始的。比如说你在阅读这篇文章时，你基于对前面的文字的理解来理解你目前阅读到的文字，而不是每读到一个文字时，都抛弃掉前面的思考，从头开始。你的记忆是有持久性的。<br>传统的神经网络并不能如此，这似乎是一个主要的缺点。例如，假设你在看一场电影，你想对电影里的每一个场景进行分类。传统的神经网络不能够基于前面的已分类场景来推断接下来的场景分类。<br>循环神经网络(Recurrent Neural Networks)解决了这个问题。这种神经网络带有环，可以将信息持久化。<br><a id="more"></a><br><img src="/2018/06/11/RNN-LSTM/pic_1.png" alt="pic_1"><br>在上图所示的神经网络$A$中，输入为$X_t$，输出为$h_t$。$A$上的环允许将每一步产生的信息传递到下一步中。环的加入使得RNN变得神秘。不过，如果你多思考一下的话，其实RNN跟普通的神经网络也没有那么不同。一个RNN可以看作是同一个网络的多份副本，每一份都将信息传递到下一个副本。如果我们将环展开的话：<br><img src="/2018/06/11/RNN-LSTM/pic_2.png" alt="pic_2"><br>这种链式结构展示了RNN与序列和列表的密切关系。RNN的这种结构能够非常自然地使用这类数据。而且事实的确如此。在过去的几年里，RNN在一系列的任务中都取得了令人惊叹的成就，比如语音识别，语言建模，翻译，图片标题等等。<br>LSTM是这一系列成功中的必要组成部分。LSTM(Long Short Term Memory)是一种特殊的循环神经网络，在许多任务中，LSTM表现得比标准的RNN要出色得多。几乎所有基于RNN的令人赞叹的结果都是LSTM取得的。本文接下来将着重介绍LSTM。  </p>
 <h2 id="长期依赖-Long-Term-Dependencies-的问题"><a href="#长期依赖-Long-Term-Dependencies-的问题" class="headerlink" title="长期依赖(Long Term Dependencies)的问题"></a>长期依赖(Long Term Dependencies)的问题</h2><p>RNN的一个核心思想是将以前的信息连接到当前的任务中来，例如，通过前面的视频帧来帮助理解当前帧。如果RNN真的能够这样做的话，那么它们将会极其有用。但是事实真是如此吗？未必。<br>有时候，我们只需要看最近的信息，就可以完成当前的任务。比如，考虑一个语言模型，通过前面的单词来预测接下来的单词。如果我们想预测句子<code>“the clouds are in the sky”</code>中的最后一个单词，我们不需要更多的上下文信息——很明显下一个单词应该是sky。在这种情况下，当前位置与相关信息所在位置之间的距离相对较小，RNN可以被训练来使用这样的信息。<br><img src="/2018/06/11/RNN-LSTM/pic_3.png" alt="pic_3"><br>然而，有时候我们需要更多的上下文信息。比如，我们想预测句子<code>“I grew up in France… I speak fluent French”</code>中的最后一个单词。最近的信息告诉我们，最后一个单词可能是某种语言的名字，然而如果我们想确定到底是哪种语言的话，我们需要France这个更远的上下文信息。实际上，相关信息和需要该信息的位置之间的距离可能非常的远。<br>不幸的是，随着距离的增大，RNN对于如何将这样的信息连接起来无能为力。<br><img src="/2018/06/11/RNN-LSTM/pic_4.png" alt="pic_4"><br>理论上说，RNN是有能力来处理这种长期依赖<code>(Long Term Dependencies)</code>的。人们可以通过精心调参来构建模型处理一个这种玩具问题<code>(Toy Problem)</code>。  </p>
 <h2 id="LSTM网络"><a href="#LSTM网络" class="headerlink" title="LSTM网络"></a>LSTM网络</h2><p>LSTM，全称为长短期记忆网络(Long Short Term Memory networks)，是一种特殊的RNN，能够学习到长期依赖关系。LSTM由Hochreiter &amp; Schmidhuber (1997)提出，许多研究者进行了一系列的工作对其改进并使之发扬光大。LSTM在许多问题上效果非常好，现在被广泛使用。<br>LSTM在设计上明确地避免了长期依赖的问题。记住长期信息是小菜一碟！所有的循环神经网络都有着重复的神经网络模块形成链的形式。在普通的RNN中，重复模块结构非常简单，例如只有一个tanh层。<br><img src="/2018/06/11/RNN-LSTM/pic_5.png" alt="pic_5"><br>LSTM也有这种链状结构，不过其重复模块的结构不同。LSTM的重复模块中有4个神经网络层，并且他们之间的交互非常特别。<br><img src="/2018/06/11/RNN-LSTM/pic_6.png" alt="pic_6"><br>我们会一步一步地对LSTM的各个部分进行介绍。开始之前，我们先介绍一下将用到的标记。<br><img src="/2018/06/11/RNN-LSTM/pic_7.png" alt="pic_7"><br>在上图中，每条线表示向量的传递，从一个结点的输出传递到另外结点的输入。粉红圆表示向量的元素级操作，比如相加或者相乘。黄色方框表示神经网络的层。线合并表示向量的连接，线分叉表示向量复制。</p>
 <h3 id="LSTM核心思想"><a href="#LSTM核心思想" class="headerlink" title="LSTM核心思想"></a>LSTM核心思想</h3><p>LSTM的关键是元胞状态(Cell State)，下图中横穿整个元胞顶部的水平线。<br>元胞状态有点像是传送带，它直接穿过整个链，同时只有一些较小的线性交互。上面承载的信息可以很容易地流过而不改变。<br><img src="/2018/06/11/RNN-LSTM/pic_8.png" alt="pic_8"><br>LSTM有能力对元胞状态添加或者删除信息，这种能力通过一种叫门的结构来控制。<br>门是一种选择性让信息通过的方法。它们由一个Sigmoid神经网络层和一个元素级相乘操作组成。<br><img src="/2018/06/11/RNN-LSTM/pic_9.png" alt="pic_9"><br>Sigmoid层输出0~1之间的值，每个值表示对应的部分信息是否应该通过。0值表示不允许信息通过，1值表示让所有信息通过。一个LSTM有3个这种门，来保护和控制元胞状态。</p>

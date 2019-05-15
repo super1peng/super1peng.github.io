@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用户才">
+<meta name="description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用">
 <meta name="keywords" content="Django,Django rest framework">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Django RESTful API (4) 认证和权限">
 <meta property="og:url" content="http://super1peng.xyz/2018/10/06/Django-RESTful-API-4-认证和权限/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用户才">
+<meta property="og:description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyib0v3xlj30o90k70v8.jpg">
-<meta property="og:updated_time" content="2018-10-19T12:32:38.119Z">
+<meta property="og:updated_time" content="2019-05-15T07:30:41.415Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django RESTful API (4) 认证和权限">
-<meta name="twitter:description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用户才">
+<meta name="twitter:description" content="前言按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。   但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能：   sinppet与其他创建者相互关联； 只有经过身份验证（登录）的用">
 <meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyib0v3xlj30o90k70v8.jpg">
 
 
@@ -340,7 +340,9 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。  </p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>按照前面几篇文章的介绍，使用Django编写RESTful API的基本功能已经像模像样了。我们可以通过不同的URL访问到不同的资源，通过不同的HTTP请求来实现对资源的不同操作。  </p>
 <p>但是现在我们的API还有一个明显的缺陷，那就是没有认证和权限功能，任何资源都会被任何用户随意更改，所以我们要改进程序，实现一下的功能： </p>
 <ul>
 <li>sinppet与其他创建者相互关联；</li>

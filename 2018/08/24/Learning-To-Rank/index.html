@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://super1peng.xyz/2018/08/24/Learning-To-Rank/pointwise.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/08/24/Learning-To-Rank/pairwise.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/08/24/Learning-To-Rank/ndcg.png">
-<meta property="og:updated_time" content="2018-10-19T12:33:40.506Z">
+<meta property="og:updated_time" content="2019-05-15T07:31:25.072Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Learning To Rank">
 <meta name="twitter:description" content="Learning to rank，即排序学习，简称L2R，它是构建排序模型的机器学习方法，在信息检索、自然语言处理、数据挖掘等场景中具有重要作用。其达到的效果是：给定一组文档，对任意查询请求给出反映文档相关性的文档排序。">
@@ -342,7 +342,9 @@
       
 
       
-        <p>Learning to rank，即排序学习，简称L2R，它是构建排序模型的机器学习方法，在信息检索、自然语言处理、数据挖掘等场景中具有重要作用。其达到的效果是：给定一组文档，对任意查询请求给出反映文档相关性的文档排序。<br><a id="more"></a></p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<p>Learning to rank，即排序学习，简称L2R，它是构建排序模型的机器学习方法，在信息检索、自然语言处理、数据挖掘等场景中具有重要作用。其达到的效果是：给定一组文档，对任意查询请求给出反映文档相关性的文档排序。<br><a id="more"></a></p>
 <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>随着互联网的快速发展，L2R技术也越来越受到关注，这是机器学习常见的任务之一。信息检索时，给定一个查询目标，我们需要算出最符合要求的结果并返回，这里涉及一些特征计算、匹配等算法，对于海量的数据，如果仅靠人工来干预其中的一些参数来进行排序的话，是远远达不到要求的，而L2R算法就是用来解决这个问题的。</p>
 <h1 id="L2R算法"><a href="#L2R算法" class="headerlink" title="L2R算法"></a>L2R算法</h1><p>L2R算法主要包括三种类别：Pointwise、Pairwise、Listwise。</p>
 <h2 id="Pointwise"><a href="#Pointwise" class="headerlink" title="Pointwise"></a>Pointwise</h2><p>Pointwise将问题转化为多分类或者回归问题。如果归结为多分类问题，对于某个Query，对文档与此Query的相关程度打标签，标签分为有限的类别，这样就将问题转化为多分类问题；如果归结为回归问题，对于某个Query，则对文档与此Query的相关程度计算相似度Score，这样就将问题归结为回归问题。  </p>

@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="在之前的文章中，加入了用户模型，以及相关的认证和权限的功能。但是我们在使用的时候，会发现在访问 http://127.0.0.1:8000/users/ 时看到的用户列表，不能够直接点击某个链接然后查看其详情，也就是不能跳转到  http://127.0.0.1:8000/users/2 这样的链接，查看Snippet列表的时候也是如此。而且User和Snippet也没相关的链接进行相互之间的跳转">
+<meta name="description" content="在之前的文章中，加入了用户模型，以及相关的认证和权限的功能。但是我们在使用的时候，会发现在访问 http://127.0.0.1:8000/users/ 时看到的用户列表，不能够直接点击某个链接然后查看其详情，也就是不能跳转到  http://127.0.0.1:8000/users/2 这样的链接，查看Snippet列表的时候也是如此。而且User和Snippet也没相关的链接进行相互之间的">
 <meta name="keywords" content="Django,Django rest framework">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Django RESTful API (5) 添加超链接提高模型间的关联性">
 <meta property="og:url" content="http://super1peng.xyz/2018/10/06/Django-RESTful-API-5-添加超链接提高模型间的关联性/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="在之前的文章中，加入了用户模型，以及相关的认证和权限的功能。但是我们在使用的时候，会发现在访问 http://127.0.0.1:8000/users/ 时看到的用户列表，不能够直接点击某个链接然后查看其详情，也就是不能跳转到  http://127.0.0.1:8000/users/2 这样的链接，查看Snippet列表的时候也是如此。而且User和Snippet也没相关的链接进行相互之间的跳转">
+<meta property="og:description" content="在之前的文章中，加入了用户模型，以及相关的认证和权限的功能。但是我们在使用的时候，会发现在访问 http://127.0.0.1:8000/users/ 时看到的用户列表，不能够直接点击某个链接然后查看其详情，也就是不能跳转到  http://127.0.0.1:8000/users/2 这样的链接，查看Snippet列表的时候也是如此。而且User和Snippet也没相关的链接进行相互之间的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyjxax51pj30kt0e740d.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyjyv0xlej30k20i8whp.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyjzxvgmaj30c606rt8q.jpg">
-<meta property="og:updated_time" content="2018-10-19T12:32:43.127Z">
+<meta property="og:updated_time" content="2019-05-15T07:30:45.993Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django RESTful API (5) 添加超链接提高模型间的关联性">
-<meta name="twitter:description" content="在之前的文章中，加入了用户模型，以及相关的认证和权限的功能。但是我们在使用的时候，会发现在访问 http://127.0.0.1:8000/users/ 时看到的用户列表，不能够直接点击某个链接然后查看其详情，也就是不能跳转到  http://127.0.0.1:8000/users/2 这样的链接，查看Snippet列表的时候也是如此。而且User和Snippet也没相关的链接进行相互之间的跳转">
+<meta name="twitter:description" content="在之前的文章中，加入了用户模型，以及相关的认证和权限的功能。但是我们在使用的时候，会发现在访问 http://127.0.0.1:8000/users/ 时看到的用户列表，不能够直接点击某个链接然后查看其详情，也就是不能跳转到  http://127.0.0.1:8000/users/2 这样的链接，查看Snippet列表的时候也是如此。而且User和Snippet也没相关的链接进行相互之间的">
 <meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvyjxax51pj30kt0e740d.jpg">
 
 
@@ -342,7 +342,9 @@
       
 
       
-        <p>在之前的文章中，加入了用户模型，以及相关的认证和权限的功能。但是我们在使用的时候，会发现在访问 <a href="http://127.0.0.1:8000/users/" target="_blank" rel="noopener">http://127.0.0.1:8000/users/</a> 时看到的用户列表，不能够直接点击某个链接然后查看其详情，也就是不能跳转到  <a href="http://127.0.0.1:8000/users/2" target="_blank" rel="noopener">http://127.0.0.1:8000/users/2</a> 这样的链接，查看Snippet列表的时候也是如此。而且User和Snippet也没相关的链接进行相互之间的跳转。这些就很影响用户体验了，每次都需要重新输入URL才可以访问别的内容。这就是这篇文章主要解决的问题。</p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<p>在之前的文章中，加入了用户模型，以及相关的认证和权限的功能。但是我们在使用的时候，会发现在访问 <a href="http://127.0.0.1:8000/users/" target="_blank" rel="noopener">http://127.0.0.1:8000/users/</a> 时看到的用户列表，不能够直接点击某个链接然后查看其详情，也就是不能跳转到  <a href="http://127.0.0.1:8000/users/2" target="_blank" rel="noopener">http://127.0.0.1:8000/users/2</a> 这样的链接，查看Snippet列表的时候也是如此。而且User和Snippet也没相关的链接进行相互之间的跳转。这些就很影响用户体验了，每次都需要重新输入URL才可以访问别的内容。这就是这篇文章主要解决的问题。</p>
 <p>另外，上一篇文章说的能使代码段高亮的HTML代码，也会在本文中看到其使用。<br><a id="more"></a></p>
 <h2 id="为API创建根URL"><a href="#为API创建根URL" class="headerlink" title="为API创建根URL"></a>为API创建根URL</h2><p>根URL也就是访问根路径，就是<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">```python</span><br><span class="line">from rest_framework.decorators import api_view</span><br><span class="line">from rest_framework.response import Response</span><br><span class="line">from rest_framework.reverse import reverse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@api_view([&apos;GET&apos;])</span><br><span class="line">def api_root(request, format=None):</span><br><span class="line">    return Response(&#123;</span><br><span class="line">        &apos;users&apos;: reverse(&apos;user-list&apos;, request=request, format=format),</span><br><span class="line">        &apos;snippets&apos;: reverse(&apos;snippet-list&apos;, request=request, format=format)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure></p>
 <p>这里的新知识是reverse，它会根据参数返回一个超链接，看到’user-list’和’snippet-list’基本就和Django自带的reverse一样的道理，就是根据路由匹配模式的命名来生成超链接，所以等下需要编辑 snippets/urls.py 设置一下name参数。</p>

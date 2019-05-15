@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下">
+<meta name="description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的">
 <meta name="keywords" content="自然语言处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Negative-Sampling-CBOW">
 <meta property="og:url" content="http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下">
+<meta property="og:description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/1.png">
-<meta property="og:updated_time" content="2018-10-19T12:33:48.296Z">
+<meta property="og:updated_time" content="2019-05-15T07:31:28.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Negative-Sampling-CBOW">
-<meta name="twitter:description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下">
+<meta name="twitter:description" content="在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的">
 <meta name="twitter:image" content="http://super1peng.xyz/2018/04/23/Negative-Sampling-CBOW/1.png">
 
 
@@ -340,7 +340,9 @@
       
 
       
-        <p>　　在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。<br>　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下走很久了，能不能不用创建这么复杂的一棵霍夫曼树，将模型的结构变得更加简单？<br>　　Negative Sampling就是这么一种求解word2vec模型的方法，它摒弃了霍夫曼树，采用了Negative Sampling(负采样)的方法来求解。<br><a id="more"></a></p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<p>　　在上一篇中我们讲到了基于Hierarchical Softmax的word2vec模型，本文我们再来看看另一种求解word2vec模型的方法：Negative Sampling。<br>　　我们先来看看Hierarchical Softmax的缺点。在模型中，使用霍夫曼树来代替传统的神经网络，可以提高模型训练的效率。但是如果我们的训练样本里的中心词$w$是一个很生僻的词，那么就得在霍夫曼树中辛苦的向下走很久了，能不能不用创建这么复杂的一棵霍夫曼树，将模型的结构变得更加简单？<br>　　Negative Sampling就是这么一种求解word2vec模型的方法，它摒弃了霍夫曼树，采用了Negative Sampling(负采样)的方法来求解。<br><a id="more"></a></p>
 <h1 id="基于Negative-Sampling的模型概述"><a href="#基于Negative-Sampling的模型概述" class="headerlink" title="基于Negative Sampling的模型概述"></a>基于Negative Sampling的模型概述</h1><p>既然名字叫Negative Sampling（负采样），那么肯定使用了采样的方法。采样的方法有很多种，比如之前讲到的大名鼎鼎的<code>MCMC</code>。我们这里的Negative Sampling采样方法并没有MCMC那么复杂。  </p>
 <p>　　比如我们有一个训练样本，中心词是$w$,它周围上下文共有$2c$个词，记为$context(w)$。由于这个中心词$w$的确和$context(w)$相关存在，因此它是一个真实的正例。通过Negative Sampling采样，我们得到$neg$个和$w$不同的中心词$w_i,i=1,2,..neg$，这样$context(w)$和$w_i$就组成了$neg$个并不真实存在的负例。利用这一个正例和$neg$个负例，我们进行二元逻辑回归，得到负采样对应每个词$w_i$对应的模型参数$\theta_{i}$，和每个词的词向量。</p>
 <p>　　从上面的描述可以看出，Negative Sampling由于没有采用霍夫曼树，每次只是通过采样$neg$个不同的中心词做负例，就可以训练模型，因此整个过程要比Hierarchical Softmax简单。</p>

@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="在上一节中，我们讲到了使用神经网络的方法来得到词向量语言模型的原理和其中存在的一些问题，在这节中我们将着重讲述如何对传统的神经网络模型进行优化。由于word2vec有两种改进方法，一种是基于Hierarchical Softmax的，另一种是基于Negative Sampling的。本文关注于基于Hierarchical Softmax的改进方法，在下一篇讨论基于Negative Sampling">
+<meta name="description" content="在上一节中，我们讲到了使用神经网络的方法来得到词向量语言模型的原理和其中存在的一些问题，在这节中我们将着重讲述如何对传统的神经网络模型进行优化。由于word2vec有两种改进方法，一种是基于Hierarchical Softmax的，另一种是基于Negative Sampling的。本文关注于基于Hierarchical Softmax的改进方法，在下一篇讨论基于Negative Sampli">
 <meta name="keywords" content="自然语言处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hierarchical Softmax --CBOW">
 <meta property="og:url" content="http://super1peng.xyz/2018/04/22/Hierarchical-Softmax-CBOW/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="在上一节中，我们讲到了使用神经网络的方法来得到词向量语言模型的原理和其中存在的一些问题，在这节中我们将着重讲述如何对传统的神经网络模型进行优化。由于word2vec有两种改进方法，一种是基于Hierarchical Softmax的，另一种是基于Negative Sampling的。本文关注于基于Hierarchical Softmax的改进方法，在下一篇讨论基于Negative Sampling">
+<meta property="og:description" content="在上一节中，我们讲到了使用神经网络的方法来得到词向量语言模型的原理和其中存在的一些问题，在这节中我们将着重讲述如何对传统的神经网络模型进行优化。由于word2vec有两种改进方法，一种是基于Hierarchical Softmax的，另一种是基于Negative Sampling的。本文关注于基于Hierarchical Softmax的改进方法，在下一篇讨论基于Negative Sampli">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://super1peng.xyz/2018/04/22/Hierarchical-Softmax-CBOW/1.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/04/22/Hierarchical-Softmax-CBOW/2.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/04/22/Hierarchical-Softmax-CBOW/3.png">
-<meta property="og:updated_time" content="2018-10-19T12:33:33.294Z">
+<meta property="og:updated_time" content="2019-05-15T07:31:17.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hierarchical Softmax --CBOW">
-<meta name="twitter:description" content="在上一节中，我们讲到了使用神经网络的方法来得到词向量语言模型的原理和其中存在的一些问题，在这节中我们将着重讲述如何对传统的神经网络模型进行优化。由于word2vec有两种改进方法，一种是基于Hierarchical Softmax的，另一种是基于Negative Sampling的。本文关注于基于Hierarchical Softmax的改进方法，在下一篇讨论基于Negative Sampling">
+<meta name="twitter:description" content="在上一节中，我们讲到了使用神经网络的方法来得到词向量语言模型的原理和其中存在的一些问题，在这节中我们将着重讲述如何对传统的神经网络模型进行优化。由于word2vec有两种改进方法，一种是基于Hierarchical Softmax的，另一种是基于Negative Sampling的。本文关注于基于Hierarchical Softmax的改进方法，在下一篇讨论基于Negative Sampli">
 <meta name="twitter:image" content="http://super1peng.xyz/2018/04/22/Hierarchical-Softmax-CBOW/1.png">
 
 
@@ -342,7 +342,9 @@
       
 
       
-        <p>在上一节中，我们讲到了使用神经网络的方法来得到词向量语言模型的原理和其中存在的一些问题，在这节中我们将着重讲述如何对传统的神经网络模型进行优化。由于word2vec有两种改进方法，一种是基于<code>Hierarchical Softmax</code>的，另一种是基于<code>Negative Sampling</code>的。本文关注于基于Hierarchical Softmax的改进方法，在下一篇讨论基于Negative Sampling的改进方法。<br><a id="more"></a></p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<p>在上一节中，我们讲到了使用神经网络的方法来得到词向量语言模型的原理和其中存在的一些问题，在这节中我们将着重讲述如何对传统的神经网络模型进行优化。由于word2vec有两种改进方法，一种是基于<code>Hierarchical Softmax</code>的，另一种是基于<code>Negative Sampling</code>的。本文关注于基于Hierarchical Softmax的改进方法，在下一篇讨论基于Negative Sampling的改进方法。<br><a id="more"></a></p>
 <h1 id="霍夫曼树"><a href="#霍夫曼树" class="headerlink" title="霍夫曼树"></a>霍夫曼树</h1><p>针对上节提到的问题，最先优化使用的数据结构是用霍夫曼树来代替隐藏层和输出层的神经元，霍夫曼树的叶子节点起到输出层神经元的作用，叶子节点的个数即为词汇表的大小，而内部节点则起到隐藏层神经元的作用。  </p>
 <p>具体如何使用霍夫曼树来进行CBOW和Skip-Gram的训练我们在下一节中将会讲述在，在本节中我们先复习一下霍夫曼树。建立霍夫曼树的过程如下：</p>
 <ul>

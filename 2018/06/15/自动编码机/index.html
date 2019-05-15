@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="介绍自动编码机是一个神经网络，它的意义在于让网络能够学习到一些数据当中有效的表示，或者叫数据的编码方式。什么叫有效的表示呢? 比如这一组数据:50,25,38,19 它其实有效的表示不过是25,19而已。就是数据真正有效有价值的部分。学术一点来说，我们希望创建这么一个编码（encoder）和解码（decoder），从而构建这么一个映射：inputdata —-(encoder)——&amp;gt; int">
+<meta name="description" content="介绍自动编码机是一个神经网络，它的意义在于让网络能够学习到一些数据当中有效的表示，或者叫数据的编码方式。什么叫有效的表示呢? 比如这一组数据:50,25,38,19 它其实有效的表示不过是25,19而已。就是数据真正有效有价值的部分。学术一点来说，我们希望创建这么一个编码（encoder）和解码（decoder），从而构建这么一个映射：inputdata —-(encoder)——&amp;gt; i">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自动编码机">
 <meta property="og:url" content="http://super1peng.xyz/2018/06/15/自动编码机/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="介绍自动编码机是一个神经网络，它的意义在于让网络能够学习到一些数据当中有效的表示，或者叫数据的编码方式。什么叫有效的表示呢? 比如这一组数据:50,25,38,19 它其实有效的表示不过是25,19而已。就是数据真正有效有价值的部分。学术一点来说，我们希望创建这么一个编码（encoder）和解码（decoder），从而构建这么一个映射：inputdata —-(encoder)——&amp;gt; int">
+<meta property="og:description" content="介绍自动编码机是一个神经网络，它的意义在于让网络能够学习到一些数据当中有效的表示，或者叫数据的编码方式。什么叫有效的表示呢? 比如这一组数据:50,25,38,19 它其实有效的表示不过是25,19而已。就是数据真正有效有价值的部分。学术一点来说，我们希望创建这么一个编码（encoder）和解码（decoder），从而构建这么一个映射：inputdata —-(encoder)——&amp;gt; i">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://super1peng.xyz/2018/06/15/自动编码机/pic_1.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/06/15/自动编码机/pic_2.png">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="http://super1peng.xyz/2018/06/15/自动编码机/pic_6.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/06/15/自动编码机/pic_7.png">
 <meta property="og:image" content="http://super1peng.xyz/2018/06/15/自动编码机/pic_8.png">
-<meta property="og:updated_time" content="2018-10-19T12:35:03.699Z">
+<meta property="og:updated_time" content="2019-05-15T07:32:39.153Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动编码机">
-<meta name="twitter:description" content="介绍自动编码机是一个神经网络，它的意义在于让网络能够学习到一些数据当中有效的表示，或者叫数据的编码方式。什么叫有效的表示呢? 比如这一组数据:50,25,38,19 它其实有效的表示不过是25,19而已。就是数据真正有效有价值的部分。学术一点来说，我们希望创建这么一个编码（encoder）和解码（decoder），从而构建这么一个映射：inputdata —-(encoder)——&amp;gt; int">
+<meta name="twitter:description" content="介绍自动编码机是一个神经网络，它的意义在于让网络能够学习到一些数据当中有效的表示，或者叫数据的编码方式。什么叫有效的表示呢? 比如这一组数据:50,25,38,19 它其实有效的表示不过是25,19而已。就是数据真正有效有价值的部分。学术一点来说，我们希望创建这么一个编码（encoder）和解码（decoder），从而构建这么一个映射：inputdata —-(encoder)——&amp;gt; i">
 <meta name="twitter:image" content="http://super1peng.xyz/2018/06/15/自动编码机/pic_1.png">
 
 
@@ -347,7 +347,9 @@
       
 
       
-        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>自动编码机是一个神经网络，它的意义在于让网络能够学习到一些数据当中有效的表示，或者叫数据的编码方式。什么叫有效的表示呢? 比如这一组数据:50,25,38,19 它其实有效的表示不过是25,19而已。就是数据真正有效有价值的部分。<br>学术一点来说，我们希望创建这么一个编码（encoder）和解码（decoder），从而构建这么一个映射：<br>inputdata —-(encoder)——&gt; internal representation ———(decoder)—-&gt;output data<br><a id="more"></a><br>通过这么encoder 和decoder 这么一弄之后，使得output data和input data 的差异性尽可能的小，那么就说我们通过encoder得到的internal的数据，是input data的数据的一种有效表现形式。<br>假设input data的维度是100，hidden layer的维度是10，那么实际上有没有点降维的感觉。PCA也是找到可以代表原来信息的主要成分。<br>而且如果大家注意到上面的实现的话，它其实是一个无监督学习。就是不需要标签的学习。你随便给一些输入数据就可以先拿来训练了，这个也叫做预训练。</p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>自动编码机是一个神经网络，它的意义在于让网络能够学习到一些数据当中有效的表示，或者叫数据的编码方式。什么叫有效的表示呢? 比如这一组数据:50,25,38,19 它其实有效的表示不过是25,19而已。就是数据真正有效有价值的部分。<br>学术一点来说，我们希望创建这么一个编码（encoder）和解码（decoder），从而构建这么一个映射：<br>inputdata —-(encoder)——&gt; internal representation ———(decoder)—-&gt;output data<br><a id="more"></a><br>通过这么encoder 和decoder 这么一弄之后，使得output data和input data 的差异性尽可能的小，那么就说我们通过encoder得到的internal的数据，是input data的数据的一种有效表现形式。<br>假设input data的维度是100，hidden layer的维度是10，那么实际上有没有点降维的感觉。PCA也是找到可以代表原来信息的主要成分。<br>而且如果大家注意到上面的实现的话，它其实是一个无监督学习。就是不需要标签的学习。你随便给一些输入数据就可以先拿来训练了，这个也叫做预训练。</p>
 <h1 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h1><p>为了说明一下就先拿一本书上的简单例子做个示范:目标是把一个三维数据用二维来表示。<br><img src="/2018/06/15/自动编码机/pic_1.png" alt="pic_1"></p>
 <h1 id="自动编码机"><a href="#自动编码机" class="headerlink" title="自动编码机"></a>自动编码机</h1><p>上面一个只是简单的例子，实际上自动编码机可能有很多层，那么我们如何训练一个多层的自动编码机呢？<br>自动编码机因为过于强大会发生一些事情，假设自动编码机能够强大到做到output和input完全一致，那么自动编码机也就失去意义了（过拟合）  </p>
 <p>所以我们将采取几种措施：  </p>

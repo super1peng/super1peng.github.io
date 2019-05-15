@@ -97,7 +97,7 @@
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg15eydlnj30b908tta0.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fvg16765f0j30vs0q0hdt.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fvg17dxp1pj309a02k0t4.jpg">
-<meta property="og:updated_time" content="2018-10-19T12:33:26.689Z">
+<meta property="og:updated_time" content="2019-05-15T07:31:13.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FM模型理论和实践">
 <meta name="twitter:description" content="FM背景在计算广告和推荐系统中，CTR预估(click-through rate)是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。在进行CTR预估时，除了单特征外，往往要对特征进行组合。对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。今天我们就来讲讲FM算法。">
@@ -349,7 +349,9 @@
       
 
       
-        <h1 id="FM背景"><a href="#FM背景" class="headerlink" title="FM背景"></a>FM背景</h1><p>在计算广告和推荐系统中，CTR预估(click-through rate)是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。在进行CTR预估时，除了单特征外，往往要对特征进行组合。对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。今天我们就来讲讲FM算法。<br><a id="more"></a></p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<h1 id="FM背景"><a href="#FM背景" class="headerlink" title="FM背景"></a>FM背景</h1><p>在计算广告和推荐系统中，CTR预估(click-through rate)是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。在进行CTR预估时，除了单特征外，往往要对特征进行组合。对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。今天我们就来讲讲FM算法。<br><a id="more"></a></p>
 <h1 id="One-hot编码带来的问题"><a href="#One-hot编码带来的问题" class="headerlink" title="One-hot编码带来的问题"></a>One-hot编码带来的问题</h1><p>FM(Factorization Machine)主要是为了解决数据稀疏的情况下，特征怎样组合的问题。已一个广告分类的问题为例，根据用户与广告位的一些特征，来预测用户是否会点击广告。数据如下：(本例来自美团技术团队分享的paper)<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0vtoligj308503st98.jpg" alt="1"></p>
 <p>click是分类值，表明用户有没有点击该广告。1表示点击，0表示未点击。而country,day,ad_type则是对应的特征。对于这种categorical特征，一般都是进行one-hot编码处理。  </p>
 <p>将上面的数据进行one-hot编码以后，就变成了下面这样：<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvg0xofd6gj30jq035q3s.jpg" alt="2"></p>

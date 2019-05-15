@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="用深度学习来解决大规模文本分类问题具体业务场景淘宝商品的一个典型的例子见下图，图中商品的标题是“夏装雪纺条纹短袖t恤女春半袖衣服夏天中长款大码胖mm显瘦上衣夏”。淘宝网后台是通过树形的多层的类目体系管理商品的，覆盖叶子类目数量达上万个，商品量也是10亿量级，我们是任务是根据商品标题预测其所在叶子类目，示例中商品归属的类目为“女装/女士精品&amp;gt;&amp;gt;蕾丝衫/雪纺衫”。很显然，这是一个非常典型的">
+<meta name="description" content="用深度学习来解决大规模文本分类问题具体业务场景淘宝商品的一个典型的例子见下图，图中商品的标题是“夏装雪纺条纹短袖t恤女春半袖衣服夏天中长款大码胖mm显瘦上衣夏”。淘宝网后台是通过树形的多层的类目体系管理商品的，覆盖叶子类目数量达上万个，商品量也是10亿量级，我们是任务是根据商品标题预测其所在叶子类目，示例中商品归属的类目为“女装/女士精品&amp;gt;&amp;gt;蕾丝衫/雪纺衫”。很显然，这是一个非常典">
 <meta name="keywords" content="自然语言处理,深度学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Text-Classification">
 <meta property="og:url" content="http://super1peng.xyz/2018/11/07/Text-Classification/index.html">
 <meta property="og:site_name" content="大大大大碗面">
-<meta property="og:description" content="用深度学习来解决大规模文本分类问题具体业务场景淘宝商品的一个典型的例子见下图，图中商品的标题是“夏装雪纺条纹短袖t恤女春半袖衣服夏天中长款大码胖mm显瘦上衣夏”。淘宝网后台是通过树形的多层的类目体系管理商品的，覆盖叶子类目数量达上万个，商品量也是10亿量级，我们是任务是根据商品标题预测其所在叶子类目，示例中商品归属的类目为“女装/女士精品&amp;gt;&amp;gt;蕾丝衫/雪纺衫”。很显然，这是一个非常典型的">
+<meta property="og:description" content="用深度学习来解决大规模文本分类问题具体业务场景淘宝商品的一个典型的例子见下图，图中商品的标题是“夏装雪纺条纹短袖t恤女春半袖衣服夏天中长款大码胖mm显瘦上衣夏”。淘宝网后台是通过树形的多层的类目体系管理商品的，覆盖叶子类目数量达上万个，商品量也是10亿量级，我们是任务是根据商品标题预测其所在叶子类目，示例中商品归属的类目为“女装/女士精品&amp;gt;&amp;gt;蕾丝衫/雪纺衫”。很显然，这是一个非常典">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fwzgdnigumj30k00aj75t.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fwzgigwltvj30k004qt96.jpg">
@@ -99,10 +99,10 @@
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fwzjrgsojaj30k007utaa.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fwzjss4c6fj30k0020mxe.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fwzjtvcxrkj30k000w0sq.jpg">
-<meta property="og:updated_time" content="2018-11-07T08:22:08.289Z">
+<meta property="og:updated_time" content="2019-05-15T07:31:56.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Text-Classification">
-<meta name="twitter:description" content="用深度学习来解决大规模文本分类问题具体业务场景淘宝商品的一个典型的例子见下图，图中商品的标题是“夏装雪纺条纹短袖t恤女春半袖衣服夏天中长款大码胖mm显瘦上衣夏”。淘宝网后台是通过树形的多层的类目体系管理商品的，覆盖叶子类目数量达上万个，商品量也是10亿量级，我们是任务是根据商品标题预测其所在叶子类目，示例中商品归属的类目为“女装/女士精品&amp;gt;&amp;gt;蕾丝衫/雪纺衫”。很显然，这是一个非常典型的">
+<meta name="twitter:description" content="用深度学习来解决大规模文本分类问题具体业务场景淘宝商品的一个典型的例子见下图，图中商品的标题是“夏装雪纺条纹短袖t恤女春半袖衣服夏天中长款大码胖mm显瘦上衣夏”。淘宝网后台是通过树形的多层的类目体系管理商品的，覆盖叶子类目数量达上万个，商品量也是10亿量级，我们是任务是根据商品标题预测其所在叶子类目，示例中商品归属的类目为“女装/女士精品&amp;gt;&amp;gt;蕾丝衫/雪纺衫”。很显然，这是一个非常典">
 <meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fwzgdnigumj30k00aj75t.jpg">
 
 
@@ -351,7 +351,9 @@
       
 
       
-        <h2 id="用深度学习来解决大规模文本分类问题"><a href="#用深度学习来解决大规模文本分类问题" class="headerlink" title="用深度学习来解决大规模文本分类问题"></a>用深度学习来解决大规模文本分类问题</h2><h3 id="具体业务场景"><a href="#具体业务场景" class="headerlink" title="具体业务场景"></a>具体业务场景</h3><p>淘宝商品的一个典型的例子见下图，图中商品的标题是“夏装雪纺条纹短袖t恤女春半袖衣服夏天中长款大码胖mm显瘦上衣夏”。淘宝网后台是通过树形的多层的类目体系管理商品的，覆盖叶子类目数量达上万个，商品量也是10亿量级，我们是任务是根据商品标题预测其所在叶子类目，示例中商品归属的类目为“女装/女士精品&gt;&gt;蕾丝衫/雪纺衫”。很显然，这是一个非常典型的短文本多分类问题。接下来分别会介绍下文本分类传统和深度学习的做法，最后简单梳理下实践的经验。<br><a id="more"></a></p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<h2 id="用深度学习来解决大规模文本分类问题"><a href="#用深度学习来解决大规模文本分类问题" class="headerlink" title="用深度学习来解决大规模文本分类问题"></a>用深度学习来解决大规模文本分类问题</h2><h3 id="具体业务场景"><a href="#具体业务场景" class="headerlink" title="具体业务场景"></a>具体业务场景</h3><p>淘宝商品的一个典型的例子见下图，图中商品的标题是“夏装雪纺条纹短袖t恤女春半袖衣服夏天中长款大码胖mm显瘦上衣夏”。淘宝网后台是通过树形的多层的类目体系管理商品的，覆盖叶子类目数量达上万个，商品量也是10亿量级，我们是任务是根据商品标题预测其所在叶子类目，示例中商品归属的类目为“女装/女士精品&gt;&gt;蕾丝衫/雪纺衫”。很显然，这是一个非常典型的短文本多分类问题。接下来分别会介绍下文本分类传统和深度学习的做法，最后简单梳理下实践的经验。<br><a id="more"></a></p>
 <p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fwzgdnigumj30k00aj75t.jpg" width="50%"></p>
 <h3 id="传统的文本分类问题"><a href="#传统的文本分类问题" class="headerlink" title="传统的文本分类问题"></a>传统的文本分类问题</h3><p>文本分类问题算是自然语言处理领域中一个非常经典的问题，最早就通过专家规则（Pattern）进行分类，甚至在80年代初一度发展到利用知识工程建立专家系统。</p>
 <p>后来伴随着统计学习方法的发展，特别是90年代后互联网在线文本数量增长和机器学习学科的兴起，逐渐形成了一套解决大规模文本分类问题的经典玩法，这个阶段的主要套路是人工特征工程+浅层分类模型。训练文本分类器过程见下图：  </p>

@@ -115,7 +115,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1g0taiz2zboj30tu07yjtn.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1g0tak6ug0dj31m00l6qf6.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1g0tam1rxcsj31ly0l0x6p.jpg">
-<meta property="og:updated_time" content="2019-04-15T08:56:11.635Z">
+<meta property="og:updated_time" content="2019-05-15T07:33:03.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Collaborative Metric Learning">
 <meta name="twitter:description" content="《Collaborative Metric Learning》发表在2017年WWW，其主旨是将Metric Learning和Collaborative Filtering结合提升推荐效果。">
@@ -367,7 +367,10 @@
       
 
       
-        <p>《Collaborative Metric Learning》发表在2017年WWW，其主旨是将Metric Learning和Collaborative Filtering结合提升推荐效果。<br><a id="more"></a><br><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t7xhe30qj31ji0bu40n.jpg"></p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+
+<p>《Collaborative Metric Learning》发表在2017年WWW，其主旨是将Metric Learning和Collaborative Filtering结合提升推荐效果。<br><a id="more"></a><br><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1g0t7xhe30qj31ji0bu40n.jpg"></p>
 <p>本文指出基于矩阵分解的CF模型使用product dot 度量user vector和 item vector的方式不满足三角不等式，导致MF模型无法捕获用户的细粒度偏好。因此作者想到使用Large-Margin Nearest Neighbor（LMNN）中提到的“异类远离”的思想，即一个用户所喜欢的商品要远离这个用户不喜欢的商品，并且该距离也会被一个与Rank（物品排序）有关的权重控制。在论文中，作者进一步考虑了使用Deep Learning进行特征的映射、正则项的约束、特征损失等Tickets。最后，通过实验表明，该模型在一系列标准的数据集上性能得到了显著的提升。</p>
 <h3 id="度量学习"><a href="#度量学习" class="headerlink" title="度量学习"></a>度量学习</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>度量学习（Metric Learning）它的目的就是用来比较两个对象之间的相似程度，通常用于图像识别领域，比如人脸的相似性、姿势的相似性等。相似性的度量函数$d(x,y)$一般根据处理的问题进行选择，但是要尽量满足以下的条件：</p>
 <p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1g0t88fdn73j30a803g3yq.jpg"></p>

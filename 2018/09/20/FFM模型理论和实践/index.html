@@ -94,7 +94,7 @@
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fvgb88ua0nj30hy03oabk.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fvgb9dupzvj30i2030gmj.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgbb3wezgj30gr0dz11y.jpg">
-<meta property="og:updated_time" content="2018-10-19T12:33:13.896Z">
+<meta property="og:updated_time" content="2019-05-15T07:31:05.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFM模型理论和实践">
 <meta name="twitter:description" content="FFM理论在CTR预估中，经常会遇到One-hot类型的变量，One-hot类型变量会导致严重的数据特征稀疏，为了解决这一个问题，上一节我们讲述了FM模型，而在这一节中，我们将介绍一种在FM基础上发展出来的算法FFM(Field-aware Factorization Machine)。">
@@ -346,7 +346,9 @@
       
 
       
-        <h1 id="FFM理论"><a href="#FFM理论" class="headerlink" title="FFM理论"></a>FFM理论</h1><p>在CTR预估中，经常会遇到One-hot类型的变量，One-hot类型变量会导致严重的数据特征稀疏，为了解决这一个问题，上一节我们讲述了FM模型，而在这一节中，我们将介绍一种在FM基础上发展出来的算法FFM(Field-aware Factorization Machine)。<br><a id="more"></a></p>
+        <meta name="”referrer”" content="”no-referrer”">
+
+<h1 id="FFM理论"><a href="#FFM理论" class="headerlink" title="FFM理论"></a>FFM理论</h1><p>在CTR预估中，经常会遇到One-hot类型的变量，One-hot类型变量会导致严重的数据特征稀疏，为了解决这一个问题，上一节我们讲述了FM模型，而在这一节中，我们将介绍一种在FM基础上发展出来的算法FFM(Field-aware Factorization Machine)。<br><a id="more"></a></p>
 <p>FFM模型中引入了类别的概念，即field。还是拿上一讲中的数据来讲，先看下图：<br><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fvgb1ksgppj30cg05sdhf.jpg" alt="1"><br>在上面的广告点击案例中，“Day=26/11/15”、“Day=1/7/14”、“Day=19/2/15”这三个特征都是代表日期的，可以放到同一个field中。同理，Country也可以放到一个field中。简单来说，同一个categorical特征经过One-Hot编码生成的数值特征都可以放到同一个field，包括用户国籍，广告类型，日期等等。  </p>
 <p>在FFM中，每一维特征xi，针对其它特征的每一种field fj，都会学习一个隐向量v_i,fj。因此，隐向量不仅与特征相关，也与field相关。也就是说，“Day=26/11/15”这个特征与“Country”特征和“Ad_type”特征进行关联的时候使用不同的隐向量，这与“Country”和“Ad_type”的内在差异相符，也是FFM中“field-aware”的由来。  </p>
 <p>假设样本的n个特征属于f个field，那么FFM的二次项有nf个隐向量。而在FM模型中，每一维特征的隐向量只有一个。FM可以看作FFM的特例，是把所有特征都归属到一个field时的FFM模型。根据FFM的field敏感特性，可以导出其模型方程。</p>
